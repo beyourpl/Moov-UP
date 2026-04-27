@@ -1,0 +1,31 @@
+services:
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/scripts:/app/scripts
+      - ./backend/tests:/app/tests
+      - ./backend/data:/app/data
+      - hf_cache:/root/.cache/huggingface
+      - sqlite_data:/app/db
+    env_file: ./backend/.env
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build: ./frontend
+    ports: ["5173:5173"]
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+    environment:
+      # URL vue par le navigateur (hôte:port public de l’API). Définir dans le fichier .env à la racine :
+      #   VITE_API_URL=http://178.104.253.218:8000
+      # Voir env.compose.example. Défaut si absent : localhost.
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    depends_on:
+      - backend
+
+volumes:
+  hf_cache:
+  sqlite_data:

@@ -1,0 +1,11 @@
+.env
+backend/.env
+
+frontend/node_modules/
+backend/.venv/
+**/__pycache__/
+*.pyc
+.DS_Store
+
+# Dépôt git imbriqué (éviter sous-module accidentel)
+Moov'UP/

@@ -1,0 +1,11 @@
+{
+  "name": "tempo",
+  "private": true,
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "dev:all": "cd frontend && npm run dev:all",
+    "dev:api": "cd frontend && npm run dev:api",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm run preview"
+  }
+}
