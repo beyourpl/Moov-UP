@@ -6,5 +6,7 @@ RUN npm install
 
 COPY . .
 
+ENV VITE_BIND_HOST=0.0.0.0
 EXPOSE 5173
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+# Vite seul : l’API est le service backend (pas dev-api.mjs du poste dev).
+CMD ["npm", "run", "dev:vite"]

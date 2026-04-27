@@ -1,8 +1,29 @@
 // En dev sans VITE_API_URL : URLs relatives → proxy Vite vers dev-api (port 8787).
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV ? "" : "http://localhost:8000");
+// Sur https://moovup.site : si VITE_API_URL est encore en http:// / localhost / IP, le navigateur
+// bloque souvent (contenu mixte) — on utilise https://api.<domaine>.
 const TOKEN_KEY = "moovup_token";
+
+function resolveApiBase() {
+  const viteUrl = String(import.meta.env.VITE_API_URL || "").trim();
+  const isDev = import.meta.env.DEV;
+  const domain = String(import.meta.env.VITE_PUBLIC_DOMAIN || "moovup.site").trim() || "moovup.site";
+
+  if (typeof window !== "undefined") {
+    const { protocol, hostname } = window.location;
+    const onProdSite = hostname === domain || hostname === `www.${domain}`;
+    if (protocol === "https:" && onProdSite) {
+      const insecure =
+        !viteUrl ||
+        viteUrl.startsWith("http://") ||
+        viteUrl.includes("localhost") ||
+        /http:\/\/[\d.]+/.test(viteUrl);
+      if (insecure) return `https://api.${domain}`;
+    }
+  }
+
+  if (isDev && !viteUrl) return "";
+  return viteUrl || (isDev ? "" : "http://localhost:8000");
+}
 
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
@@ -14,6 +35,7 @@ export function setToken(t) {
 }
 
 async function request(method, path, body) {
+  const API_URL = resolveApiBase();
   const headers = { "Content-Type": "application/json" };
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
@@ -27,10 +49,17 @@ async function request(method, path, body) {
     });
   } catch (e) {
     if (e instanceof TypeError) {
+      const pageHttps =
+        typeof window !== "undefined" && window.location.protocol === "https:";
+      const apiHttp = API_URL.startsWith("http://");
+      const mixed = pageHttps && apiHttp;
       throw new Error(
-        `Impossible de joindre l'API. ` +
-          "En local : dans frontend, lance « npm run dev:all » (API + Vite), ou « npm run dev:api » dans un terminal et « npm run dev » dans l'autre. " +
-          "Avec Docker : « docker compose up » (port 8000) et éventuellement VITE_API_URL=http://localhost:8000."
+        `Impossible de joindre l'API (${API_URL || "URL relative"}). ` +
+          (mixed
+            ? "Page en HTTPS mais API en http:// : utilise une API en https:// (ex. https://api.moovup.site) ou mets à jour le déploiement. "
+            : "") +
+          "Vérifie https://api.moovup.site/api/health dans le navigateur, Caddy (api → port 8000), et « docker compose ps ». " +
+          "Après « git pull », rebuild le front : docker compose up -d --build --force-recreate frontend. Vide le cache (Ctrl+Shift+R)."
       );
     }
     throw e;
@@ -45,7 +74,11 @@ async function request(method, path, body) {
   }
   if (!res.ok) {
     let detail;
-    try { detail = (await res.json()).detail; } catch { detail = res.statusText; }
+    try {
+      detail = (await res.json()).detail;
+    } catch {
+      detail = res.statusText;
+    }
     throw new Error(detail || res.statusText);
   }
   if (res.status === 204) return null;

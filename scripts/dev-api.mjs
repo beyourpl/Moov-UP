@@ -4,7 +4,7 @@
  *
  * Usage (depuis la racine tempo) :
  *   node scripts/dev-api.mjs
- * Puis : cd frontend && npm run dev (avec proxy), ou npm run dev:all pour tout lancer.
+ * Puis : cd frontend && npm run dev (API + Vite), ou npm run dev:vite si l’API tourne déjà.
  *
  * JWT_SECRET : lit backend/.env si présent, sinon "dev-secret-not-for-prod" (comme config Python).
  */
@@ -289,7 +289,7 @@ let nextConvId = 1;
 /** @type {Map<number, object>} */
 const conversations = new Map();
 
-function cors(res, origin = "http://localhost:5173") {
+function cors(res, origin = "http://localhost:3000") {
   res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -356,7 +356,7 @@ function getUser(req) {
 }
 
 const server = http.createServer(async (req, res) => {
-  const origin = req.headers.origin || "http://localhost:5173";
+  const origin = req.headers.origin || "http://localhost:3000";
   cors(res, origin);
 
   if (req.method === "OPTIONS") {
@@ -553,6 +553,6 @@ server.on("error", (err) => {
 server.listen(PORT, "127.0.0.1", () => {
   console.log(`[dev-api] Moov'Up API locale http://localhost:${PORT}`);
   console.log(`[dev-api] JWT_SECRET=${JWT_SECRET.slice(0, 8)}… (aligné sur backend/.env ou défaut Python)`);
-  console.log("[dev-api] Avec le front : depuis frontend, « npm run dev:all » (recommandé) ou ce serveur + « npm run dev » (proxy Vite → ce port).");
+  console.log("[dev-api] Avec le front : depuis frontend, « npm run dev » (API + Vite) ou ce serveur + « npm run dev:vite » (proxy /api → ce port).");
   console.log(`[dev-api] Sinon définis VITE_API_URL=http://localhost:${PORT} si tu n’utilises pas le proxy.`);
 });

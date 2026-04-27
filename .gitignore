@@ -2,6 +2,8 @@
 backend/.env
 
 frontend/node_modules/
+# Ne pas versionner le build Vite : risque de servir un JS obsolète (ex. vieux message d’erreur API).
+frontend/dist/
 backend/.venv/
 **/__pycache__/
 *.pyc

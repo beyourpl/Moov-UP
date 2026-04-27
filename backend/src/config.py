@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     OPENROUTER_API_KEY: str = "missing"
     JWT_SECRET: str = "dev-secret-not-for-prod"
     LLM_MODEL: str = "google/gemini-3-flash-preview"
-    ALLOWED_ORIGIN: str = "http://localhost:5173"
+    ALLOWED_ORIGIN: str = "http://localhost:5173,http://localhost:3000"
     DATABASE_URL: str = "sqlite:///./moovup.db"
     DATA_DIR: str = "./data"
 

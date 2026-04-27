@@ -1,6 +1,7 @@
 /**
- * Lance l’API de dev (port 8787) et Vite ensemble. À utiliser depuis le frontend :
- *   npm run dev:all
+ * Lance l’API de dev (port 8787) et Vite ensemble. Script par défaut du frontend :
+ *   npm run dev
+ *   npm run dev:all (alias)
  */
 import { spawn } from "child_process";
 import path from "path";
