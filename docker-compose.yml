@@ -18,6 +18,7 @@ services:
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
+      - ./frontend/index.html:/app/index.html
       - ./frontend/vite.config.js:/app/vite.config.js
     environment:
       # URL vue par le navigateur. Sur https://moovup.site, mettre https://api.moovup.site (voir env.compose.example).
