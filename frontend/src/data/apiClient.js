@@ -1,6 +1,6 @@
+// Module renommé (api.js → apiClient.js) pour éviter un JS « api.js » mis en cache par un proxy ou le navigateur.
 // En dev sans VITE_API_URL : URLs relatives → proxy Vite vers dev-api (port 8787).
-// Sur https://moovup.site : si VITE_API_URL est encore en http:// / localhost / IP, le navigateur
-// bloque souvent (contenu mixte) — on utilise https://api.<domaine>.
+// Sur https://moovup.site : VITE_API_URL http:// / localhost / IP → on utilise https://api.<domaine>.
 const TOKEN_KEY = "moovup_token";
 
 function resolveApiBase() {
@@ -54,12 +54,12 @@ async function request(method, path, body) {
       const apiHttp = API_URL.startsWith("http://");
       const mixed = pageHttps && apiHttp;
       throw new Error(
-        `Impossible de joindre l'API (${API_URL || "URL relative"}). ` +
+        `[MOOVUP-NET] Impossible de joindre l'API (${API_URL || "URL relative"}). ` +
           (mixed
-            ? "Page en HTTPS mais API en http:// : utilise une API en https:// (ex. https://api.moovup.site) ou mets à jour le déploiement. "
+            ? "Page en HTTPS mais API en http:// : utilise une API en https:// (ex. https://api.moovup.site). "
             : "") +
-          "Vérifie https://api.moovup.site/api/health dans le navigateur, Caddy (api → port 8000), et « docker compose ps ». " +
-          "Après « git pull », rebuild le front : docker compose up -d --build --force-recreate frontend. Vide le cache (Ctrl+Shift+R)."
+          "Ouvre https://api.moovup.site/api/health dans ce navigateur. Si ça ne charge pas : Caddy ou backend. " +
+          "Sinon : sur le VPS, git pull dans le dossier Docker puis docker compose up -d --force-recreate frontend. Cache : Ctrl+Shift+R."
       );
     }
     throw e;

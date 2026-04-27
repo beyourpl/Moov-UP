@@ -10,6 +10,8 @@ export default defineConfig({
   plugins: [react()],
   esbuild: false,
   server: {
+    // Évite qu’un proxy / le navigateur garde d’anciens modules (/src/...) après un git pull.
+    headers: { "Cache-Control": "no-store" },
     // Local : 127.0.0.1 évite sous Windows EACCES sur ::1. Docker : VITE_BIND_HOST=0.0.0.0
     host: process.env.VITE_BIND_HOST || "127.0.0.1",
     port: devPort,

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { apiPost } from "../data/api.js";
+import { apiPost } from "../data/apiClient.js";
 import { getSession, logoutUser } from "../data/authStorage.js";
 import { clearQuizDraft, loadQuizDraft, saveQuizDraft } from "../data/quizDraftStorage.js";
 import { setLastConversationId } from "../data/conversationStorage.js";

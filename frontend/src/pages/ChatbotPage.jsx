@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getLastConversationId } from "../data/conversationStorage.js";
 import ReactMarkdown from "react-markdown";
-import { apiGet, apiPost } from "../data/api.js";
+import { apiGet, apiPost } from "../data/apiClient.js";
 import { getSession, logoutUser } from "../data/authStorage.js";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import PathwaySummaryModal from "../components/PathwaySummaryModal.jsx";

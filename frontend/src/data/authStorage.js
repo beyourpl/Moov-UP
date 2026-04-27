@@ -1,4 +1,4 @@
-import { apiDelete, apiGet, apiPost, getToken, setToken } from "./api.js";
+import { apiDelete, apiGet, apiPost, getToken, setToken } from "./apiClient.js";
 
 const PROFILE_PREFIX = "moovup_profile_v1_";
 
