@@ -21,8 +21,8 @@ services:
       - ./frontend/index.html:/app/index.html
       - ./frontend/vite.config.js:/app/vite.config.js
     environment:
-      # URL vue par le navigateur. Sur https://moovup.site, mettre https://api.moovup.site (voir env.compose.example).
-      # Sinon le front corrige souvent tout seul via VITE_PUBLIC_DOMAIN + détection HTTPS.
+      # Front HTTPS : appels /api en même origine ; Vite proxy vers le conteneur backend.
+      VITE_API_PROXY_TARGET: http://backend:8000
       VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
       VITE_PUBLIC_DOMAIN: ${VITE_PUBLIC_DOMAIN:-moovup.site}
     depends_on:

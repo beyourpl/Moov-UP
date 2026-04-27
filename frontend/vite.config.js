@@ -1,6 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+// Docker Compose : définir VITE_API_PROXY_TARGET=http://backend:8000 (service backend).
+// Local sans Docker : défaut 127.0.0.1:8787 (scripts/dev-api.mjs).
+const apiProxyTarget =
+  process.env.VITE_API_PROXY_TARGET || "http://127.0.0.1:8787";
+
 // Sous Windows, 5173 est souvent dans une plage réservée (Hyper-V / WSL) → EACCES.
 // Docker : VITE_BIND_HOST est défini → on garde 5173 (mappé par compose).
 const devPort =
@@ -20,8 +25,7 @@ export default defineConfig({
     // Derrière Caddy / domaine public (Vite 6 refuse les Host inconnus par défaut)
     allowedHosts: true,
     proxy: {
-      // API de dev (scripts/dev-api.mjs) sur 8787 — même origine en local sans VITE_API_URL
-      "/api": { target: "http://127.0.0.1:8787", changeOrigin: true },
+      "/api": { target: apiProxyTarget, changeOrigin: true },
     },
   },
   resolve: {

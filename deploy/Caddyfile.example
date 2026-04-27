@@ -1,0 +1,16 @@
+# Remplace moovup.site par ton domaine. Colle ce bloc dans /etc/caddy/Caddyfile sur le VPS.
+# Indispensable pour que https://moovup.site/api/... atteigne FastAPI (même origine que le front).
+
+moovup.site, www.moovup.site {
+	handle /api/* {
+		reverse_proxy 127.0.0.1:8000
+	}
+	handle {
+		reverse_proxy 127.0.0.1:5173
+	}
+}
+
+# Optionnel : garder api. pour tests directs
+api.moovup.site {
+	reverse_proxy 127.0.0.1:8000
+}

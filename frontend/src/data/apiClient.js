@@ -1,6 +1,5 @@
-// Module renommé (api.js → apiClient.js) pour éviter un JS « api.js » mis en cache par un proxy ou le navigateur.
-// En dev sans VITE_API_URL : URLs relatives → proxy Vite vers dev-api (port 8787).
-// Sur https://moovup.site : VITE_API_URL http:// / localhost / IP → on utilise https://api.<domaine>.
+// Même origine en prod : https://moovup.site/api/... → Caddy ou Vite proxy → backend (évite CORS + api sous-domaine).
+// En dev local : URLs relatives → proxy Vite vers dev-api (8787) ou Docker → backend (VITE_API_PROXY_TARGET).
 const TOKEN_KEY = "moovup_token";
 
 function resolveApiBase() {
@@ -11,14 +10,8 @@ function resolveApiBase() {
   if (typeof window !== "undefined") {
     const { protocol, hostname } = window.location;
     const onProdSite = hostname === domain || hostname === `www.${domain}`;
-    if (protocol === "https:" && onProdSite) {
-      const insecure =
-        !viteUrl ||
-        viteUrl.startsWith("http://") ||
-        viteUrl.includes("localhost") ||
-        /http:\/\/[\d.]+/.test(viteUrl);
-      if (insecure) return `https://api.${domain}`;
-    }
+    // HTTPS sur le domaine public : toujours /api en relatif (même origine).
+    if (protocol === "https:" && onProdSite) return "";
   }
 
   if (isDev && !viteUrl) return "";
@@ -54,12 +47,12 @@ async function request(method, path, body) {
       const apiHttp = API_URL.startsWith("http://");
       const mixed = pageHttps && apiHttp;
       throw new Error(
-        `[MOOVUP-NET] Impossible de joindre l'API (${API_URL || "URL relative"}). ` +
+        `[MOOVUP-NET-v3] Impossible de joindre l'API (${API_URL || "même origine /api"}). ` +
           (mixed
-            ? "Page en HTTPS mais API en http:// : utilise une API en https:// (ex. https://api.moovup.site). "
+            ? "Mélange HTTPS / HTTP : vérifie la config. "
             : "") +
-          "Ouvre https://api.moovup.site/api/health dans ce navigateur. Si ça ne charge pas : Caddy ou backend. " +
-          "Sinon : sur le VPS, git pull dans le dossier Docker puis docker compose up -d --force-recreate frontend. Cache : Ctrl+Shift+R."
+          "Teste https://moovup.site/api/health (Caddy doit envoyer /api vers le port 8000). Voir deploy/Caddyfile.example. " +
+          "Sinon git pull + docker compose up -d --force-recreate frontend. Cache : Ctrl+Shift+R."
       );
     }
     throw e;
