@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
+import { CLIENT_BUILD_ID } from "../clientBuildId.js";
 import { getSession, loginUser, logoutUser, registerUser } from "../data/authStorage.js";
 import { useTranslation } from "../hooks/useTranslation.js";
 
@@ -324,6 +325,9 @@ export default function AuthPage() {
                       </button>
                     </>
                   )}
+                </p>
+                <p className="auth-build-id" title="Si ce libellé manque ou est ancien, le navigateur n’a pas le dernier déploiement.">
+                  {CLIENT_BUILD_ID}
                 </p>
               </div>
             </div>
