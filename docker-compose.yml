@@ -18,6 +18,7 @@ services:
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
+      - ./frontend/vite.config.js:/app/vite.config.js
     environment:
       # URL vue par le navigateur (hôte:port public de l’API). Définir dans le fichier .env à la racine :
       #   VITE_API_URL=http://178.104.253.218:8000

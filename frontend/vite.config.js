@@ -5,6 +5,8 @@ export default defineConfig({
   plugins: [react()],
   esbuild: false,
   server: {
+    // Derrière Caddy / domaine public (Vite 6 refuse les Host inconnus par défaut)
+    allowedHosts: true,
     proxy: {
       // API de dev (scripts/dev-api.mjs) sur 8787 — même origine en local sans VITE_API_URL
       "/api": { target: "http://127.0.0.1:8787", changeOrigin: true },
