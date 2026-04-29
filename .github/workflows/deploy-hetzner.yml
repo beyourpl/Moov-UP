@@ -31,9 +31,12 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          debug: true
+          timeout: 60s
           script_stop: true
           script: |
-            set -e
+            set -ex
             cd "${{ secrets.VPS_DEPLOY_PATH }}"
+            pwd
             git pull --ff-only
             docker compose up -d --force-recreate --build
