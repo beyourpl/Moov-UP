@@ -1,0 +1,39 @@
+# Déploiement auto : chaque push sur `main` → SSH vers le VPS → git pull + Docker.
+#
+# Secrets GitHub (Settings → Secrets and variables → Actions) :
+#   VPS_HOST          ex. 178.104.253.218
+#   VPS_USER          ex. root
+#   VPS_SSH_KEY       clé privée PEM (tout le bloc -----BEGIN ... PRIVATE KEY-----)
+#   VPS_DEPLOY_PATH   ex. /root/tempo  (dossier qui contient docker-compose.yml)
+#
+# Sur le VPS : clone du repo une fois + backend/.env configuré.
+# Repo public : git pull sans login. Repo privé : ajoute une deploy key (read) sur GitHub
+# et configure-la sur le VPS (~/.ssh) pour ce dépôt.
+
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-moovup
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH — git pull + Docker
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script_stop: true
+          script: |
+            set -e
+            cd "${{ secrets.VPS_DEPLOY_PATH }}"
+            git pull --ff-only
+            docker compose up -d --force-recreate --build

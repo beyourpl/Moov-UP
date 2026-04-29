@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import re
 
-SYSTEM_PROMPT = """Tu es Moov'Coach, expert francophone en orientation scolaire en France.
+_SYSTEM_PROMPT_TEXT = """Tu es Moov'Coach, expert francophone en orientation scolaire en France.
 Ton public : des lyceens et etudiants. Ton ton : clair, direct, chaleureux, jamais condescendant.
 
 # Regles de continuite (IMPORTANT)
@@ -17,12 +18,17 @@ Si l'historique ne permet pas de lever l'ambiguite, demande UNE clarification co
 ("Tu parles de quel metier ?") au lieu d'inventer ou de partir dans tous les sens.
 
 # Regles de sources
-- Source PRINCIPALE : les fiches ONISEP fournies dans "Contexte ONISEP". Cite-les en priorite avec leur lien.
+- Source PRINCIPALE : les infos des fiches ONISEP dans "Contexte ONISEP". Exploite-les pour le fond,
+  mais NE recopie PAS les URLs ni les liens https dans ta reponse : l'interface affiche deja un bouton
+  « Fiche ONISEP » pour chaque metier pertinent.
+- INTERDIT : toute phrase du type « Pour plus de details sur les missions..., consulte sa fiche : »
+  suivie d'une URL, ou toute ligne qui repete une URL onisep.fr — meme si elle figure dans le contexte.
+  Tu peux dire en une courte phrase « Les details officiels sont sur la fiche ONISEP du metier » sans lien.
 - Si le contexte ONISEP de ce tour ne mentionne PAS le metier identifie via l'historique,
   c'est NORMAL (le retrieval suit la question courante). Tu peux quand meme repondre en
   t'appuyant sur l'echange precedent + tes connaissances generales, en signalant
   "(estimation hors fiche ONISEP)" pour toute donnee chiffree (salaire, durees, statistiques).
-- Ne jamais inventer un lien ONISEP. N'utiliser que ceux fournis dans le contexte.
+- Ne jamais inventer un lien ONISEP. N'utiliser que ceux fournis dans le contexte (sans les afficher).
 
 # Regles de longueur
 - Reponses COURTES par defaut : 3-6 phrases pour une question simple.
@@ -36,6 +42,25 @@ Si l'historique ne permet pas de lever l'ambiguite, demande UNE clarification co
   Oriente vers les CFA. La fiche ONISEP du diplome est la source a verifier.
 - Question hors orientation : recentre poliment en une phrase.
 """
+
+SYSTEM_PROMPT = _SYSTEM_PROMPT_TEXT
+
+_ONISEP_HTTP = re.compile(
+    r"https?://(?:www\.)?onisep\.fr[^\s)\]>\"',]*",
+    re.IGNORECASE,
+)
+_BOILERPLATE_POUR_DETAILS = re.compile(
+    r"(?is)\s*pour plus de d[eéè]tails sur les missions[^\n]*(?:\n|$)",
+)
+
+
+def sanitize_chat_reply(text: str) -> str:
+    """Retire les URLs onisep.fr et la phrase-type « pour plus de détails… » (liens déjà dans l'UI)."""
+    t = _BOILERPLATE_POUR_DETAILS.sub("", text)
+    t = _ONISEP_HTTP.sub("", t)
+    t = re.sub(r"[ \t]{2,}", " ", t)
+    t = re.sub(r"\n{3,}", "\n\n", t)
+    return t.strip()
 
 
 def _serialize_rag(rag_context: list[dict]) -> str:

@@ -1,4 +1,4 @@
-from src.metier.prompt import build_prompt, SYSTEM_PROMPT
+from src.metier.prompt import build_prompt, sanitize_chat_reply, SYSTEM_PROMPT
 
 
 def test_build_prompt_returns_system_then_user():
@@ -37,7 +37,18 @@ def test_user_block_orders_history_before_rag_context():
     )
 
 
-def test_system_prompt_instructs_history_usage():
+def test_sanitize_chat_reply_strips_onisep_boilerplate_and_urls():
+    raw = (
+        "Voici un métier intéressant.\n\n"
+        "Pour plus de détails sur les missions de ce métier, tu peux consulter sa fiche : "
+        "https://www.onisep.fr/http/redirection/metier/slug/MET.360\n"
+    )
+    out = sanitize_chat_reply(raw)
+    assert "onisep.fr" not in out.lower()
+    assert "pour plus de" not in out.lower()
+    assert "Voici un métier" in out
+
+
     """Verifie que le system prompt contient les regles cles de continuite."""
     expected_keywords = [
         "Historique",          # mention explicite de la section

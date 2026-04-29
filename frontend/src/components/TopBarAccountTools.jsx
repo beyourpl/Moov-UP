@@ -1,9 +1,10 @@
 import { getSession } from "../data/authStorage.js";
 import { setLanguagePreference, setThemePreference } from "../data/uiPreferences.js";
-import { SUPPORTED_LANGUAGES, getText } from "../data/translations.js";
+import { getText } from "../data/translations.js";
 import { useUiPreferences } from "../hooks/useUiPreferences.js";
 import { useState } from "react";
 import AccountProfileModal from "./AccountProfileModal.jsx";
+import LanguageDropdown from "./LanguageDropdown.jsx";
 
 export const TOPBAR_LANGUAGE_LABELS = {
   fr: "Français",
@@ -55,18 +56,12 @@ export function TopBarAccountTools({
       >
         {theme === "dark" ? t("common", "dark", "Sombre") : t("common", "clear", "Clair")}
       </button>
-      <select
-        className="nav-btn secondary"
-        value={language}
-        onChange={(e) => setLanguagePreference(e.target.value)}
-        aria-label={t("common", "language", "Langue")}
-      >
-        {SUPPORTED_LANGUAGES.map((lang) => (
-          <option key={lang} value={lang}>
-            {TOPBAR_LANGUAGE_LABELS[lang] || lang}
-          </option>
-        ))}
-      </select>
+      <LanguageDropdown
+        language={language}
+        labels={TOPBAR_LANGUAGE_LABELS}
+        onChange={setLanguagePreference}
+        ariaLabel={t("common", "language", "Langue")}
+      />
     </>
   );
 

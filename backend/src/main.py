@@ -25,6 +25,12 @@ async def lifespan(app: FastAPI):
             app.state.rag = RagService()
         except FileNotFoundError:
             app.state.rag = None
+        except Exception:
+            logging.getLogger("moovup").exception(
+                "RAG / SentenceTransformer indisponible au démarrage — "
+                "auth et /api/health OK ; quiz/chat nécessitent le modèle HF (voir logs)."
+            )
+            app.state.rag = None
     yield
 
 

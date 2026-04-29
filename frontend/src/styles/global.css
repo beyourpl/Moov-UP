@@ -20,9 +20,10 @@
   --neon-blue: #80e8ff;
   --shadow: 0 18px 50px rgba(8, 22, 42, 0.4);
   --radius: 22px;
-  /* Pleine largeur : pas de gouttière CSS (seulement safe-area iPhone si besoin) */
+  /* Landing : pleine largeur mais gouttières pour que l’accueil ne soit pas collé aux bords */
   --lp-max: 100%;
-  --lp-gutter: 0px;
+  --lp-gutter: clamp(18px, 4.5vw, 52px);
+  color-scheme: dark;
 }
 
 :root[data-theme="light"] {
@@ -41,6 +42,7 @@
   --gold: #b45309;
   --gold-soft: #d97706;
   --shadow: 0 18px 40px rgba(10, 26, 47, 0.18);
+  color-scheme: light;
 }
 
 /* Lisibilité renforcée en thème clair */
@@ -124,8 +126,8 @@
 .lp-hero-badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin: 18px 0 8px;
+  gap: 12px;
+  margin: 22px 0 12px;
 }
 
 .lp-mini-badge {
@@ -1842,9 +1844,9 @@ body:has(.lp) #root {
   position: sticky;
   top: 0;
   z-index: 40;
-  padding: 14px 0 22px;
-  padding-left: env(safe-area-inset-left, 0px);
-  padding-right: env(safe-area-inset-right, 0px);
+  padding: 18px 0 24px;
+  padding-left: max(var(--lp-gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--lp-gutter), env(safe-area-inset-right, 0px));
   background: linear-gradient(180deg, rgba(9, 17, 31, 0.95), rgba(9, 17, 31, 0.7));
   backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
@@ -1858,12 +1860,12 @@ body:has(.lp) #root {
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 10px clamp(8px, 2vw, 16px);
+  padding: 12px clamp(14px, 2.8vw, 28px);
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px 18px;
+  gap: 12px 20px;
   min-width: 0;
   border: 1px solid rgba(125, 191, 255, 0.12);
   border-radius: 999px;
@@ -2103,8 +2105,7 @@ body:has(.lp) #root {
   border-color: rgba(31, 53, 86, 0.28);
 }
 
-:root[data-theme="light"] .lp-header-tools .nav-btn.secondary,
-:root[data-theme="light"] .lp-header-tools select.nav-btn.secondary {
+:root[data-theme="light"] .lp-header-tools .nav-btn.secondary {
   background: rgba(31, 53, 86, 0.06);
   border-color: rgba(31, 53, 86, 0.2);
   color: #102a43;
@@ -2139,19 +2140,6 @@ body:has(.lp) #root {
   font-size: 0.82rem;
   font-weight: 700;
   box-shadow: none;
-}
-
-.lp-header-prefs select.nav-btn.secondary {
-  appearance: none;
-  padding-right: 30px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%2380e8ff' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 11px center;
-  cursor: pointer;
-}
-
-:root[data-theme="light"] .lp-header-prefs select.nav-btn.secondary {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='none' stroke='%2333506d' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round' d='M3 4.5 6 7.5 9 4.5'/%3E%3C/svg%3E");
 }
 
 .lp-account-trigger {
@@ -2321,7 +2309,7 @@ body:has(.lp) #root {
 }
 
 .lp-hero {
-  padding: clamp(48px, 8vh, 96px) 0 clamp(64px, 10vh, 120px);
+  padding: clamp(56px, 9vh, 112px) 0 clamp(72px, 12vh, 140px);
   position: relative;
   min-height: calc(100vh - 120px);
   min-height: calc(100svh - 120px);
@@ -2364,7 +2352,7 @@ body:has(.lp) #root {
   display: grid;
   /* minmax(0, 1fr) évite min-width:auto des pistes — sinon léger overflow horizontal */
   grid-template-columns: minmax(0, 1fr);
-  gap: 36px;
+  gap: clamp(40px, 5vw, 64px);
   align-items: center;
   min-width: 0;
 }
@@ -2382,9 +2370,9 @@ body:has(.lp) #root {
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: #aef7ff;
-  margin: 0 0 18px;
+  margin: 0 0 22px;
   font-weight: 800;
-  padding: 9px 15px;
+  padding: 10px 18px;
   background: linear-gradient(135deg, rgba(64, 224, 208, 0.2), rgba(64, 224, 208, 0.08));
   border: 1px solid rgba(128, 232, 255, 0.45);
   box-shadow: 0 0 0 1px rgba(64, 224, 208, 0.16) inset;
@@ -2404,9 +2392,9 @@ body:has(.lp) #root {
 }
 
 .lp-title {
-  margin: 0 0 20px;
+  margin: 0 0 26px;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
-  line-height: 1.05;
+  line-height: 1.12;
   letter-spacing: -0.03em;
   font-weight: 800;
   background: linear-gradient(135deg, var(--text) 0%, rgba(255, 255, 255, 0.85) 50%, var(--green) 100%);
@@ -2416,11 +2404,11 @@ body:has(.lp) #root {
 }
 
 .lp-lead {
-  margin: 0 0 32px;
+  margin: 0 0 40px;
   color: var(--muted);
   font-size: 1.12rem;
-  line-height: 1.7;
-  max-width: 540px;
+  line-height: 1.75;
+  max-width: 580px;
 }
 
 .lp-lead strong {
@@ -2431,8 +2419,8 @@ body:has(.lp) #root {
 .lp-hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-bottom: 28px;
+  gap: 16px;
+  margin-bottom: 36px;
 }
 
 .lp-hero-actions .lp-btn {
@@ -2456,7 +2444,7 @@ body:has(.lp) #root {
 }
 
 .lp-trust {
-  margin: 0;
+  margin: 8px 0 0;
   padding: 0;
   list-style: none;
   color: var(--muted);
@@ -2700,7 +2688,7 @@ body:has(.lp) #root {
 }
 
 .lp-section {
-  padding: clamp(72px, 10vh, 140px) 0;
+  padding: clamp(80px, 11vh, 152px) 0;
   position: relative;
   max-width: 100%;
   overflow-x: hidden;
@@ -3302,6 +3290,7 @@ body:has(.lp) #root {
   .lp-hero-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: stretch;
+    gap: clamp(44px, 4vw, 72px);
   }
 
   .lp-hero-visual {
@@ -4818,6 +4807,96 @@ section.lp-section + .quiz-container,
 
 .topbar-account-tools .user-pill:hover {
   transform: translateY(-1px);
+}
+
+/* Menu langue personnalisé (remplace <select> natif — couleurs garanties) */
+.lang-dropdown {
+  position: relative;
+  display: inline-flex;
+}
+
+.lang-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.lang-dropdown-current {
+  max-width: 11rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lang-dropdown-chevron {
+  flex-shrink: 0;
+  opacity: 0.82;
+  transition: transform 0.2s ease;
+}
+
+.lang-dropdown-trigger[aria-expanded="true"] .lang-dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.lang-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: min(240px, calc(100vw - 24px));
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel-2);
+  box-shadow: var(--shadow), 0 12px 36px rgba(0, 0, 0, 0.38);
+  z-index: 10001;
+  max-height: min(70vh, 420px);
+  overflow-y: auto;
+}
+
+:root[data-theme="light"] .lang-dropdown-panel {
+  background: var(--panel);
+  box-shadow: var(--shadow), 0 14px 40px rgba(31, 53, 86, 0.15);
+}
+
+.lang-dropdown-option {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
+  padding: 10px 14px;
+  margin: 0;
+  border: none;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.lang-dropdown-option:hover,
+.lang-dropdown-option:focus-visible {
+  outline: none;
+  background: rgba(64, 224, 208, 0.18);
+}
+
+.lang-dropdown-option.is-active {
+  background: rgba(64, 224, 208, 0.28);
+  font-weight: 800;
+}
+
+:root[data-theme="light"] .lang-dropdown-option:hover,
+:root[data-theme="light"] .lang-dropdown-option:focus-visible {
+  background: rgba(20, 184, 166, 0.16);
+}
+
+:root[data-theme="light"] .lang-dropdown-option.is-active {
+  background: rgba(20, 184, 166, 0.24);
 }
 
 .account-modal-root {
@@ -7208,10 +7287,6 @@ body {
 }
 
 /* Landing attractiveness boost */
-.lp-hero {
-  padding-top: 42px;
-}
-
 .lp-title {
   text-shadow: 0 8px 26px rgba(64, 224, 208, 0.12);
 }

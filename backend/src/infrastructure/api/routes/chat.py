@@ -8,7 +8,7 @@ from src.infrastructure.api.schemas import ChatIn, ChatOut
 from src.infrastructure.api.deps import get_current_user
 from src.infrastructure.db.database import get_db
 from src.infrastructure.db.models import Conversation, Message, User
-from src.metier.prompt import build_prompt
+from src.metier.prompt import build_prompt, sanitize_chat_reply
 from src.service.llm_client import OpenRouterClient
 
 
@@ -62,6 +62,7 @@ async def chat(
 
     client = OpenRouterClient()
     reply = await client.chat(messages)
+    reply = sanitize_chat_reply(reply)
     logger.info("[chat] llm_reply (%d chars): %s", len(reply), reply[:300].replace("\n", " "))
 
     db.add(Message(conversation_id=conv.id, role="user", content=body.message))

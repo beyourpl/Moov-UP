@@ -15,16 +15,19 @@ services:
   frontend:
     build: ./frontend
     ports: ["5173:5173"]
+    # Aligné avec vite.config.js : sans ça, Vite peut prendre le port 3000 alors que compose mappe 5173 → ERR_EMPTY_RESPONSE.
+    environment:
+      VITE_BIND_HOST: "0.0.0.0"
+      VITE_DEV_PORT: "5173"
+      # Front HTTPS : appels /api en même origine ; Vite proxy vers le conteneur backend.
+      VITE_API_PROXY_TARGET: http://backend:8000
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+      VITE_PUBLIC_DOMAIN: ${VITE_PUBLIC_DOMAIN:-moovup.site}
     volumes:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
       - ./frontend/index.html:/app/index.html
       - ./frontend/vite.config.js:/app/vite.config.js
-    environment:
-      # Front HTTPS : appels /api en même origine ; Vite proxy vers le conteneur backend.
-      VITE_API_PROXY_TARGET: http://backend:8000
-      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
-      VITE_PUBLIC_DOMAIN: ${VITE_PUBLIC_DOMAIN:-moovup.site}
     depends_on:
       - backend
 
