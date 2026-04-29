@@ -3,8 +3,9 @@
 # Secrets GitHub (Settings → Secrets and variables → Actions) :
 #   VPS_HOST          ex. 178.104.253.218
 #   VPS_USER          ex. root
-#   VPS_SSH_KEY       clé privée OpenSSH complète (BEGIN … END). Le job « Préparer la clé SSH »
-#                     écrit le fichier en UTF-8 (Python) pour éviter les soucis bash/multiligne + CRLF.
+#   VPS_SSH_KEY_B64   optionnel (recommandé) : une seule ligne base64 du fichier clé privée brut.
+#                     Linux/Mac : base64 -w0 ~/.ssh/id_ed25519  puis colle le résultat (évite troncature UI).
+#   VPS_SSH_KEY       sinon : clé privée complète multiligne (BEGIN … END). UTF-8 + CRLF gérés par le job.
 #   VPS_DEPLOY_PATH   ex. /root/tempo  (dossier qui contient docker-compose.yml)
 #
 # Sur le VPS : clone du repo une fois + backend/.env configuré.
@@ -26,31 +27,52 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Préparer la clé SSH sur le runner (UTF-8 + vérif ssh-keygen)
+      - name: Préparer la clé SSH sur le runner (B64 ou PEM + vérif ssh-keygen)
         env:
           SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          SSH_KEY_B64: ${{ secrets.VPS_SSH_KEY_B64 }}
         run: |
           set -euo pipefail
           KEY_FILE="${GITHUB_WORKSPACE}/.ssh_ci/deploy.key"
           python3 << 'PY'
+          import base64
           import os
+          import re
           import stat
           from pathlib import Path
 
           ws = Path(os.environ["GITHUB_WORKSPACE"])
           key_path = ws / ".ssh_ci" / "deploy.key"
           key_path.parent.mkdir(parents=True, exist_ok=True)
-          raw = os.environ.get("SSH_KEY", "")
-          if not raw or not raw.strip():
-              raise SystemExit("VPS_SSH_KEY est vide — régénère le secret GitHub.")
-          if raw.startswith("\ufeff"):
-              raw = raw[1:]
-          norm = raw.replace("\r\n", "\n").replace("\r", "\n")
-          key_path.write_text(norm, encoding="utf-8", newline="\n")
+
+          b64 = os.environ.get("SSH_KEY_B64", "").strip()
+          raw_txt = os.environ.get("SSH_KEY", "")
+
+          if b64:
+              blob = base64.b64decode(re.sub(r"\s+", "", b64))
+              key_path.write_bytes(blob)
+          elif raw_txt and raw_txt.strip():
+              raw = raw_txt
+              if raw.startswith("\ufeff"):
+                  raw = raw[1:]
+              norm = raw.replace("\r\n", "\n").replace("\r", "\n")
+              key_path.write_text(norm, encoding="utf-8", newline="\n")
+          else:
+              raise SystemExit(
+                  "Renseigne VPS_SSH_KEY_B64 (recommandé) ou VPS_SSH_KEY (clé privée complète)."
+              )
+
           key_path.chmod(stat.S_IRUSR | stat.S_IWUSR)
           print("deploy.key bytes:", key_path.stat().st_size)
+          peek = key_path.read_bytes()[:120].decode("utf-8", errors="replace").splitlines()
+          head0 = peek[0].strip() if peek else ""
+          print("has_pem_begin:", head0.startswith("-----BEGIN"))
+          print("first_line_len:", len(head0))
           PY
-          ssh-keygen -y -f "$KEY_FILE" > /dev/null
+          if ! ssh-keygen -y -f "$KEY_FILE" </dev/null >/dev/null 2>&1; then
+            echo "::error::Clé privée illisible (libcrypto). Cause fréquente : secret tronqué, mauvais fichier (publique au lieu de privée), ou collage incomplet. Crée le secret VPS_SSH_KEY_B64 avec : base64 -w0 ~/.ssh/id_ed25519 (Linux/Mac), une ligne dans GitHub."
+            exit 255
+          fi
 
       - name: SSH — git pull + Docker
         uses: appleboy/ssh-action@v1.2.0
