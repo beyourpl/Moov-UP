@@ -3,7 +3,8 @@
 # Secrets GitHub (Settings → Secrets and variables → Actions) :
 #   VPS_HOST          ex. 178.104.253.218
 #   VPS_USER          ex. root
-#   VPS_SSH_KEY       clé privée PEM (tout le bloc -----BEGIN ... PRIVATE KEY-----)
+#   VPS_SSH_KEY       clé privée OpenSSH (BEGIN … PRIVATE KEY …). Collée depuis Windows : LF dans VS Code ;
+#                     le job « Préparer la clé SSH » retire aussi les \r (CRLF) pour éviter ParsePrivateKey « no key found ».
 #   VPS_DEPLOY_PATH   ex. /root/tempo  (dossier qui contient docker-compose.yml)
 #
 # Sur le VPS : clone du repo une fois + backend/.env configuré.
@@ -25,12 +26,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Préparer la clé SSH sur le runner (supprime CRLF)
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          mkdir -p "${GITHUB_WORKSPACE}/.ssh_ci"
+          KEY_FILE="${GITHUB_WORKSPACE}/.ssh_ci/deploy.key"
+          printf '%s' "$SSH_KEY" > "$KEY_FILE"
+          sed -i 's/\r$//' "$KEY_FILE"
+          chmod 600 "$KEY_FILE"
+          test -s "$KEY_FILE"
+
       - name: SSH — git pull + Docker
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          key_path: ${{ github.workspace }}/.ssh_ci/deploy.key
           debug: true
           timeout: 60s
           script_stop: true
