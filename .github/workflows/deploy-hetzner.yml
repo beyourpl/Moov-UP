@@ -3,8 +3,8 @@
 # Secrets GitHub (Settings → Secrets and variables → Actions) :
 #   VPS_HOST          ex. 178.104.253.218
 #   VPS_USER          ex. root
-#   VPS_SSH_KEY       clé privée OpenSSH (BEGIN … PRIVATE KEY …). Collée depuis Windows : LF dans VS Code ;
-#                     le job « Préparer la clé SSH » retire aussi les \r (CRLF) pour éviter ParsePrivateKey « no key found ».
+#   VPS_SSH_KEY       clé privée OpenSSH complète (BEGIN … END). Le job « Préparer la clé SSH »
+#                     écrit le fichier en UTF-8 (Python) pour éviter les soucis bash/multiligne + CRLF.
 #   VPS_DEPLOY_PATH   ex. /root/tempo  (dossier qui contient docker-compose.yml)
 #
 # Sur le VPS : clone du repo une fois + backend/.env configuré.
@@ -26,17 +26,31 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Préparer la clé SSH sur le runner (supprime CRLF)
+      - name: Préparer la clé SSH sur le runner (UTF-8 + vérif ssh-keygen)
         env:
           SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
           set -euo pipefail
-          mkdir -p "${GITHUB_WORKSPACE}/.ssh_ci"
           KEY_FILE="${GITHUB_WORKSPACE}/.ssh_ci/deploy.key"
-          printf '%s' "$SSH_KEY" > "$KEY_FILE"
-          sed -i 's/\r$//' "$KEY_FILE"
-          chmod 600 "$KEY_FILE"
-          test -s "$KEY_FILE"
+          python3 << 'PY'
+          import os
+          import stat
+          from pathlib import Path
+
+          ws = Path(os.environ["GITHUB_WORKSPACE"])
+          key_path = ws / ".ssh_ci" / "deploy.key"
+          key_path.parent.mkdir(parents=True, exist_ok=True)
+          raw = os.environ.get("SSH_KEY", "")
+          if not raw or not raw.strip():
+              raise SystemExit("VPS_SSH_KEY est vide — régénère le secret GitHub.")
+          if raw.startswith("\ufeff"):
+              raw = raw[1:]
+          norm = raw.replace("\r\n", "\n").replace("\r", "\n")
+          key_path.write_text(norm, encoding="utf-8", newline="\n")
+          key_path.chmod(stat.S_IRUSR | stat.S_IWUSR)
+          print("deploy.key bytes:", key_path.stat().st_size)
+          PY
+          ssh-keygen -y -f "$KEY_FILE" > /dev/null
 
       - name: SSH — git pull + Docker
         uses: appleboy/ssh-action@v1.2.0
