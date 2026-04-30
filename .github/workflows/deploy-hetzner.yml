@@ -7,10 +7,22 @@
 #                     Linux/Mac : base64 -w0 ~/.ssh/id_ed25519  puis colle le résultat (évite troncature UI).
 #   VPS_SSH_KEY       sinon : clé privée complète multiligne (BEGIN … END). UTF-8 + CRLF gérés par le job.
 #   VPS_DEPLOY_PATH   ex. /root/tempo  (dossier qui contient docker-compose.yml)
+#   VPS_SSH_PORT      optionnel : port SSH si ≠ 22 (ex. 2222)
 #
 # Sur le VPS : clone du repo une fois + backend/.env configuré.
 # Repo public : git pull sans login. Repo privé : ajoute une deploy key (read) sur GitHub
 # et configure-la sur le VPS (~/.ssh) pour ce dépôt.
+#
+# Dépannage (runs rouges) : GitHub → Actions → ouvrir un run → la carte rouge indique l’étape.
+#   • « Contrôle des secrets » → VPS_HOST / VPS_USER / VPS_DEPLOY_PATH vide, ou clé SSH absente.
+#   • « Préparer la clé » / ssh-keygen → secret tronqué, mauvaise clé (publique au lieu de privée),
+#     base64 invalide. Recréer VPS_SSH_KEY_B64 (une seule ligne, sans retours).
+#   • « SSH — git pull » → Permission denied (publickey) : la clé du secret n’est pas dans
+#     ~/.ssh/authorized_keys du VPS_USER pour ce serveur. Connection refused : IP / port 22 / pare-feu Hetzner.
+#     cd: … No such file : VPS_DEPLOY_PATH incorrect sur le VPS. git pull : auth GitHub ou conflit.
+#   • « getKeyFile … no key found » avec une ancienne étape appleboy : drone-ssh (Go) n’a pas lu la clé ;
+#     ce workflow utilise OpenSSH (`ssh` comme en local). Si ça échoue encore : clé protégée par passphrase
+#     → retire la passphrase avec ssh-keygen -p, ou déploie depuis une clé sans mot de passe.
 
 name: Deploy to Hetzner
 
@@ -27,6 +39,26 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Contrôle des secrets (sans les afficher)
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_DEPLOY_PATH: ${{ secrets.VPS_DEPLOY_PATH }}
+          VPS_SSH_KEY_B64: ${{ secrets.VPS_SSH_KEY_B64 }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          ok=1
+          [ -n "${VPS_HOST:-}" ] || { echo "::error::Secret VPS_HOST est vide (Settings → Secrets → Actions)."; ok=0; }
+          [ -n "${VPS_USER:-}" ] || { echo "::error::Secret VPS_USER est vide."; ok=0; }
+          [ -n "${VPS_DEPLOY_PATH:-}" ] || { echo "::error::Secret VPS_DEPLOY_PATH est vide (ex. /root/tempo)."; ok=0; }
+          if [ -z "${VPS_SSH_KEY_B64:-}" ] && [ -z "${VPS_SSH_KEY:-}" ]; then
+            echo "::error::Renseigne VPS_SSH_KEY_B64 ou VPS_SSH_KEY (clé privée de déploiement)."
+            ok=0
+          fi
+          [ "$ok" = 1 ] || exit 1
+          echo "Secrets obligatoires présents (valeurs non affichées)."
+
       - name: Préparer la clé SSH sur le runner (B64 ou PEM + vérif ssh-keygen)
         env:
           SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
@@ -74,18 +106,32 @@ jobs:
             exit 255
           fi
 
+      # OpenSSH sur le runner (même moteur que ssh-keygen). appleboy/drone-ssh utilisait crypto Go et
+      # peut échouer avec « ssh: no key found » sur certaines clés pourtant valides pour OpenSSH.
       - name: SSH — git pull + Docker
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key_path: ${{ github.workspace }}/.ssh_ci/deploy.key
-          debug: true
-          timeout: 60s
-          script_stop: true
-          script: |
-            set -ex
-            cd "${{ secrets.VPS_DEPLOY_PATH }}"
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_DEPLOY_PATH: ${{ secrets.VPS_DEPLOY_PATH }}
+          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
+        run: |
+          set -euo pipefail
+          KEY_FILE="${GITHUB_WORKSPACE}/.ssh_ci/deploy.key"
+          test -s "$KEY_FILE"
+          chmod 600 "$KEY_FILE"
+          PORT_ARGS=()
+          if [ -n "${VPS_SSH_PORT:-}" ]; then
+            PORT_ARGS=(-p "${VPS_SSH_PORT}")
+          fi
+          REMOTE_PATH=$(printf '%q' "${VPS_DEPLOY_PATH}")
+          ssh "${PORT_ARGS[@]}" \
+            -i "$KEY_FILE" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=accept-new \
+            -o ConnectTimeout=30 \
+            "${VPS_USER}@${VPS_HOST}" \
+            "set -ex
+            cd ${REMOTE_PATH}
             pwd
             git pull --ff-only
-            docker compose up -d --force-recreate --build
+            docker compose up -d --force-recreate --build"
