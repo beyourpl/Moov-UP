@@ -20,9 +20,9 @@
   --neon-blue: #80e8ff;
   --shadow: 0 18px 50px rgba(8, 22, 42, 0.4);
   --radius: 22px;
-  /* Landing : pleine largeur mais gouttières pour que l’accueil ne soit pas collé aux bords */
+  /* Landing : pleine largeur mais gouttières généreuses pour que l’accueil respire */
   --lp-max: 100%;
-  --lp-gutter: clamp(18px, 4.5vw, 52px);
+  --lp-gutter: clamp(24px, 6vw, 80px);
   color-scheme: dark;
 }
 
@@ -1844,7 +1844,7 @@ body:has(.lp) #root {
   position: sticky;
   top: 0;
   z-index: 40;
-  padding: 18px 0 24px;
+  padding: 22px 0 28px;
   padding-left: max(var(--lp-gutter), env(safe-area-inset-left, 0px));
   padding-right: max(var(--lp-gutter), env(safe-area-inset-right, 0px));
   background: linear-gradient(180deg, rgba(9, 17, 31, 0.95), rgba(9, 17, 31, 0.7));
@@ -1860,12 +1860,12 @@ body:has(.lp) #root {
   width: 100%;
   max-width: none;
   margin: 0;
-  padding: 12px clamp(14px, 2.8vw, 28px);
+  padding: 14px clamp(18px, 3.5vw, 36px);
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px 20px;
+  gap: 14px 24px;
   min-width: 0;
   border: 1px solid rgba(125, 191, 255, 0.12);
   border-radius: 999px;
@@ -2309,7 +2309,7 @@ body:has(.lp) #root {
 }
 
 .lp-hero {
-  padding: clamp(56px, 9vh, 112px) 0 clamp(72px, 12vh, 140px);
+  padding: clamp(64px, 10vh, 128px) 0 clamp(84px, 13vh, 168px);
   position: relative;
   min-height: calc(100vh - 120px);
   min-height: calc(100svh - 120px);
@@ -2352,7 +2352,7 @@ body:has(.lp) #root {
   display: grid;
   /* minmax(0, 1fr) évite min-width:auto des pistes — sinon léger overflow horizontal */
   grid-template-columns: minmax(0, 1fr);
-  gap: clamp(40px, 5vw, 64px);
+  gap: clamp(48px, 6vw, 88px);
   align-items: center;
   min-width: 0;
 }
@@ -2688,7 +2688,7 @@ body:has(.lp) #root {
 }
 
 .lp-section {
-  padding: clamp(80px, 11vh, 152px) 0;
+  padding: clamp(92px, 12.5vh, 176px) 0;
   position: relative;
   max-width: 100%;
   overflow-x: hidden;
@@ -2754,14 +2754,14 @@ body:has(.lp) #root {
 .lp-feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  gap: 24px;
 }
 
 .lp-pillar-grid,
 .lp-founder-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
+  gap: 22px;
 }
 
 .lp-feature {
@@ -3237,7 +3237,7 @@ body:has(.lp) #root {
 }
 
 .lp-footer {
-  padding: 36px 0 56px;
+  padding: 44px 0 64px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2));
   position: relative;
@@ -3290,7 +3290,7 @@ body:has(.lp) #root {
   .lp-hero-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: stretch;
-    gap: clamp(44px, 4vw, 72px);
+    gap: clamp(52px, 5.5vw, 96px);
   }
 
   .lp-hero-visual {
