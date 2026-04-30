@@ -17,9 +17,10 @@
 #   • « Contrôle des secrets » → VPS_HOST / VPS_USER / VPS_DEPLOY_PATH vide, ou clé SSH absente.
 #   • « Préparer la clé » / ssh-keygen → secret tronqué, mauvaise clé (publique au lieu de privée),
 #     base64 invalide. Recréer VPS_SSH_KEY_B64 (une seule ligne, sans retours).
-#   • « SSH — git pull » → Permission denied (publickey) : la clé du secret n’est pas dans
-#     ~/.ssh/authorized_keys du VPS_USER pour ce serveur. Connection refused : IP / port 22 / pare-feu Hetzner.
-#     cd: … No such file : VPS_DEPLOY_PATH incorrect sur le VPS. git pull : auth GitHub ou conflit.
+#   • « Port SSH joignable » → pare-feu / mauvaise IP / sshd arrêté / mauvais port.
+#   • « SSH — git pull » → Permission denied (publickey) : clé absente de ~/.ssh/authorized_keys
+#     pour VPS_USER ; ou passphrase sur la clé. cd: … No such file : VPS_DEPLOY_PATH incorrect.
+#     git pull : repo privé sans clé sur le VPS ou conflit.
 #   • « getKeyFile … no key found » avec une ancienne étape appleboy : drone-ssh (Go) n’a pas lu la clé ;
 #     ce workflow utilise OpenSSH (`ssh` comme en local). Si ça échoue encore : clé protégée par passphrase
 #     → retire la passphrase avec ssh-keygen -p, ou déploie depuis une clé sans mot de passe.
@@ -106,6 +107,31 @@ jobs:
             exit 255
           fi
 
+      # Vérifie que le pare-feu / le port SSH laisse passer GitHub avant d’essayer l auth.
+      - name: Port SSH joignable depuis le runner
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
+        run: |
+          set -euo pipefail
+          trim() { echo -n "${1:-}" | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'; }
+          H=$(trim "${VPS_HOST}")
+          P=$(trim "${VPS_SSH_PORT:-22}")
+          # Si VPS_HOST est du type ipv4:port ou domaine:port (pas IPv6 entre crochets)
+          if [[ "$H" != \[* ]] && [[ "$H" == *:* ]]; then
+            maybe_port="${H##*:}"
+            if [[ "$maybe_port" =~ ^[0-9]+$ ]]; then
+              P="$maybe_port"
+              H="${H%:*}"
+            fi
+          fi
+          echo "Test TCP vers le serveur SSH (sans authentifier)…"
+          if ! timeout 20 bash -c "exec 3<>/dev/tcp/${H}/${P}"; then
+            echo "::error::Aucune réponse sur ${H}:${P} depuis GitHub Actions. Vérifie : IP publique, port SSH, pare-feu Hetzner Cloud (entrée TCP ${P} depuis Internet), et que sshd tourne sur le VPS."
+            exit 1
+          fi
+          echo "OK — port ${P} joignable."
+
       # OpenSSH sur le runner (même moteur que ssh-keygen). appleboy/drone-ssh utilisait crypto Go et
       # peut échouer avec « ssh: no key found » sur certaines clés pourtant valides pour OpenSSH.
       - name: SSH — git pull + Docker
@@ -116,22 +142,33 @@ jobs:
           VPS_SSH_PORT: ${{ secrets.VPS_SSH_PORT }}
         run: |
           set -euo pipefail
+          trim() { echo -n "${1:-}" | tr -d '\r\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'; }
           KEY_FILE="${GITHUB_WORKSPACE}/.ssh_ci/deploy.key"
+          VPS_HOST=$(trim "${VPS_HOST}")
+          VPS_USER=$(trim "${VPS_USER}")
+          VPS_DEPLOY_PATH=$(trim "${VPS_DEPLOY_PATH}")
+          PORT=$(trim "${VPS_SSH_PORT:-22}")
+          if [[ "$VPS_HOST" != \[* ]] && [[ "$VPS_HOST" == *:* ]]; then
+            maybe_port="${VPS_HOST##*:}"
+            if [[ "$maybe_port" =~ ^[0-9]+$ ]]; then
+              PORT="$maybe_port"
+              VPS_HOST="${VPS_HOST%:*}"
+            fi
+          fi
           test -s "$KEY_FILE"
           chmod 600 "$KEY_FILE"
           PORT_ARGS=()
-          if [ -n "${VPS_SSH_PORT:-}" ]; then
-            PORT_ARGS=(-p "${VPS_SSH_PORT}")
+          if [ -n "$PORT" ] && [ "$PORT" != "22" ]; then
+            PORT_ARGS=(-p "$PORT")
           fi
           REMOTE_PATH=$(printf '%q' "${VPS_DEPLOY_PATH}")
+          REMOTE_CMD="set -ex && cd ${REMOTE_PATH} && pwd && git pull --ff-only && if docker compose version >/dev/null 2>&1; then docker compose up -d --force-recreate --build; elif command -v docker-compose >/dev/null 2>&1; then docker-compose up -d --force-recreate --build; else echo 'Ni docker compose ni docker-compose sur le VPS' >&2; exit 1; fi"
           ssh "${PORT_ARGS[@]}" \
             -i "$KEY_FILE" \
             -o BatchMode=yes \
             -o StrictHostKeyChecking=accept-new \
             -o ConnectTimeout=30 \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=12 \
             "${VPS_USER}@${VPS_HOST}" \
-            "set -ex
-            cd ${REMOTE_PATH}
-            pwd
-            git pull --ff-only
-            docker compose up -d --force-recreate --build"
+            "bash -lc $(printf '%q' "$REMOTE_CMD")"
