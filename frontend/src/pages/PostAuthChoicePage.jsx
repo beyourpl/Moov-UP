@@ -16,7 +16,7 @@ export default function PostAuthChoicePage() {
     () => ({
       questionnaire: t("choice", "questionnaire", "Faire le questionnaire"),
       assistant: t("choice", "assistant", "Parler à Moov'Coach"),
-      title: t("choice", "title", "Que veux-tu faire maintenant ?"),
+      title: t("choice", "title", "Que veux tu faire maintenant ?"),
       description: t(
         "choice",
         "description",
@@ -40,7 +40,7 @@ export default function PostAuthChoicePage() {
       brandMissionText: t(
         "choice",
         "brandMissionText",
-        "Accompagner les 16-30 ans dans l'orientation, l'insertion et la reconversion avec des informations claires, réalistes et actionnables."
+        "Accompagner les 16 à 30 ans dans l'orientation, l'insertion et la reconversion avec des informations claires, réalistes et actionnables."
       ),
       brandVisionTitle: t("choice", "brandVisionTitle", "Vision"),
       brandVisionText: t(
@@ -81,7 +81,7 @@ export default function PostAuthChoicePage() {
   })();
 
   return (
-    <div className={`app quiz-app ${theme}`}>
+    <div className={`app quiz-app ${theme} post-auth-choice`}>
       <div className="top-actions quiz-top">
         <Link to="/" className="quiz-site-link">
           ← Moov&apos;Up
@@ -101,14 +101,14 @@ export default function PostAuthChoicePage() {
         </div>
       </div>
 
-      <section className="hero">
+      <section className="hero post-auth-choice-hero">
         <span className="eyebrow">{ui.welcome}</span>
         <h1>{ui.title}</h1>
-        <p>{ui.description}</p>
+        <p className="post-auth-choice-lead">{ui.description}</p>
       </section>
 
-      <section className="panel">
-        <div className="choices">
+      <section className="panel post-auth-choice-cards">
+        <div className="choices post-auth-choice-grid">
           <Link to="/demo" className="answer-btn choice-link">
             <span className="answer-title">{ui.questionnaire}</span>
             <span className="answer-sub">{ui.questionnaireSub}</span>

@@ -3272,6 +3272,31 @@ body:has(.lp) #root {
   font-weight: 700;
 }
 
+/* Cartes cofondateurs : titre de rôle un peu plus lisible & « premium » */
+#fondateurs .lp-founder-card-v2 .lp-founder-role {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.45;
+  max-width: 17.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
+  background: linear-gradient(115deg, var(--blue) 0%, #7df4ea 55%, var(--green) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+:root[data-theme="light"] #fondateurs .lp-founder-card-v2 .lp-founder-role {
+  background: linear-gradient(115deg, #0f4a7a 0%, #0d7a8a 55%, #067a62 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
 .lp-steps {
   list-style: none;
   margin: 0;
@@ -3588,26 +3613,38 @@ body:has(.lp) #root {
   box-shadow: var(--shadow), var(--moov-card-hover-extra-shadow);
 }
 
-/* Cofondateurs : cercle + bordure, photo rognée dedans (#fondateurs = spécificité / pas de conflit) */
+/* Cofondateurs : cadre circulaire strict, la photo remplit le disque sans dépasser */
 #fondateurs .lp-founder-photo-wrap {
+  position: relative;
   width: 96px;
   height: 96px;
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  margin: 0 auto 14px;
   border-radius: 50%;
   overflow: hidden;
   box-sizing: border-box;
   border: 2px solid rgba(64, 224, 208, 0.45);
-  margin: 0 auto 14px;
-  flex-shrink: 0;
   box-shadow: 0 6px 20px rgba(64, 224, 208, 0.25);
   background: rgba(10, 26, 47, 0.55);
+  line-height: 0;
 }
 
 #fondateurs .lp-founder-photo-img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
   object-fit: cover;
-  object-position: center;
+  /* Visage un peu plus haut dans le cadre + zoom léger pour mieux voir les têtes */
+  object-position: var(--founder-photo-pos, center 28%);
+  transform-origin: center center;
+  transform: translateZ(0) scale(var(--founder-photo-zoom, 1.22));
 }
 .lp-about-v2 {
   margin-top: 28px;

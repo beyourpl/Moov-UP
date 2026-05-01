@@ -1,0 +1,4 @@
+# Déclare les variables dépôt personnalisées pour actionlint (CLI / intégrations CI).
+# Voir https://github.com/rhysd/actionlint/blob/main/docs/config.md
+config-variables:
+  - VPS_SSH_PORT

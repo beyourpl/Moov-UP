@@ -15,7 +15,15 @@ const FOUNDERS = [
   { firstName: "Hassna", lastName: "Marjane", roleKey: "founder1Role", roleFallback: "Cofondatrice · Data Scientist", photo: hassnaPhoto },
   { firstName: "Jalis", lastName: "Shoul", roleKey: "founder2Role", roleFallback: "Cofondateur · Data Scientist", photo: jalisPhoto },
   { firstName: "Leila", lastName: "Serhir", roleKey: "founder3Role", roleFallback: "Cofondatrice · PMO / Cheffe de projet", photo: leilaPhoto },
-  { firstName: "Ayoub", lastName: "Touati", roleKey: "founder4Role", roleFallback: "Cofondateur · Data Analyst", photo: ayoubPhoto },
+  {
+    firstName: "Ayoub",
+    lastName: "Touati",
+    roleKey: "founder4Role",
+    roleFallback: "Cofondateur · Data Analyst",
+    photo: ayoubPhoto,
+    photoZoom: 1.06,
+    photoObjectPosition: "center 38%",
+  },
 ];
 
 export default function LandingPage() {
@@ -141,7 +149,13 @@ export default function LandingPage() {
                   key={`${founder.firstName}-${founder.lastName}`}
                   className="lp-founder-card-v2"
                 >
-                  <div className="lp-founder-photo-wrap">
+                  <div
+                    className="lp-founder-photo-wrap"
+                    style={{
+                      ...(founder.photoZoom != null ? { "--founder-photo-zoom": founder.photoZoom } : {}),
+                      ...(founder.photoObjectPosition != null ? { "--founder-photo-pos": founder.photoObjectPosition } : {}),
+                    }}
+                  >
                     <img
                       src={founder.photo}
                       alt=""

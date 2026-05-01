@@ -7,6 +7,7 @@ import { getSession, logoutUser } from "../data/authStorage.js";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import PathwaySummaryModal from "../components/PathwaySummaryModal.jsx";
 import { useTranslation } from "../hooks/useTranslation.js";
+import { stripTrailingOnisepFromAssistantText } from "../data/chatMessageCleanup.js";
 
 function useQueryParam(key) {
   const { search } = useLocation();
@@ -47,15 +48,16 @@ function CoachAvatar({ title }) {
 function MessageBubble({ role, content, userInitial, youTitle, coachTitle }) {
   const isUser = role === "user";
   const initial = (userInitial && String(userInitial).trim()[0]) || "?";
+  const displayContent = isUser ? content : stripTrailingOnisepFromAssistantText(content);
   return (
     <div className={`chat-msg-row ${isUser ? "user" : "assistant"}`}>
       {!isUser && <CoachAvatar title={coachTitle} />}
       <div className={`chat-bubble ${isUser ? "user" : "assistant"}`}>
         {isUser ? (
-          <p className="chat-bubble-text">{content}</p>
+          <p className="chat-bubble-text">{displayContent}</p>
         ) : (
           <div className="chat-bubble-md">
-            <ReactMarkdown>{content}</ReactMarkdown>
+            <ReactMarkdown>{displayContent}</ReactMarkdown>
           </div>
         )}
       </div>
@@ -251,7 +253,7 @@ export default function ChatbotPage() {
         <h1>{tc("title", "Moov'Coach")}</h1>
         <p>{tc("heroLead", "Pose tes questions sur les métiers et formations recommandées pour ton profil.")}</p>
         <div className="chatbot-hero-actions">
-          <button type="button" className="nav-btn secondary" onClick={() => setPathwayOpen(true)}>
+          <button type="button" className="nav-btn secondary chatbot-hero-path" onClick={() => setPathwayOpen(true)}>
             {tc("viewMyPath", "Voir mon parcours")}
           </button>
           <Link to="/cvlm" className="nav-btn secondary">{tc("cvLmLink", "CV & LM")}</Link>
@@ -269,7 +271,7 @@ export default function ChatbotPage() {
           </div>
           <div className="chatbot-aside-list">
             {recs.map((hit, i) => (
-              <article key={i} className="chatbot-rec">
+              <article key={i} className="chatbot-rec chatbot-rec-interactive">
                 <h4 className="chatbot-rec-title">{hit.metier?.libelle}</h4>
                 {hit.metier?.description && (
                   <p className="chatbot-rec-desc">{hit.metier.description.slice(0, 160)}…</p>
@@ -305,13 +307,7 @@ export default function ChatbotPage() {
         <section className="chatbot-chat" aria-label={tc("chatSectionAria", "Conversation")}>
           <div className="chatbot-chat-head">
             <h3>{tc("chatHead", "Conversation avec Moov'Coach")}</h3>
-            <button
-              type="button"
-              className="nav-btn secondary chatbot-pathway-btn"
-              onClick={() => setPathwayOpen(true)}
-            >
-              {tc("detailedPath", "Parcours détaillé")}
-            </button>
+            <span className="chatbot-chat-head-hint">{tc("chatHeadHint", "Pose une question ci-dessous. Ouvre « Voir mon parcours » pour le résumé complet.")}</span>
           </div>
 
           <div className="chatbot-stream" ref={scrollRef}>

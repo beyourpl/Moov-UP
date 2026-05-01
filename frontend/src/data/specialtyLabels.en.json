@@ -1,0 +1,112 @@
+{
+  "tech": {
+    "cyber": { "title": "Cybersecurity", "sub": "Protect systems, networks, and data" },
+    "dev": { "title": "Development", "sub": "Build apps, websites, software, or services" },
+    "reseaux": { "title": "Networks", "sub": "Install, maintain, and manage infrastructure" },
+    "web": { "title": "Web", "sub": "Create sites, interfaces, and online services" },
+    "data": { "title": "Data", "sub": "Handle, analyze, and get value from data" },
+    "ia": { "title": "AI", "sub": "Design smart, automated tools" },
+    "cloud": { "title": "Cloud", "sub": "Deploy services and remote infrastructure" },
+    "support": { "title": "IT support", "sub": "Help, diagnose, and fix issues" },
+    "qa": { "title": "Testing & quality", "sub": "Verify, secure, and harden software" },
+    "autre-tech": { "title": "Other / not sure", "sub": "A broader tech profile or still deciding" }
+  },
+  "business": {
+    "commerce": { "title": "Commerce", "sub": "Sales, client relations, negotiation" },
+    "marketing": { "title": "Marketing", "sub": "Communication, strategy, branding" },
+    "management": { "title": "Management", "sub": "Organization, steering, team coordination" },
+    "finance": { "title": "Finance", "sub": "Budgeting, analysis, and financial control" },
+    "rh": { "title": "Human resources", "sub": "Recruiting, support, people management" },
+    "entrepreneuriat": { "title": "Entrepreneurship", "sub": "Create, launch, and grow a project" },
+    "vente": { "title": "Sales", "sub": "Pitch, persuade, grow a client portfolio" },
+    "gestion-projet": { "title": "Project management", "sub": "Coordinate, prioritize, and move teams forward" },
+    "relation-client": { "title": "Customer relations", "sub": "Support, retain, and meet customer needs" },
+    "autre-business": { "title": "Other / not sure", "sub": "A broader business profile or still deciding" }
+  },
+  "creative": {
+    "graphisme": { "title": "Graphic design", "sub": "Visual identity, posters, digital assets" },
+    "design": { "title": "Digital design", "sub": "Visual work for screens and real use" },
+    "audiovisuel": { "title": "Audiovisual", "sub": "Image, video, filming, visual storytelling" },
+    "uxui": { "title": "UX/UI", "sub": "Design interfaces that look good and work well" },
+    "animation": { "title": "Animation", "sub": "Bring visuals, video, or content to life" },
+    "photo": { "title": "Photography", "sub": "Create images, frame, edit, tell a story" },
+    "direction-artistique": { "title": "Art direction", "sub": "Steer a visual identity and creative concepts" },
+    "montage": { "title": "Editing", "sub": "Assemble, pace, and finish visual narratives" },
+    "motion-design": { "title": "Motion design", "sub": "Animate content to explain or grab attention" },
+    "autre-creative": { "title": "Other / not sure", "sub": "A broader creative profile or still deciding" }
+  },
+  "sante": {
+    "medecine": { "title": "Medicine", "sub": "Diagnose, treat, prescribe" },
+    "soins-infirmiers": { "title": "Nursing", "sub": "Care, support, monitor" },
+    "kinesitherapie": { "title": "Physiotherapy", "sub": "Rehab, mobility, pain" },
+    "sage-femme": { "title": "Midwifery", "sub": "Pregnancy care, deliveries, postnatal" },
+    "pharmacie": { "title": "Pharmacy", "sub": "Prepare and dispense medicines" },
+    "odontologie": { "title": "Dentistry", "sub": "Dental care, prosthetics, surgery" },
+    "psychologie": { "title": "Psychology", "sub": "Listening, assessment, support" },
+    "aide-soignante": { "title": "Nursing assistant", "sub": "Help with daily care" },
+    "ergotherapie": { "title": "Occupational therapy", "sub": "Re-enable, support independence, adapt" },
+    "autre-sante": { "title": "Other / not sure", "sub": "A broader healthcare profile or still deciding" }
+  },
+  "education": {
+    "enseignant": { "title": "Teacher", "sub": "Pass on knowledge" },
+    "education-specialisee": { "title": "Special education", "sub": "Support students who struggle" },
+    "direction-ecole": { "title": "School leadership", "sub": "Run a school" },
+    "formation-adulte": { "title": "Adult education", "sub": "Train adults changing careers" },
+    "soutien-scolaire": { "title": "Tutoring", "sub": "Help students improve" },
+    "animation": { "title": "Facilitation", "sub": "Lead educational activities" },
+    "orientation": { "title": "Careers advisor", "sub": "Guide orientation choices" },
+    "pedagogie": { "title": "Pedagogy", "sub": "Design teaching methods" },
+    "autre-education": { "title": "Other / not sure", "sub": "A broader education profile or still deciding" }
+  },
+  "droit": {
+    "avocat": { "title": "Lawyer", "sub": "Defend, advise, plead" },
+    "magistrat": { "title": "Magistrate", "sub": "Judge, deliver justice" },
+    "notaire": { "title": "Notary", "sub": "Authentic deeds, legal advice" },
+    "huissier": { "title": "Bailiff", "sub": "Enforce decisions, serve papers" },
+    "juriste": { "title": "In-house counsel", "sub": "Advice, compliance, contracts" },
+    "police-judiciaire": { "title": "Criminal investigation", "sub": "Inquiries, investigations" },
+    "droit-immobilier": { "title": "Property law", "sub": "Transactions, leases, ownership" },
+    "droit-travail": { "title": "Employment law", "sub": "Work relations, disputes" },
+    "autre-droit": { "title": "Other / not sure", "sub": "A broader legal profile or still deciding" }
+  },
+  "industrie": {
+    "ingenierie": { "title": "Engineering", "sub": "Design, calculate, optimize" },
+    "production": { "title": "Production", "sub": "Manufacture, assemble, run lines" },
+    "maintenance": { "title": "Maintenance", "sub": "Repair, upkeep, prevention" },
+    "qualite": { "title": "Quality", "sub": "Inspect, certify, improve" },
+    "logistique": { "title": "Logistics", "sub": "Supply, store, distribute" },
+    "achats": { "title": "Purchasing", "sub": "Select, negotiate, order" },
+    "bureau-etudes": { "title": "Design office", "sub": "Plans, prototypes" },
+    "autre-industrie": { "title": "Other / not sure", "sub": "A broader industry profile or still deciding" }
+  },
+  "batiment": {
+    "architecture": { "title": "Architecture", "sub": "Design buildings, draw" },
+    "btp": { "title": "Construction", "sub": "Build, structural and finishing work" },
+    "genie-civil": { "title": "Civil engineering", "sub": "Infrastructure, bridges, roads" },
+    "batiment-durable": { "title": "Sustainable building", "sub": "Green construction, energy" },
+    "architecture-interieur": { "title": "Interior design", "sub": "Layout, furnishing, décor" },
+    "topographie": { "title": "Surveying", "sub": "Measure, map, set out sites" },
+    "bet": { "title": "Construction design office", "sub": "Calculations, plans, diagnostics" },
+    "autre-batiment": { "title": "Other / not sure", "sub": "A broader built-environment profile or still deciding" }
+  },
+  "agriculture": {
+    "agriculture-elevage": { "title": "Farming / livestock", "sub": "Grow, raise, produce" },
+    "agronomie": { "title": "Agronomy", "sub": "Improve farming practices" },
+    "environnement": { "title": "Environment", "sub": "Protection, natural resource management" },
+    "agroalimentaire": { "title": "Agri-food", "sub": "Process and package food" },
+    "paysage": { "title": "Landscape", "sub": "Design and maintain green spaces" },
+    "foret": { "title": "Forestry", "sub": "Manage, harvest, replant" },
+    "marine": { "title": "Marine / fishing", "sub": "Work with maritime resources" },
+    "autre-agriculture": { "title": "Other / not sure", "sub": "A broader agriculture profile or still deciding" }
+  },
+  "service": {
+    "tourisme": { "title": "Tourism", "sub": "Welcome, guide, organize" },
+    "hotellerie": { "title": "Hospitality", "sub": "Welcome, lodging, food service" },
+    "sport": { "title": "Sport", "sub": "Coach, teach, support" },
+    "evenementiel": { "title": "Events", "sub": "Plan, coordinate, host" },
+    "rh": { "title": "Human resources", "sub": "Recruiting, training, payroll" },
+    "comptabilite": { "title": "Accounting", "sub": "Bookkeeping, filings" },
+    "banque": { "title": "Banking / insurance", "sub": "Advise, sell financial products" },
+    "autre-service": { "title": "Other / not sure", "sub": "A broader services profile or still deciding" }
+  }
+}

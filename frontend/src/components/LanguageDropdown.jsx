@@ -2,18 +2,22 @@ import { createPortal } from "react-dom";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { SUPPORTED_LANGUAGES } from "../data/translations.js";
 
+/** Colonne liste langues : assez étroite, sans suivre un bouton très large en flex. */
+const LANG_PANEL_MIN = 128;
+const LANG_PANEL_MAX = 180;
+
 function measurePanelPosition(triggerEl) {
   if (!triggerEl) return null;
   const r = triggerEl.getBoundingClientRect();
   const vw = window.innerWidth;
-  const panelMin = 240;
   const pad = 12;
-  let left = r.right - panelMin;
-  left = Math.max(pad, Math.min(left, vw - panelMin - pad));
+  const panelW = Math.min(Math.max(LANG_PANEL_MIN, r.width), LANG_PANEL_MAX);
+  let left = r.right - panelW;
+  left = Math.max(pad, Math.min(left, vw - panelW - pad));
   return {
     top: r.bottom + 8,
     left,
-    minWidth: Math.max(panelMin, r.width),
+    width: panelW,
   };
 }
 
@@ -83,7 +87,10 @@ export default function LanguageDropdown({
           position: "fixed",
           top: panelPos.top,
           left: panelPos.left,
-          minWidth: panelPos.minWidth,
+          width: panelPos.width,
+          minWidth: panelPos.width,
+          maxWidth: panelPos.width,
+          boxSizing: "border-box",
           zIndex: 2147483000,
         }}
       >

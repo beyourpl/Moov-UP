@@ -5,8 +5,8 @@ import { getSession, logoutUser } from "../data/authStorage.js";
 import { clearQuizDraft, loadQuizDraft, saveQuizDraft } from "../data/quizDraftStorage.js";
 import { setLastConversationId } from "../data/conversationStorage.js";
 import { getQuizChoiceText, getQuizQuestionText, getText } from "../data/translations.js";
+import { getSpecialtyChoiceText } from "../data/specialtyLabels.js";
 import { playQuizTickSound } from "../data/quizTickSound.js";
-import { setQuizTickSoundEnabled } from "../data/uiPreferences.js";
 import { useUiPreferences } from "../hooks/useUiPreferences.js";
 import {
   QUESTION_ORDER,
@@ -20,7 +20,7 @@ const Q1_CHOICES = [
   { value: "tech", title: "Tech", sub: "Informatique, code, données, cybersécurité" },
   { value: "business", title: "Business", sub: "Commerce, gestion, finance, marketing" },
   { value: "creative", title: "Créatif", sub: "Design, graphisme, audiovisuel, communication" },
-  { value: "sante", title: "Santé", sub: "Médical, paramédical, bien-être" },
+  { value: "sante", title: "Santé", sub: "Médical, paramédical, bien être" },
   { value: "education", title: "Éducation", sub: "Enseignement, formation" },
   { value: "droit", title: "Droit", sub: "Juridique, avocat, notariat" },
   { value: "industrie", title: "Industrie", sub: "Production, ingénierie, maintenance" },
@@ -93,16 +93,16 @@ const Q10_CHOICES = [
 ];
 
 const BASE_QUESTIONS = [
-  { id: "q1", title: "Dans quel univers professionnel te projettes-tu le plus ?", body: "Choisis le type d'activités qui te motive le plus au quotidien.", choices: Q1_CHOICES },
-  { id: "q2", title: "Quel mode d'apprentissage te fait vraiment progresser ?", body: "Cette information aide à recommander des formations adaptées à ton style d'études.", choices: Q2_CHOICES },
-  { id: "q3", title: "Où en es-tu aujourd'hui dans ton parcours ?", body: "Je m'appuie sur ton niveau actuel pour te proposer une trajectoire réaliste.", choices: Q3_CHOICES },
-  { id: "q4", title: "Quelle spécialité de ce domaine t'attire le plus ?", body: "Cette précision permet de cibler un métier et les études qui y mènent.", choices: Q4_CHOICES },
-  { id: "q5", title: "Dans quel cadre tu te vois le mieux ?", body: "Cela affine le type de contexte professionnel qui te correspond.", choices: Q5_CHOICES },
-  { id: "q6", title: "Quel rythme d'études te correspond ?", body: "Court, progressif, long ou en alternance : tu choisis ton tempo.", choices: Q6_CHOICES },
-  { id: "q7", title: "Quel niveau d'encadrement te convient ?", body: "Cette information aide à orienter vers des parcours plus ou moins autonomes.", choices: Q7_CHOICES },
-  { id: "q8", title: "Ton rapport aux chiffres et à la logique ?", body: "On mesure l'aisance quantitative pour renforcer la cohérence de l'orientation.", choices: Q8_CHOICES },
-  { id: "q9", title: "Quel est ton objectif professionnel ?", body: "Cela aide à cibler les formations et les métiers les plus adaptés à tes ambitions.", choices: Q9_CHOICES },
-  { id: "q10", title: "Quelle mobilité es-tu prêt(e) à avoir ?", body: "La disponibilité géographique aide à mieux filtrer les options réalistes.", choices: Q10_CHOICES },
+  { id: "q1", title: "Quel grand domaine d’activité t’attire le plus pour ton futur métier ?", body: "On commence par les familles de métiers (numérique, santé, commerce…) avant de préciser la suite.", choices: Q1_CHOICES },
+  { id: "q2", title: "Tu retiens surtout les choses en faisant, en échangeant ou en lisant / en théorisant ?", body: "Ça indique si tu seras plus à l’aise en atelier, en cours magistraux ou en projet.", choices: Q2_CHOICES },
+  { id: "q3", title: "Quel est ton niveau scolaire actuel (ou le dernier diplôme obtenu) ?", body: "Indispensable pour proposer des filières réalistes par rapport à ta situation.", choices: Q3_CHOICES },
+  { id: "q4", title: "Dans ce domaine, quelle filière ou spécialité te parle le plus ?", body: "On cible le métier et les études qui y mènent.", choices: Q4_CHOICES },
+  { id: "q5", title: "Tu t’imagines plutôt au bureau, sur le terrain, en déplacement constant ou en télétravail ?", body: "Ici on parle du lieu et du rythme de travail, pas de la durée des études.", choices: Q5_CHOICES },
+  { id: "q6", title: "Pour avancer dans un cursus, tu préfères un rythme très cadré, un équilibre, ou une forte autonomie ?", body: "C’est lié à ta façon de progresser dans les études (pas à ton lieu de travail ni à ta mobilité).", choices: Q6_CHOICES },
+  { id: "q7", title: "Face aux enseignants, tuteurs ou équipe pédagogique, tu veux être porté·e étape par étape, un juste milieu, ou piloter tes choix ?", body: "Ici on parle du lien d’accompagnement humain — autre dimension que la question précédente.", choices: Q7_CHOICES },
+  { id: "q8", title: "Les maths, la stat et le raisonnement logique : atout, correct, ou sujet que tu évites ?", body: "Évite de t’orienter vers des filières trop « chiffrées » si ce n’est pas ton truc.", choices: Q8_CHOICES },
+  { id: "q9", title: "À horizon quelques années, tu veux surtout trouver vite un job, devenir expert·e, garder le choix ouvert, ou monter ton activité ?", body: "Insertion, expertise, polyvalence ou entrepreneuriat : ça oriente la trajectoire.", choices: Q9_CHOICES },
+  { id: "q10", title: "Géographiquement : tu restes proche de chez toi, tu bouges dans tout le pays, tu peux aller à l’étranger, ou tu vise 100 % à distance ?", body: "Affine les formations selon ta mobilité et le mode présentiel / distanciel.", choices: Q10_CHOICES },
 ];
 
 function normalizeAnswer(value) {
@@ -234,7 +234,10 @@ export default function QuizPage() {
   const currentChoice = (() => {
     if (!currentAnswer) return null;
     if (currentQuestionId === "q4") {
-      return specialtyConfig[domain]?.find((item) => item.value === currentAnswer) || null;
+      const base = specialtyConfig[domain]?.find((item) => item.value === currentAnswer);
+      if (!base) return null;
+      const lbl = getSpecialtyChoiceText(language, domain, currentAnswer, {});
+      return { ...base, title: lbl.title, sub: lbl.sub };
     }
     return translatedChoices.find((choice) => choice.value === currentAnswer) || currentQuestion?.choices?.find((choice) => choice.value === currentAnswer) || null;
   })();
@@ -258,14 +261,6 @@ export default function QuizPage() {
     definitionLabel: getText(language, "quiz", "definitionLabel", "Définition"),
     officialSheet: getText(language, "quiz", "officialSheet", "Voir la fiche officielle"),
     invalidProfile: getText(language, "quiz", "invalidProfile", "Impossible de proposer un parcours pour ce profil. Vérifie tes réponses ou réessaie plus tard."),
-    tickSoundOn: getText(language, "quizMeta", "tickSoundOn", "Son : activé"),
-    tickSoundOff: getText(language, "quizMeta", "tickSoundOff", "Son : coupé"),
-    tickSoundAria: getText(
-      language,
-      "quizMeta",
-      "tickSoundAria",
-      "Activer ou désactiver le petit son lors de la validation d’une réponse",
-    ),
     questionNavAria: getText(language, "quizMeta", "questionNav", "Navigation du questionnaire"),
     quizPrevAria: getText(language, "quizMeta", "quizPrev", "Question précédente"),
     quizNextAria: getText(language, "quizMeta", "quizNext", "Question suivante"),
@@ -286,6 +281,14 @@ export default function QuizPage() {
     ),
     errorTitle: getText(language, "quizMeta", "errorTitle", "Une erreur est survenue"),
     retry: getText(language, "quizMeta", "retry", "Réessayer"),
+    resumeDraftBody: getText(
+      language,
+      "quizMeta",
+      "resumeDraftBody",
+      "Ton questionnaire a été repris automatiquement là où tu t'étais arrêté.",
+    ),
+    resumeDraftOk: getText(language, "quizMeta", "resumeDraftOk", "OK"),
+    questionProgress: getText(language, "quizMeta", "questionProgress", "{answered}/10 complétées"),
   };
 
   const answerQuestion = useCallback((questionId, value) => {
@@ -441,16 +444,19 @@ export default function QuizPage() {
     if (!domain || !specialtyConfig[domain]) return null;
     return (
       <div className="choices">
-        {specialtyConfig[domain].map((item) => (
-          <ChoiceButton
-            key={item.value}
-            title={item.title}
-            sub={item.sub}
-            active={answers.q4 === item.value}
-            disabled={advancing}
-            onClick={() => answerQuestion("q4", item.value)}
-          />
-        ))}
+        {specialtyConfig[domain].map((item) => {
+          const lbl = getSpecialtyChoiceText(language, domain, item.value, {});
+          return (
+            <ChoiceButton
+              key={item.value}
+              title={lbl.title}
+              sub={lbl.sub}
+              active={answers.q4 === item.value}
+              disabled={advancing}
+              onClick={() => answerQuestion("q4", item.value)}
+            />
+          );
+        })}
       </div>
     );
   };
@@ -460,16 +466,7 @@ export default function QuizPage() {
       <div className="top-actions quiz-top">
         <Link to="/" className="quiz-site-link">← Moov&apos;Up</Link>
         <div className="quiz-top-btns">
-          <span className="user-pill">{session?.pseudo || "Utilisateur"}</span>
-          <button
-            type="button"
-            className="nav-btn secondary quiz-tick-toggle"
-            aria-pressed={quizTickSound}
-            aria-label={ui.tickSoundAria}
-            onClick={() => setQuizTickSoundEnabled(!quizTickSound)}
-          >
-            {quizTickSound ? ui.tickSoundOn : ui.tickSoundOff}
-          </button>
+          <span className="user-pill">{session?.pseudo || getText(language, "coach", "visitor", "Utilisateur")}</span>
           <button type="button" className="nav-btn secondary" disabled={!canBack} onClick={goBack}>{ui.back}</button>
           <button type="button" className="nav-btn primary" onClick={goHome}>{ui.home}</button>
           <button type="button" className="nav-btn secondary" onClick={handleLogout}>{ui.logout}</button>
@@ -482,10 +479,10 @@ export default function QuizPage() {
         <p>{ui.intro}</p>
         {phase === "quiz" && resumeBanner ? (
           <div className="quiz-resume-banner" role="status">
-            <p>Ton questionnaire a été repris automatiquement là où tu t’étais arrêté.</p>
+            <p>{ui.resumeDraftBody}</p>
             <div className="quiz-resume-banner-actions">
               <button type="button" className="nav-btn secondary" onClick={() => setResumeBanner(false)}>
-                OK
+                {ui.resumeDraftOk}
               </button>
               <button type="button" className="nav-btn primary" onClick={resetQuestionnaire}>
                 {ui.restart}
@@ -506,14 +503,14 @@ export default function QuizPage() {
 
       {phase === "quiz" && currentQuestion && (
         <section className="quiz-stage">
-          <section className="panel quiz-question-panel">
+          <section className="panel quiz-question-panel" key={currentQuestionId}>
             <div className="quiz-question-head">
               <div>
                 <div className="question-number">{ui.questionLabel} {stepIndex + 1}</div>
                 <h2>{translatedQuestion?.title || currentQuestion.title}</h2>
               </div>
               <div className={`quiz-step-badge${checkPulse ? " is-validating" : ""}`}>
-                <span>{answeredCount}/10 complétées</span>
+                <span>{ui.questionProgress.replace(/\{answered\}/g, String(answeredCount))}</span>
                 {checkPulse ? <span className="quiz-step-check" aria-hidden="true">✓</span> : null}
               </div>
             </div>

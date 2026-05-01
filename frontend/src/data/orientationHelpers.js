@@ -1,7 +1,7 @@
 import { specialtyConfig } from "./specialtyConfig.js";
+import { getSpecialtyChoiceText } from "./specialtyLabels.js";
 
-export const QUESTION_ORDER = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"];
-
+export { QUESTION_ORDER } from "./questionOrder.js";
 export { specialtyConfig };
 
 const specialtyNormalize = {
@@ -121,9 +121,9 @@ export function normalizeSpecialty(domain, specialty) {
   return specialtyNormalize[domain]?.[specialty];
 }
 
-export function getSpecialtyLabel(domain, specialty) {
-  const list = specialtyConfig[domain] || [];
-  return list.find((item) => item.value === specialty)?.title ?? specialty;
+export function getSpecialtyLabel(domain, specialty, language = "fr") {
+  const t = getSpecialtyChoiceText(language, domain, specialty, {}).title;
+  return t || specialty;
 }
 
 export const levelLabels = {
