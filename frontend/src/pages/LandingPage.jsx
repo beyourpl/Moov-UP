@@ -1,22 +1,28 @@
 ﻿import { Link, useNavigate } from "react-router-dom";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
+import { getLastConversationId } from "../data/conversationStorage.js";
 import { getSession, logoutUser } from "../data/authStorage.js";
 import { useTranslation } from "../hooks/useTranslation.js";
+import hassnaPhoto from "../assets/founders/hassna.png";
+import jalisPhoto from "../assets/founders/jalis.png";
+import leilaPhoto from "../assets/founders/leila.png";
+import ayoubPhoto from "../assets/founders/ayoub.png";
 
 const GOOGLE_DEMO_URL = "https://forms.gle/QRdjqLB7D7kgnfZo7";
 const VIDEO_EMBED_URL = "";
 
 const FOUNDERS = [
-  { name: "Hassna Marjane", roleKey: "founder1Role", roleFallback: "Co-fondatrice · Data Scientist", initial: "H" },
-  { name: "Jalis Shoul", roleKey: "founder2Role", roleFallback: "Co-fondateur · Data Scientist", initial: "J" },
-  { name: "Leila Serhir", roleKey: "founder3Role", roleFallback: "Co-fondatrice · PMO / Cheffe de projet", initial: "L" },
-  { name: "Ayoub Touati", roleKey: "founder4Role", roleFallback: "Co-fondateur · Data Analyst", initial: "A" },
+  { firstName: "Hassna", lastName: "Marjane", roleKey: "founder1Role", roleFallback: "Cofondatrice · Data Scientist", photo: hassnaPhoto },
+  { firstName: "Jalis", lastName: "Shoul", roleKey: "founder2Role", roleFallback: "Cofondateur · Data Scientist", photo: jalisPhoto },
+  { firstName: "Leila", lastName: "Serhir", roleKey: "founder3Role", roleFallback: "Cofondatrice · PMO / Cheffe de projet", photo: leilaPhoto },
+  { firstName: "Ayoub", lastName: "Touati", roleKey: "founder4Role", roleFallback: "Cofondateur · Data Analyst", photo: ayoubPhoto },
 ];
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const session = getSession();
   const { t } = useTranslation();
+  const lastConversationId = session ? getLastConversationId() : null;
 
   const goGuided = () => navigate(session ? "/demo" : "/auth");
   const goTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -34,7 +40,7 @@ export default function LandingPage() {
         <div className="lp-header-inner">
           <Link to="/" className="lp-logo">Moov&apos;Up</Link>
           <nav className="lp-nav" aria-label={t("a11y", "mainNav", "Navigation principale")}>
-            <a href="#fondateurs">{t("landing", "navCoFounders", "Co-fondateurs")}</a>
+            <a href="#fondateurs">{t("landing", "navCoFounders", "Cofondateurs")}</a>
             <a href="#produit">{t("landing", "navProduct", "Produit")}</a>
             <a href="#parcours">{t("landing", "navSteps", "Comment ça marche")}</a>
             <a href="#faq">{t("landing", "navFaq", "FAQ")}</a>
@@ -89,6 +95,11 @@ export default function LandingPage() {
                 <a href={GOOGLE_DEMO_URL} target="_blank" rel="noopener noreferrer" className="lp-btn lp-btn-ghost lp-btn-lg">
                   {t("landing", "ctaSecondary", "Voir notre formulaire")}
                 </a>
+                {lastConversationId ? (
+                  <Link to={`/assistant?cid=${lastConversationId}`} className="lp-btn lp-btn-secondary lp-btn-lg">
+                    {t("landing", "ctaMyResults", "Voir mes résultats")}
+                  </Link>
+                ) : null}
               </div>
               <ul className="lp-trust">
                 <li>{t("landing", "trustItem1", "Gratuit et sans engagement")}</li>
@@ -114,21 +125,36 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ─── CO-FONDATEURS ─── */}
+        {/* ─── Cofondateurs ─── */}
         <section className="lp-section" id="fondateurs">
           <div className="lp-container">
             <div className="lp-section-head">
               <p className="lp-section-kicker">{t("landing", "foundersSection", "L'équipe fondatrice")}</p>
               <h2 className="lp-h2">{t("landing", "betaTitle", "Créé par des étudiants, pour les étudiants")}</h2>
               <p className="lp-sub" style={{ marginTop: "10px" }}>
-                {t("landing", "foundersDesc", "Quatre co-fondateurs...")}
+                {t("landing", "foundersDesc", "Quatre cofondateurs...")}
               </p>
             </div>
-            <div className="lp-founder-grid">
-              {FOUNDERS.map((founder) => (
-                <article key={founder.name} className="lp-founder-card-v2">
-                  <div className="lp-founder-avatar">{founder.initial}</div>
-                  <p className="lp-founder-name">{founder.name}</p>
+            <div className="lp-founder-grid-v2">
+              {FOUNDERS.slice(0, 4).map((founder) => (
+                <article
+                  key={`${founder.firstName}-${founder.lastName}`}
+                  className="lp-founder-card-v2"
+                >
+                  <div className="lp-founder-photo-wrap">
+                    <img
+                      src={founder.photo}
+                      alt=""
+                      className="lp-founder-photo-img"
+                      width={96}
+                      height={96}
+                      decoding="async"
+                    />
+                  </div>
+                  <div className="lp-founder-name-stack">
+                    <span className="lp-founder-given">{founder.firstName}</span>
+                    <span className="lp-founder-family">{founder.lastName}</span>
+                  </div>
                   <p className="lp-founder-role">{t("landing", founder.roleKey, founder.roleFallback)}</p>
                 </article>
               ))}
@@ -149,7 +175,7 @@ export default function LandingPage() {
               <article className="lp-value-card">
                 <h3 className="lp-h3">{t("landing", "whyMissionTitle", "Mission")}</h3>
                 <p className="lp-feature-body">
-                  {t("landing", "whyMissionBody", "Aider les 16-30 ans à choisir leur voie, trouver leur place dans l'emploi et avancer avec des informations fiables.")}
+                  {t("landing", "whyMissionBody", "Aider les 16 à 30 ans à choisir leur voie, trouver leur place dans l'emploi et avancer avec des informations fiables.")}
                 </p>
               </article>
               <article className="lp-value-card">
@@ -292,7 +318,7 @@ export default function LandingPage() {
                 <iframe
                   className="lp-video-iframe"
                   src={VIDEO_EMBED_URL}
-                  title="Présentation Moov'Up"
+                  title={t("a11y", "landingPresentation", "Présentation Moov'Up")}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
@@ -356,28 +382,36 @@ export default function LandingPage() {
             </div>
             <div className="lp-faq-v2">
               <article className="lp-faq-item-v2">
-                <h3 className="lp-h3 lp-faq-question">{t("landing", "faq1Q", "Est-ce un conseil d'orientation officiel ?")}</h3>
+                <h3 className="lp-h3 lp-faq-question"><span className="lp-faq-question-text">{t("landing", "faq1Q", "Est ce un conseil d'orientation officiel ?")}</span></h3>
                 <p className="lp-feature-body">{t("landing", "faq1A", "Moov'Up est une aide à la réflexion et à la décision, conçue pour compléter un accompagnement humain.")}</p>
               </article>
               <article className="lp-faq-item-v2">
-                <h3 className="lp-h3 lp-faq-question">{t("landing", "faq2Q", "Mes réponses sont-elles enregistrées ?")}</h3>
+                <h3 className="lp-h3 lp-faq-question"><span className="lp-faq-question-text">{t("landing", "faq2Q", "Mes réponses sont elles enregistrées ?")}</span></h3>
                 <p className="lp-feature-body">{t("landing", "faq2A", "Avec un compte, tes réponses servent à ton profil et à Moov'Coach. Sans connexion, rien n'est enregistré par l'application.")}</p>
               </article>
               <article className="lp-faq-item-v2">
-                <h3 className="lp-h3 lp-faq-question">{t("landing", "faq3Q", "C'est gratuit ?")}</h3>
+                <h3 className="lp-h3 lp-faq-question"><span className="lp-faq-question-text">{t("landing", "faq3Q", "C'est gratuit ?")}</span></h3>
                 <p className="lp-feature-body">{t("landing", "faq3A", "Oui, entièrement gratuit et sans engagement. Tu peux relancer le parcours autant de fois que tu veux.")}</p>
               </article>
               <article className="lp-faq-item-v2">
-                <h3 className="lp-h3 lp-faq-question">{t("landing", "faq4Q", "Combien de temps prend le questionnaire ?")}</h3>
+                <h3 className="lp-h3 lp-faq-question"><span className="lp-faq-question-text">{t("landing", "faq4Q", "Combien de temps prend le questionnaire ?")}</span></h3>
                 <p className="lp-feature-body">{t("landing", "faq4A", "Environ 3 minutes : 10 questions ciblées, sans création de compte, pour un résultat personnalisé immédiat.")}</p>
               </article>
               <article className="lp-faq-item-v2">
-                <h3 className="lp-h3 lp-faq-question">{t("landing", "faq5Q", "À qui s'adresse Moov'Up ?")}</h3>
-                <p className="lp-feature-body">{t("landing", "faq5A", "Aux 16-30 ans : lycéens qui hésitent après le bac, étudiants qui doutent de leur filière, jeunes actifs en quête de stabilité ou en reconversion.")}</p>
+                <h3 className="lp-h3 lp-faq-question"><span className="lp-faq-question-text">{t("landing", "faq5Q", "À qui s'adresse Moov'Up ?")}</span></h3>
+                <p className="lp-feature-body">{t("landing", "faq5A", "Aux 16 à 30 ans : lycéens qui hésitent après le bac, étudiants qui doutent de leur filière, jeunes actifs en quête de stabilité ou en reconversion.")}</p>
               </article>
               <article className="lp-faq-item-v2">
-                <h3 className="lp-h3 lp-faq-question">{t("landing", "faq6Q", "Comment fonctionne le coach IA Moov'Coach ?")}</h3>
+                <h3 className="lp-h3 lp-faq-question"><span className="lp-faq-question-text">{t("landing", "faq6Q", "Comment fonctionne Moov'Coach ?")}</span></h3>
                 <p className="lp-feature-body">{t("landing", "faq6A", "Disponible 24/7, il complète le questionnaire en répondant à tes questions précises sur les métiers, les études, les salaires et les débouchés.")}</p>
+              </article>
+              <article className="lp-faq-item-v2">
+                <h3 className="lp-h3 lp-faq-question"><span className="lp-faq-question-text">{t("landing", "faq7Q", "Les infos métiers et formations sont elles fiables ?")}</span></h3>
+                <p className="lp-feature-body">{t("landing", "faq7A", "Les étapes du parcours renvoient vers des fiches et référentiels officiels pour que tu puisses vérifier et approfondir (ONISEP, organismes publics, etc.). Moov'Up t'aide à décider ; garde l'habitude de croiser avec des interlocuteurs humains quand tu le peux.")}</p>
+              </article>
+              <article className="lp-faq-item-v2">
+                <h3 className="lp-h3 lp-faq-question"><span className="lp-faq-question-text">{t("landing", "faq8Q", "Peut on utiliser Moov'Up sur mobile ou recommencer le parcours ?")}</span></h3>
+                <p className="lp-feature-body">{t("landing", "faq8A", "Oui. Relance le parcours guidé autant que tu veux si ton projet change. Tout est pensé pour le mobile comme pour l'ordinateur : zones tactiles larges et lecture confortable sur petit écran.")}</p>
               </article>
             </div>
           </div>
@@ -399,6 +433,11 @@ export default function LandingPage() {
                 <button type="button" className="lp-btn lp-btn-primary lp-btn-lg" onClick={goGuided}>
                   {t("landing", "ctaFinalBtn", "Lancer le parcours →")}
                 </button>
+                {lastConversationId ? (
+                  <Link to={`/assistant?cid=${lastConversationId}`} className="lp-btn lp-btn-secondary lp-btn-lg">
+                    {t("landing", "ctaMyResults", "Voir mes résultats")}
+                  </Link>
+                ) : null}
                 <button type="button" className="lp-btn lp-btn-ghost lp-btn-lg" onClick={goTop}>
                   ↑ {t("landing", "navTop", "Haut")}
                 </button>
