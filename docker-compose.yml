@@ -19,9 +19,11 @@ services:
     environment:
       VITE_BIND_HOST: "0.0.0.0"
       VITE_DEV_PORT: "5173"
-      # Front HTTPS : appels /api en même origine ; Vite proxy vers le conteneur backend.
+      # Front : le navigateur doit appeler /api en relatif (même origine). Ne pas mettre localhost:8000 ici
+      # (le client s’exécute chez l’utilisateur). Vite proxifie /api → backend via VITE_API_PROXY_TARGET.
       VITE_API_PROXY_TARGET: http://backend:8000
-      VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+      # Optionnel (racine .env) : ex. http://IP:8000 si tu ouvres le front sans proxy /api.
+      VITE_API_URL: ${VITE_API_URL:-}
       VITE_PUBLIC_DOMAIN: ${VITE_PUBLIC_DOMAIN:-moovup.site}
     volumes:
       - ./frontend/src:/app/src

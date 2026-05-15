@@ -21,6 +21,9 @@ export function stripTrailingOnisepFromAssistantText(content) {
     for (const re of patterns) {
       s = s.replace(re, "").trimEnd();
     }
+    const orphan = /\s+(?:(?:disponibles\s+)?sur\s+la|sur\s+le|on\s+the|available\s+on\s+the)\s*$/i;
+    s = s.replace(orphan, "").trimEnd();
+    s = s.replace(/\s*[:\-–—,…]+\s*$/u, "").trimEnd();
   } while (s !== prev);
   return s;
 }

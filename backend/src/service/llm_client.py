@@ -13,7 +13,7 @@ class OpenRouterClient:
         self.api_key = api_key or settings.OPENROUTER_API_KEY
         self.model = model or settings.LLM_MODEL
 
-    async def chat(self, messages: list[dict], temperature: float = 0.4, max_tokens: int = 1500) -> str:
+    async def chat(self, messages: list[dict], temperature: float = 0.4, max_tokens: int = 1750) -> str:
         body = {
             "model": self.model,
             "messages": messages,

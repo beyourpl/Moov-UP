@@ -1,84 +1,126 @@
-import { useState, useMemo, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useMemo, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import { TopBarAccountTools } from "./TopBarAccountTools.jsx";
 import { logoutUser } from "../data/authStorage.js";
 import { getText } from "../data/translations.js";
 import { useUiPreferences } from "../hooks/useUiPreferences.js";
+import { useNavigateBack } from "../hooks/useNavigateBack.js";
+import { getPartenairesOffer } from "../data/partenairesSession.js";
+import { getCvLmQuotaState, recordCvLmAnalysisConsumed } from "../data/usageQuota.js";
 
-const LS_CV_META = "moovup_cv_upload_meta";
-const LS_LM_META = "moovup_lm_upload_meta";
-const LS_CV_ANALYSIS = "moovup_cv_analysis";
-const LS_LM_ANALYSIS = "moovup_lm_analysis";
-
+/** CV: critères alignés sur ce que les ATS extraient et filtrent le plus souvent */
 const CV_CRITERIA_DEF = [
-  { id: "contact", labelKey: "critCvContact", weight: 1 },
-  { id: "experience", labelKey: "critCvExperience", weight: 2 },
-  { id: "formation", labelKey: "critCvFormation", weight: 2 },
-  { id: "skills", labelKey: "critCvSkills", weight: 1.5 },
-  { id: "softskills", labelKey: "critCvSoftskills", weight: 1 },
-  { id: "length", labelKey: "critCvLength", weight: 1 },
-  { id: "format", labelKey: "critCvFormat", weight: 0.5 },
+  { id: "keywords", labelKey: "critAtsKeywords", weight: 2 },
+  { id: "sections", labelKey: "critAtsSections", weight: 1.5 },
+  { id: "chronology", labelKey: "critAtsChronology", weight: 1.5 },
+  { id: "quantified", labelKey: "critAtsQuantified", weight: 1.5 },
+  { id: "skills", labelKey: "critAtsSkills", weight: 1.5 },
+  { id: "parsing", labelKey: "critAtsParsing", weight: 2 },
+  { id: "length", labelKey: "critAtsLength", weight: 1 },
 ];
 
+/** LM: critères pour lettres souvent jointes au dossier ou lues après parsing CV */
 const LM_CRITERIA_DEF = [
-  { id: "personalization", labelKey: "critLmPersonalization", weight: 2 },
-  { id: "structure", labelKey: "critLmStructure", weight: 1.5 },
-  { id: "motivation", labelKey: "critLmMotivation", weight: 2 },
-  { id: "grammar", labelKey: "critLmGrammar", weight: 1.5 },
-  { id: "length", labelKey: "critLmLength", weight: 1 },
-  { id: "impact", labelKey: "critLmImpact", weight: 1 },
+  { id: "keywords", labelKey: "critAtsLmKeywords", weight: 2 },
+  { id: "hook", labelKey: "critAtsLmHook", weight: 1.5 },
+  { id: "structure", labelKey: "critAtsLmStructure", weight: 1.5 },
+  { id: "proofs", labelKey: "critAtsLmProofs", weight: 1.5 },
+  { id: "clarity", labelKey: "critAtsLmClarity", weight: 1.5 },
+  { id: "length", labelKey: "critAtsLmLength", weight: 1 },
 ];
 
 /** French fallbacks for `t()` when a locale has no `cvlm` entry yet */
 const FR_CVLM_CRIT = {
-  critCvContact: "Informations de contact",
-  critCvExperience: "Expériences professionnelles",
-  critCvFormation: "Formation et diplômes",
-  critCvSkills: "Compétences techniques",
-  critCvSoftskills: "Soft skills",
-  critCvLength: "Longueur et concision",
-  critCvFormat: "Mise en forme",
-  critLmPersonalization: "Personnalisation",
-  critLmStructure: "Structure et logique",
-  critLmMotivation: "Clarté de la motivation",
-  critLmGrammar: "Orthographe et grammaire",
-  critLmLength: "Longueur appropriée",
-  critLmImpact: "Impact des formulations",
+  critAtsKeywords: "Mots-clés et lexique métier (ATS)",
+  critAtsSections: "Titres de sections normalisés",
+  critAtsChronology: "Dates et ordre chronologique",
+  critAtsQuantified: "Réalisations quantifiées",
+  critAtsSkills: "Bloc compétences exploitable par parsing",
+  critAtsParsing: "Lisibilité machine (PDF, mise en page)",
+  critAtsLength: "Densité / longueur (cible 1–2 pages)",
+  critAtsLmKeywords: "Alignement avec l’offre (mots-clés)",
+  critAtsLmHook: "Accroche et lien avec le poste",
+  critAtsLmStructure: "Objet, formules et paragraphes",
+  critAtsLmProofs: "Exemples et faits vérifiables",
+  critAtsLmClarity: "Clarté, ton professionnel",
+  critAtsLmLength: "Concision (cible une page)",
 };
 
 const FR_CVLM_SUG = {
-  sugCvContact: "Vérifiez que vos coordonnées sont complètes et à jour.",
-  sugCvExperience: "Décrivez plus en détail vos missions et responsabilités.",
-  sugCvSkills: "Ajoutez des compétences techniques spécifiques à votre domaine.",
-  sugCvSoftskills: "Mentionnez des soft skills pertinents (travail en équipe, adaptabilité...).",
-  sugCvLength: "Votre CV semble trop long. Visez 1 à 2 pages maximum.",
-  sugLmPersonalization: "Personnalisez votre lettre pour chaque candidature.",
-  sugLmMotivation: "Expliquez plus clairement pourquoi cette entreprise vous attire.",
-  sugLmStructure: "Structurez votre lettre en paragraphes clairs.",
-  sugLmGrammar: "Relisez-vous attentivement ou utilisez un correcteur.",
+  sugAtsKeywords:
+    "Alignez intitulés, outils et compétences sur le vocabulaire des fiches de poste ; évitez les formulations trop vagues pour passer les filtres de correspondance.",
+  sugAtsSections:
+    "Utilisez des intitulés standards (Formation, Expérience, Compétences, Langues) : les ATS segmentent souvent le CV sur ces balises.",
+  sugAtsChronology:
+    "Précisez mois/année et un ordre cohérent (souvent du plus récent au plus ancien) pour une chronologie exploitable automatiquement.",
+  sugAtsQuantified:
+    "Ajoutez des chiffres (%, volumes, délais, budgets) : les moteurs de scoring et les recruteurs s’appuient sur des indicateurs concrets.",
+  sugAtsSkills:
+    "Liste courte de compétences et synonymes métier (ex. CRM / gestion de la relation client) pour maximiser les correspondances lexicales.",
+  sugAtsParsing:
+    "Privilégiez un PDF avec texte sélectionnable, une colonne simple et peu d’éléments en image : le texte doit être extractible sans erreur.",
+  sugAtsLength:
+    "Visez 1 à 2 pages : au-delà, le risque est une perte de mots-clés en tête de document ou un abandon humain après l’aperçu ATS.",
+  sugAtsLmKeywords:
+    "Reprenez des termes ou exigences de l’annonce (sans bourrage) pour rester cohérent avec le profil parsé du CV.",
+  sugAtsLmHook:
+    "Ouvrez par le poste visé et une phrase sur ce que vous apportez sur ce rôle précis — les lecteurs et outils repèrent vite les lettres génériques.",
+  sugAtsLmStructure:
+    "Respectez objet, salutation, 2–3 paragraphes, formule de politesse : une structure régulière facilite lecture humaine et extraction.",
+  sugAtsLmProofs:
+    "Illustrez avec un fait, un projet ou un résultat mesurable plutôt qu’avec des qualificatifs seuls.",
+  sugAtsLmClarity:
+    "Phrases courtes, aucune faute évidente, acronymes développés une première fois : la clarté limite l’écart avec le profil ATS du CV.",
+  sugAtsLmLength:
+    "Tenez une page A4 : les lettres longues sont souvent tronquées ou non lues en entier après le CV dans les outils de recrutement.",
 };
 
-function simulateAIAnalysis(type, fileName, criteria) {
-  const scores = {};
-  const suggestions = [];
+function hashString(s) {
+  let h = 5381;
+  for (let i = 0; i < s.length; i += 1) {
+    h = (h * 33) ^ s.charCodeAt(i);
+  }
+  return Math.abs(h);
+}
 
+function criterionScore(seed, criterionId) {
+  const h = hashString(`${seed}|${criterionId}`);
+  return 52 + (h % 44);
+}
+
+function simulateAIAnalysis(type, fileName, criteria) {
+  const seed = `${type}:${fileName}`;
+  const scores = {};
   criteria.forEach((criterion) => {
-    const baseScore = 60 + Math.random() * 35;
-    scores[criterion.id] = Math.round(baseScore);
+    scores[criterion.id] = criterionScore(seed, criterion.id);
   });
 
-  if (type === "cv") {
-    if (scores.contact < 80) suggestions.push({ type: "warning", key: "sugCvContact" });
-    if (scores.experience < 70) suggestions.push({ type: "info", key: "sugCvExperience" });
-    if (scores.skills < 70) suggestions.push({ type: "tip", key: "sugCvSkills" });
-    if (scores.softskills < 65) suggestions.push({ type: "tip", key: "sugCvSoftskills" });
-    if (scores.length > 85) suggestions.push({ type: "warning", key: "sugCvLength" });
-  } else {
-    if (scores.personalization < 70) suggestions.push({ type: "warning", key: "sugLmPersonalization" });
-    if (scores.motivation < 75) suggestions.push({ type: "tip", key: "sugLmMotivation" });
-    if (scores.structure < 70) suggestions.push({ type: "info", key: "sugLmStructure" });
-    if (scores.grammar < 80) suggestions.push({ type: "error", key: "sugLmGrammar" });
-  }
+  const rules =
+    type === "cv"
+      ? [
+          { id: "keywords", below: 74, suggestion: { type: "warning", key: "sugAtsKeywords" } },
+          { id: "sections", below: 72, suggestion: { type: "info", key: "sugAtsSections" } },
+          { id: "chronology", below: 72, suggestion: { type: "info", key: "sugAtsChronology" } },
+          { id: "quantified", below: 73, suggestion: { type: "tip", key: "sugAtsQuantified" } },
+          { id: "skills", below: 73, suggestion: { type: "tip", key: "sugAtsSkills" } },
+          { id: "parsing", below: 71, suggestion: { type: "warning", key: "sugAtsParsing" } },
+          { id: "length", below: 75, suggestion: { type: "warning", key: "sugAtsLength" } },
+        ]
+      : [
+          { id: "keywords", below: 73, suggestion: { type: "warning", key: "sugAtsLmKeywords" } },
+          { id: "hook", below: 72, suggestion: { type: "tip", key: "sugAtsLmHook" } },
+          { id: "structure", below: 72, suggestion: { type: "info", key: "sugAtsLmStructure" } },
+          { id: "proofs", below: 73, suggestion: { type: "tip", key: "sugAtsLmProofs" } },
+          { id: "clarity", below: 74, suggestion: { type: "error", key: "sugAtsLmClarity" } },
+          { id: "length", below: 76, suggestion: { type: "info", key: "sugAtsLmLength" } },
+        ];
+
+  const suggestions = rules
+    .filter((r) => scores[r.id] < r.below)
+    .sort((a, b) => scores[a.id] - scores[b.id])
+    .slice(0, 5)
+    .map((r) => r.suggestion);
 
   const overallScore = Math.round(
     Object.entries(scores).reduce((sum, [key, value]) => {
@@ -200,6 +242,7 @@ First Last
 
 export default function CvLmUploader() {
   const navigate = useNavigate();
+  const goBackPage = useNavigateBack("/choice");
   const { language } = useUiPreferences();
   const tCommon = (key, fallback) => getText(language, "common", key, fallback);
   const [cvFile, setCvFile] = useState(null);
@@ -207,6 +250,8 @@ export default function CvLmUploader() {
   const [cvAnalysis, setCvAnalysis] = useState(null);
   const [lmAnalysis, setLmAnalysis] = useState(null);
   const [analyzing, setAnalyzing] = useState(null);
+  const [cvQuotaErr, setCvQuotaErr] = useState("");
+  const [lmQuotaErr, setLmQuotaErr] = useState("");
 
   const t = useCallback((section, key, fallback) => getText(language, section, key, fallback), [language]);
 
@@ -269,20 +314,47 @@ export default function CvLmUploader() {
     [t]
   );
 
-  useEffect(() => {
-    try {
-      const cvRaw = localStorage.getItem(LS_CV_META) || localStorage.getItem("cv");
-      if (cvRaw) setCvFile(JSON.parse(cvRaw));
-      const lmRaw = localStorage.getItem(LS_LM_META) || localStorage.getItem("lm");
-      if (lmRaw) setLmFile(JSON.parse(lmRaw));
-      const cvARaw = localStorage.getItem(LS_CV_ANALYSIS) || localStorage.getItem("cv_analysis");
-      if (cvARaw) setCvAnalysis(JSON.parse(cvARaw));
-      const lmARaw = localStorage.getItem(LS_LM_ANALYSIS) || localStorage.getItem("lm_analysis");
-      if (lmARaw) setLmAnalysis(JSON.parse(lmARaw));
-    } catch {
-      /* ignore corrupted storage */
+  const premiumOffer = getPartenairesOffer()?.offer;
+  const cvQuota = useMemo(() => getCvLmQuotaState("cv"), [cvAnalysis, analyzing, cvFile, premiumOffer]);
+  const lmQuota = useMemo(() => getCvLmQuotaState("lm"), [lmAnalysis, analyzing, lmFile, premiumOffer]);
+
+  const cvQuotaHint = useMemo(() => {
+    if (cvQuota.isUnlimited) {
+      return t(
+        "cvlm",
+        "quotaUnlimitedHint",
+        "Offre **Premium B2C** : analyses CV / lettre illimitées (démo)."
+      );
     }
-  }, []);
+    const kind = t("cvlm", "quotaKindCv", "CV");
+    return t(
+      "cvlm",
+      "quotaHint",
+      "Analyses **{kind}** gratuites restantes : **{remaining}** / **{limit}** (puis passage Premium)."
+    )
+      .replace(/\{kind\}/g, kind)
+      .replace(/\{remaining\}/g, String(cvQuota.remaining))
+      .replace(/\{limit\}/g, String(cvQuota.limit));
+  }, [cvQuota, t]);
+
+  const lmQuotaHint = useMemo(() => {
+    if (lmQuota.isUnlimited) {
+      return t(
+        "cvlm",
+        "quotaUnlimitedHint",
+        "Offre **Premium B2C** : analyses CV / lettre illimitées (démo)."
+      );
+    }
+    const kind = t("cvlm", "quotaKindLm", "lettre");
+    return t(
+      "cvlm",
+      "quotaHint",
+      "Analyses **{kind}** gratuites restantes : **{remaining}** / **{limit}** (puis passage Premium)."
+    )
+      .replace(/\{kind\}/g, kind)
+      .replace(/\{remaining\}/g, String(lmQuota.remaining))
+      .replace(/\{limit\}/g, String(lmQuota.limit));
+  }, [lmQuota, t]);
 
   const handleUpload = (e, type) => {
     const file = e.target.files[0];
@@ -298,28 +370,34 @@ export default function CvLmUploader() {
     if (type === "cv") {
       setCvFile(fileData);
       setCvAnalysis(null);
-      localStorage.removeItem(LS_CV_ANALYSIS);
-      localStorage.removeItem("cv_analysis");
+      setCvQuotaErr("");
     } else {
       setLmFile(fileData);
       setLmAnalysis(null);
-      localStorage.removeItem(LS_LM_ANALYSIS);
-      localStorage.removeItem("lm_analysis");
+      setLmQuotaErr("");
     }
 
-    const key = type === "cv" ? LS_CV_META : LS_LM_META;
-    localStorage.setItem(key, JSON.stringify(fileData));
-    try {
-      localStorage.removeItem(type === "cv" ? "cv" : "lm");
-    } catch {
-      /* ignore */
-    }
     e.target.value = "";
   };
 
   const handleAnalyze = async (type) => {
     const fileData = type === "cv" ? cvFile : lmFile;
     if (!fileData) return;
+
+    if (type === "cv") setCvQuotaErr("");
+    else setLmQuotaErr("");
+
+    const st = getCvLmQuotaState(type);
+    if (!st.isUnlimited && st.blocked) {
+      const msg = t(
+        "cvlm",
+        "quotaExceeded",
+        "Limite gratuite d’analyses atteinte pour ce document. Passe à Premium pour continuer."
+      );
+      if (type === "cv") setCvQuotaErr(msg);
+      else setLmQuotaErr(msg);
+      return;
+    }
 
     setAnalyzing(type);
 
@@ -334,14 +412,9 @@ export default function CvLmUploader() {
       setLmAnalysis(analysis);
     }
 
+    recordCvLmAnalysisConsumed(type);
+
     setAnalyzing(null);
-    const aKey = type === "cv" ? LS_CV_ANALYSIS : LS_LM_ANALYSIS;
-    localStorage.setItem(aKey, JSON.stringify(analysis));
-    try {
-      localStorage.removeItem(`${type}_analysis`);
-    } catch {
-      /* ignore */
-    }
   };
 
   const getScoreColor = (score) => {
@@ -378,7 +451,17 @@ export default function CvLmUploader() {
     </div>
   );
 
-  const AnalysisPanel = ({ analysis, type, criteria, onAnalyze, isAnalyzing, hasFile }) => {
+  const AnalysisPanel = ({
+    analysis,
+    type,
+    criteria,
+    onAnalyze,
+    isAnalyzing,
+    hasFile,
+    quotaHint,
+    quotaError,
+    quotaBlocked,
+  }) => {
     const title = type === "cv" ? ui.cvTitle : ui.lmTitle;
 
     return (
@@ -395,6 +478,21 @@ export default function CvLmUploader() {
             </div>
           )}
         </div>
+
+        {quotaHint ? (
+          <div className="cvlm-quota-hint">
+            <ReactMarkdown>{quotaHint}</ReactMarkdown>
+          </div>
+        ) : null}
+
+        {quotaError ? (
+          <div className="cvlm-quota-error" role="alert">
+            <p>{quotaError}</p>
+            <Link to="/partenaires/offres" className="lp-btn lp-btn-primary lp-btn-sm">
+              {t("cvlm", "quotaUpgradeCta", "Voir les offres Premium")}
+            </Link>
+          </div>
+        ) : null}
 
         {analysis ? (
           <div className="analysis-content">
@@ -434,7 +532,7 @@ export default function CvLmUploader() {
               type="button"
               className="lp-btn lp-btn-ghost"
               onClick={() => onAnalyze(type)}
-              disabled={!hasFile || isAnalyzing}
+              disabled={!hasFile || isAnalyzing || quotaBlocked}
             >
               {t("cvlm", "reanalyze", "Réanalyser")}
             </button>
@@ -445,7 +543,7 @@ export default function CvLmUploader() {
             <button
               className="lp-btn lp-btn-primary"
               onClick={() => onAnalyze(type)}
-              disabled={isAnalyzing || !hasFile}
+              disabled={isAnalyzing || !hasFile || quotaBlocked}
             >
               {isAnalyzing ? ui.analyzing : ui.analyze}
             </button>
@@ -463,7 +561,7 @@ export default function CvLmUploader() {
   return (
     <div className="cvlm-uploader">
       <div className="cvlm-actions cvlm-actions--with-global-nav">
-        <button type="button" className="lp-btn lp-btn-ghost" onClick={() => navigate(-1)}>
+        <button type="button" className="lp-btn lp-btn-ghost" onClick={goBackPage}>
           ← {ui.back}
         </button>
         <button type="button" className="lp-btn lp-btn-primary" onClick={() => navigate("/")}>
@@ -536,6 +634,9 @@ export default function CvLmUploader() {
             onAnalyze={handleAnalyze}
             isAnalyzing={analyzing === "cv"}
             hasFile={Boolean(cvFile)}
+            quotaHint={cvQuotaHint}
+            quotaError={cvQuotaErr}
+            quotaBlocked={!cvQuota.isUnlimited && cvQuota.blocked}
           />
         </div>
 
@@ -567,6 +668,9 @@ export default function CvLmUploader() {
             onAnalyze={handleAnalyze}
             isAnalyzing={analyzing === "lm"}
             hasFile={Boolean(lmFile)}
+            quotaHint={lmQuotaHint}
+            quotaError={lmQuotaErr}
+            quotaBlocked={!lmQuota.isUnlimited && lmQuota.blocked}
           />
         </div>
       </div>

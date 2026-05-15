@@ -20,6 +20,8 @@ def get_current_user(
         payload = decode_token(creds.credentials)
     except AuthError:
         raise HTTPException(status_code=401, detail="Invalid token")
+    if payload.get("typ", "access") != "access":
+        raise HTTPException(status_code=401, detail="Invalid token")
     user = db.get(User, payload["user_id"])
     if user is None:
         raise HTTPException(status_code=401, detail="Unknown user")

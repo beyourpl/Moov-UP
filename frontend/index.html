@@ -1,10 +1,22 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
   <head>
     <!-- MOOVUP_DEPLOY_STAMP: 2026-05-01-founders-photos-css — hard refresh si tu ne vois pas les portraits -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/png" href="/moovup-logo-square.png" />
     <title>Moov'Up — Orientation scolaire</title>
+    <!-- Thème avant 1ʳᵉ peinture : clé = moovup_theme_choice_v1 (voir uiPreferences.js). Défaut clair. -->
+    <script>
+      (function () {
+        try {
+          var t = (localStorage.getItem("moovup_theme_choice_v1") || "").trim().toLowerCase();
+          document.documentElement.dataset.theme = t === "dark" ? "dark" : "light";
+        } catch (e) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

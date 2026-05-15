@@ -1,14 +1,19 @@
 import { useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import { getLastConversationId } from "../data/conversationStorage.js";
 import { logoutUser } from "../data/authStorage.js";
+import { getPartenairesOffer } from "../data/partenairesSession.js";
 import { getText } from "../data/translations.js";
 import { useUiPreferences } from "../hooks/useUiPreferences.js";
+import { useNavigateBack } from "../hooks/useNavigateBack.js";
 
 export default function PostAuthChoicePage() {
   const navigate = useNavigate();
+  const goBackPage = useNavigateBack("/");
   const { theme, language } = useUiPreferences();
+
+  const offerId = getPartenairesOffer()?.offer;
 
   const t = (section, key, fallback) => getText(language, section, key, fallback);
 
@@ -70,6 +75,16 @@ export default function PostAuthChoicePage() {
     [language]
   );
 
+  if (!offerId) {
+    return <Navigate to="/partenaires/offres" replace />;
+  }
+  if (offerId === "licences_b2b") {
+    return <Navigate to="/partenaires/tableau-de-bord" replace />;
+  }
+  if (offerId === "premium_b2c") {
+    return <Navigate to="/partenaires/premium" replace />;
+  }
+
   const handleLogout = () => {
     logoutUser();
     navigate("/auth", { replace: true });
@@ -83,9 +98,14 @@ export default function PostAuthChoicePage() {
   return (
     <div className={`app quiz-app ${theme} post-auth-choice`}>
       <div className="top-actions quiz-top">
-        <Link to="/" className="quiz-site-link">
-          ← Moov&apos;Up
-        </Link>
+        <button
+          type="button"
+          className="quiz-site-link"
+          onClick={goBackPage}
+          aria-label={t("common", "navBackAria", "Revenir à la page précédente")}
+        >
+          ← {t("common", "back", "Retour")}
+        </button>
 
         <div className="quiz-top-btns">
           <TopBarAccountTools className="quiz-top-tools" />

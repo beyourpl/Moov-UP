@@ -1,11 +1,25 @@
 import specialtyFr from "./specialtyLabels.fr.json" with { type: "json" };
 import specialtyEn from "./specialtyLabels.en.json" with { type: "json" };
+import specialtyZh from "./specialtyLabels.zh.json" with { type: "json" };
+import specialtyHi from "./specialtyLabels.hi.json" with { type: "json" };
+import specialtyJa from "./specialtyLabels.ja.json" with { type: "json" };
+import { canonicalLanguageForTexts } from "./translations.js";
 
 /**
- * Libellés Q4 (spécialités) : FR pour la langue fr, EN pour toutes les autres locales.
+ * Libellés Q4 (spécialités) : FR/ZH/HI/JA lorsque disponibles, sinon EN.
  */
 export function getSpecialtyChoiceText(language, domain, value, fallback = {}) {
-  const pack = language === "fr" ? specialtyFr : specialtyEn;
+  const lang = canonicalLanguageForTexts(language);
+  const pack =
+    lang === "fr"
+      ? specialtyFr
+      : lang === "zh"
+        ? specialtyZh
+        : lang === "hi"
+          ? specialtyHi
+          : lang === "ja"
+            ? specialtyJa
+            : specialtyEn;
   const row = pack[domain]?.[value];
   if (row?.title != null && row.title !== "" && row?.sub != null && row.sub !== "") {
     return { title: row.title, sub: row.sub };

@@ -9,18 +9,19 @@ L'élève passe un quiz de 10 questions, reçoit des recommandations de métiers
 ## 📑 Sommaire
 
 1. [Démarrage rapide (5 commandes)](#-démarrage-rapide-5-commandes)
-2. [Stack technique](#-stack-technique)
-3. [Architecture globale](#-architecture-globale)
-4. [Pipeline d'ingestion (scraping → indexation)](#-pipeline-dingestion-scraping--indexation)
-5. [Flux d'une requête utilisateur (chat)](#-flux-dune-requête-utilisateur-chat)
-6. [API : tous les endpoints](#-api--tous-les-endpoints)
-7. [Stockage : qui contient quoi](#-stockage--qui-contient-quoi)
-8. [Docker expliqué](#-docker-expliqué)
-9. [Le Makefile et chaque commande](#-le-makefile-et-chaque-commande)
-10. [Structure du projet](#-structure-du-projet)
-11. [Tests](#-tests)
-12. [Dépannage / FAQ](#-dépannage--faq)
-13. [Pour aller plus loin](#-pour-aller-plus-loin)
+2. [Mettre à jour le site officiel (moovup.site)](#-mettre-à-jour-le-site-officiel-moovupsite)
+3. [Stack technique](#-stack-technique)
+4. [Architecture globale](#-architecture-globale)
+5. [Pipeline d'ingestion (scraping → indexation)](#-pipeline-dingestion-scraping--indexation)
+6. [Flux d'une requête utilisateur (chat)](#-flux-dune-requête-utilisateur-chat)
+7. [API : tous les endpoints](#-api--tous-les-endpoints)
+8. [Stockage : qui contient quoi](#-stockage--qui-contient-quoi)
+9. [Docker expliqué](#-docker-expliqué)
+10. [Le Makefile et chaque commande](#-le-makefile-et-chaque-commande)
+11. [Structure du projet](#-structure-du-projet)
+12. [Tests](#-tests)
+13. [Dépannage / FAQ](#-dépannage--faq)
+14. [Pour aller plus loin](#-pour-aller-plus-loin)
 
 ---
 
@@ -33,63 +34,68 @@ L'élève passe un quiz de 10 questions, reçoit des recommandations de métiers
 git clone <url-du-repo> tempo
 cd tempo
 
-# 2. Configure tes secrets
+# 2. Configure le backend (secrets)
 cp backend/.env.example backend/.env
 # Édite backend/.env :
 #   OPENROUTER_API_KEY=sk-or-v1-...
 #   JWT_SECRET=$(openssl rand -hex 32)
 #   HF_TOKEN=hf_xxxxx (optionnel mais recommandé)
-#   ALLOWED_ORIGIN=http://localhost:5173      ← si tu tournes en local sur ta machine
+#   ALLOWED_ORIGIN=http://localhost:5173,http://127.0.0.1:3000   ← origines du front local (ports Vite)
 
-# 3. ⚠️ ADAPTE VITE_API_URL DANS docker-compose.yml À TON SETUP
-#    Le repo est livré configuré pour un VPS distant (http://178.104.253.218:8000).
-#    Si tu fais tourner sur TA MACHINE LOCALE (pas de VM, pas de VPS), remplace
-#    cette ligne dans docker-compose.yml :
-#         VITE_API_URL: ${VITE_API_URL:-http://178.104.253.218:8000}
-#    par :
-#         VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
-
-# 4. Build les images Docker (~3 min, télécharge torch + faiss)
+# 3. Build les images Docker (~3 min, télécharge torch + faiss)
 make build
 
-# 5. Lance les tests pour vérifier l'install
+# 4. Lance les tests pour vérifier l'install
 make test
 # Attendu : 35 passed
 
-# 6. Démarre l'application
+# 5. Démarre l'application
 make up
 
-# Ouvre http://localhost:5173 dans ton navigateur
+# Ouvre http://localhost:5173 ou http://127.0.0.1:3000 (Vite affiche l’URL exacte dans le terminal)
 ```
 
-### Quelle valeur pour `VITE_API_URL` selon ton setup ?
+### `VITE_API_URL` (optionnel)
 
-`VITE_API_URL` est l'URL que ton **navigateur** utilise pour parler au backend. Le mot `localhost` dans le navigateur veut dire "ma machine cliente", pas le serveur Docker. Donc :
+Par défaut, **ne pas** mettre `http://localhost:8000` dans `docker-compose` pour le navigateur : le front utilise des URLs **`/api...` relatives** et le **proxy Vite** (`vite.config.js`) envoie `/api` vers l’API de dev (`dev-api` sur 8787) ou vers `backend:8000` en Docker.
 
-| Tu fais tourner Docker sur… | …et tu ouvres le navigateur sur… | `VITE_API_URL` doit valoir |
-|---|---|---|
-| **Ta propre machine** (laptop ou desktop) | la même machine | `http://localhost:8000` |
-| Une **VM locale** dans ton réseau | ton laptop (via SSH/réseau) | `http://<IP_DE_LA_VM>:8000` (ex: `http://192.168.1.42:8000`) |
-| Un **VPS distant** | ton laptop perso | `http://<IP_DU_VPS>:8000` (ex: `http://178.104.253.218:8000`) |
-
-**Comment trouver l'IP de ta VM/VPS :**
-```bash
-# Depuis la machine où tourne Docker
-ip addr show | grep "inet " | grep -v 127.0.0.1
-# ou
-hostname -I
-```
-
-**N'oublie pas** : la même IP doit aussi figurer dans `ALLOWED_ORIGIN` dans `backend/.env` (sinon CORS bloque). Tu peux y mettre plusieurs origines séparées par des virgules :
-```
-ALLOWED_ORIGIN=http://localhost:5173,http://192.168.1.42:5173
-```
-
-Après modification de `docker-compose.yml` ou `backend/.env`, refais un `make up` (ou `docker compose up -d --force-recreate --build`) pour que les changements soient pris en compte. **Vite injecte `VITE_API_URL` au moment du build du frontend** : un simple restart ne suffit pas, il faut un rebuild de l'image frontend.
+Tu ne définis `VITE_API_URL` (fichier `.env` à la racine pour Compose, voir `env.compose.example`) que dans des cas particuliers, par ex. accès direct au front **sans** proxy `/api` (IP:port du backend).
 
 > **INFO** : l'index FAISS et les données scrapées ONISEP sont **déjà commités** dans ce repo (`backend/data/metiers.faiss`, `metiers_meta.json`, `metiers_enriched.json`). Tu n'as **pas besoin** de relancer `make scrape` ni `make index`. Tu utilises directement le RAG livré.
 
 > Si tu veux quand même tout regénérer toi-même (pour comprendre le pipeline), voir la section [Pipeline d'ingestion](#-pipeline-dingestion-scraping--indexation).
+
+---
+
+## 🌐 Mettre à jour le site officiel (moovup.site)
+
+**Pourquoi `http://127.0.0.1:3000` et moovup.site peuvent différer :** ce sont **deux machines / deux copies du code**. Tant que tu n’as pas **poussé** tes commits sur GitHub et **mis à jour** le serveur, le site public reste sur l’ancienne version.
+
+**À faire à chaque fois que tu veux « la même chose » en prod :**
+
+1. **Sur ton PC** (dans le repo, branche déployée en général `main`) :
+   ```bash
+   git add -A
+   git status   # vérifie bien (pas de secrets dans le commit)
+   git commit -m "Description courte des changements"
+   git push origin main
+   ```
+2. **Sur le VPS** (SSH), dans le dossier du projet (ex. `~/tempo`) :
+   ```bash
+   git pull --ff-only
+   docker compose up -d --build
+   ```
+   Ou laisse le workflow GitHub **Deploy to Hetzner** faire cette étape après le push sur `main`.
+3. **Caddy** : le domaine doit proxifier `/api` → backend et le reste → front (voir `deploy/Caddyfile.example`), puis `sudo systemctl reload caddy` si tu modifies la config.
+4. **Navigateur** : rechargement forcé `Ctrl+Shift+R` (cache).
+
+**Vérifier que le serveur a bien ton dernier commit :**
+
+```bash
+ssh user@IP "cd ~/tempo && git log -1 --oneline"
+```
+
+Compare avec `git log -1 --oneline` sur ton PC.
 
 ---
 

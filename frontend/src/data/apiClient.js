@@ -8,10 +8,10 @@ function resolveApiBase() {
   const domain = String(import.meta.env.VITE_PUBLIC_DOMAIN || "moovup.site").trim() || "moovup.site";
 
   if (typeof window !== "undefined") {
-    const { protocol, hostname } = window.location;
+    const { hostname } = window.location;
     const onProdSite = hostname === domain || hostname === `www.${domain}`;
-    // HTTPS sur le domaine public : toujours /api en relatif (même origine).
-    if (protocol === "https:" && onProdSite) return "";
+    // Domaine public (HTTP ou HTTPS) : toujours chemins relatifs /api… — Caddy ou le proxy Vite.
+    if (onProdSite) return "";
   }
 
   if (isDev && !viteUrl) return "";

@@ -1,0 +1,112 @@
+{
+  "tech": {
+    "cyber": { "title": "サイバーセキュリティ", "sub": "システム・ネットワーク・データを守る仕事" },
+    "dev": { "title": "開発", "sub": "アプリ、サイト、ソフトウェアやサービスをつくる" },
+    "reseaux": { "title": "ネットワーク", "sub": "インフラの構築・保守・運用" },
+    "web": { "title": "Web", "sub": "サイトやUI、オンラインサービスの制作" },
+    "data": { "title": "データ", "sub": "データの扱い、分析、価値づくり" },
+    "ia": { "title": "AI", "sub": "賢い仕組みや自動化の設計" },
+    "cloud": { "title": "クラウド", "sub": "クラウド上のサービスと基盤の提供" },
+    "support": { "title": "ITサポート", "sub": "問い合わせ対応、障害切り分け、復旧" },
+    "qa": { "title": "テスト・品質", "sub": "ソフトや製品の検証と品質向上" },
+    "autre-tech": { "title": "その他・まだ決めていない", "sub": "テック全般、または方向はこれから" }
+  },
+  "business": {
+    "commerce": { "title": "商取引・商事", "sub": "営業、顧客関係、交渉" },
+    "marketing": { "title": "マーケティング", "sub": "コミュニケーション、戦略、ブランディング" },
+    "management": { "title": "マネジメント", "sub": "組織運営、方針づくり、チーム調整" },
+    "finance": { "title": "ファイナンス", "sub": "予算、分析、財務コントロール" },
+    "rh": { "title": "人事", "sub": "採用、労務、人へのサポートや配置" },
+    "entrepreneuriat": { "title": "起業・事業開発", "sub": "企画して立ち上げ、伸ばすこと" },
+    "vente": { "title": "セールス", "sub": "提案や説得、顧客基盤の拡大" },
+    "gestion-projet": { "title": "プロジェクト管理", "sub": "優先度づけ、調整、チームを前に進める" },
+    "relation-client": { "title": "顧客対応・CS", "sub": "フォロー、維持、ニーズへの対応" },
+    "autre-business": { "title": "その他・まだ決めていない", "sub": "ビジネス全般、または方向はこれから" }
+  },
+  "creative": {
+    "graphisme": { "title": "グラフィックデザイン", "sub": "ビジュアルアイデンティティや訴求素材" },
+    "design": { "title": "デジタルデザイン", "sub": "画面や実サービスに合わせたビジュアル" },
+    "audiovisuel": { "title": "映像・音響", "sub": "撮影・編集、映像での伝え方" },
+    "uxui": { "title": "UX/UI", "sub": "使いやすく美しいインターフェース" },
+    "animation": { "title": "アニメーション", "sub": "映像やコンテンツに動きをつける" },
+    "photo": { "title": "写真", "sub": "撮影、構成、編集とストーリー" },
+    "direction-artistique": { "title": "アートディレクション", "sub": "ビジュアル世界観やコンセプトの統括" },
+    "montage": { "title": "編集", "sub": "映像や訴求の組み立てと仕上げ" },
+    "motion-design": { "title": "モーショングラフィックス", "sub": "動くビジュアルで説明や訴求" },
+    "autre-creative": { "title": "その他・まだ決めていない", "sub": "クリエイティブ全般、または検討中" }
+  },
+  "sante": {
+    "medecine": { "title": "医学", "sub": "診断、治療、処方" },
+    "soins-infirmiers": { "title": "看護", "sub": "ケア、観察、サポート" },
+    "kinesitherapie": { "title": "理学療法", "sub": "リハ、可動域、疼痛ケア" },
+    "sage-femme": { "title": "助産", "sub": "妊娠〜分娩〜産後のケア" },
+    "pharmacie": { "title": "薬学・薬剤師", "sub": "医薬品の準備や提供、アドバイス" },
+    "odontologie": { "title": "歯科", "sub": "口腔ケア、補綴、治療" },
+    "psychologie": { "title": "心理", "sub": "傾聴、評価、支援" },
+    "aide-soignante": { "title": "介助・ケアワーク", "sub": "日常生活のサポート" },
+    "ergotherapie": { "title": "作業療法", "sub": "生活上の自立支援や適応" },
+    "autre-sante": { "title": "その他・まだ決めていない", "sub": "医療・福祉全般、または検討中" }
+  },
+  "education": {
+    "enseignant": { "title": "教員", "sub": "知識や技能を伝える" },
+    "education-specialisee": { "title": "特別支援・特化教育", "sub": "学びに支援が必要な児童生徒へ" },
+    "direction-ecole": { "title": "校長・スクール運営", "sub": "学校や学びの場の運営" },
+    "formation-adulte": { "title": "社会人・成人向け研修", "sub": "転職やキャリアチェンジへの学び" },
+    "soutien-scolaire": { "title": "学習支援・チューター", "sub": "学力や習熟のフォロー" },
+    "animation": { "title": "ファシリテーション", "sub": "学びの場の企画や進行" },
+    "orientation": { "title": "キャリアガイダンス", "sub": "進路や意思決定を支える" },
+    "pedagogie": { "title": "教育設計・学習科学", "sub": "教え方やカリキュラムの工夫" },
+    "autre-education": { "title": "その他・まだ決めていない", "sub": "教育・研修全般、または検討中" }
+  },
+  "droit": {
+    "avocat": { "title": "弁護士", "sub": "弁護、助言、法的手続き" },
+    "magistrat": { "title": "裁判官など司法職", "sub": "判断と正義の遂行" },
+    "notaire": { "title": "公证人・法務関連", "sub": "公的書類、証書、法的アドバイス" },
+    "huissier": { "title": "執行役・送達関連", "sub": "裁判・決定の実効や書類の達送など" },
+    "juriste": { "title": "インハウス法務", "sub": "コンプライアンス、契約、助言" },
+    "police-judiciaire": { "title": "刑事捜査", "sub": "捜査、立証協力（文脈・国により異なる）" },
+    "droit-immobilier": { "title": "不動産法", "sub": "取引、賃貸借、権利関係" },
+    "droit-travail": { "title": "労働法", "sub": "雇用関係や紛争" },
+    "autre-droit": { "title": "その他・まだ決めていない", "sub": "法務・司法全般、または検討中" }
+  },
+  "industrie": {
+    "ingenierie": { "title": "エンジニアリング", "sub": "設計、解析、最適化" },
+    "production": { "title": "生産・製造", "sub": "組立、ライン運転、製造業務" },
+    "maintenance": { "title": "メンテナンス", "sub": "修理、保全、故障予防" },
+    "qualite": { "title": "品質保証", "sub": "検査、規格適合、改善" },
+    "logistique": { "title": "物流", "sub": "調達、保管、配送" },
+    "achats": { "title": "購買", "sub": "選定、見積、発注・交渉" },
+    "bureau-etudes": { "title": "設計部門・開発設計", "sub": "図面や試作、技術検討" },
+    "autre-industrie": { "title": "その他・まだ決めていない", "sub": "モノづくり産業全般、または検討中" }
+  },
+  "batiment": {
+    "architecture": { "title": "建築（設計）", "sub": "建物の設計や意匠" },
+    "btp": { "title": "建設・施工", "sub": "躯体から仕上げまでの工事" },
+    "genie-civil": { "title": "土木", "sub": "インフラ、道路、橋梁など" },
+    "batiment-durable": { "title": "持続可能な建築", "sub": "省エネ、環境配慮の建て方" },
+    "architecture-interieur": { "title": "インテリア", "sub": "動線、家具、空間づくり" },
+    "topographie": { "title": "測量", "sub": "計測、敷地の把握、施工基準" },
+    "bet": { "title": "構造・設備設計事務所", "sub": "構造計算、図面、診断" },
+    "autre-batiment": { "title": "その他・まだ決めていない", "sub": "建築・建設全般、または検討中" }
+  },
+  "agriculture": {
+    "agriculture-elevage": { "title": "農業・畜産", "sub": "栽培、飼育、生産" },
+    "agronomie": { "title": "農学・作付け改善", "sub": "生産性や土壌・作物の最適化" },
+    "environnement": { "title": "環境", "sub": "自然保護、資源管理" },
+    "agroalimentaire": { "title": "農食品", "sub": "加工、パッケージ、流通" },
+    "paysage": { "title": "ランドスケープ", "sub": "緑地や景観の設計・維持" },
+    "foret": { "title": "林業", "sub": "森林管理、伐採、更新" },
+    "marine": { "title": "水産・海洋", "sub": "漁業資源や海洋に関わる仕事" },
+    "autre-agriculture": { "title": "その他・まだ決めていない", "sub": "農林水産・環境全般、または検討中" }
+  },
+  "service": {
+    "tourisme": { "title": "観光", "sub": "案内、企画、おもてなし" },
+    "hotellerie": { "title": "ホスピタリティ", "sub": "宿泊、飲食、接客" },
+    "sport": { "title": "スポーツ", "sub": "指導、トレーニング、サポート" },
+    "evenementiel": { "title": "イベント", "sub": "企画、運営、進行" },
+    "rh": { "title": "人事（サービス業）", "sub": "採用、研修、給与まわり" },
+    "comptabilite": { "title": "会計・経理", "sub": "記帳、申告、数値整理" },
+    "banque": { "title": "銀行・保険", "sub": "商品提案、コンサル的販売" },
+    "autre-service": { "title": "その他・まだ決めていない", "sub": "サービス業全般、または検討中" }
+  }
+}

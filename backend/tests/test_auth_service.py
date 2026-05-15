@@ -17,6 +17,7 @@ def test_create_then_decode_token_round_trip():
     payload = decode_token(token)
     assert payload["user_id"] == 42
     assert payload["email"] == "me@example.com"
+    assert payload["typ"] == "access"
 
 
 def test_decode_invalid_token_raises():

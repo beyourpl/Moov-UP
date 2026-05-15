@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiPost } from "../data/apiClient.js";
 import { getSession, logoutUser } from "../data/authStorage.js";
 import { clearQuizDraft, loadQuizDraft, saveQuizDraft } from "../data/quizDraftStorage.js";
@@ -8,6 +8,7 @@ import { getQuizChoiceText, getQuizQuestionText, getText } from "../data/transla
 import { getSpecialtyChoiceText } from "../data/specialtyLabels.js";
 import { playQuizTickSound } from "../data/quizTickSound.js";
 import { useUiPreferences } from "../hooks/useUiPreferences.js";
+import { useNavigateBack } from "../hooks/useNavigateBack.js";
 import {
   QUESTION_ORDER,
   specialtyConfig,
@@ -113,14 +114,35 @@ function scrollToEl(element) {
   element?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function sanitizeAnswersFromDraft(raw) {
+  if (!raw || typeof raw !== "object") return {};
+  const out = {};
+  for (const qid of QUESTION_ORDER) {
+    const v = raw[qid];
+    if (v != null && String(v).trim() !== "") out[qid] = v;
+    else break;
+  }
+  return out;
+}
+
+function firstIncompleteStepIndex(answers) {
+  for (let i = 0; i < QUESTION_ORDER.length; i++) {
+    if (!answers[QUESTION_ORDER[i]]) return i;
+  }
+  return QUESTION_ORDER.length;
+}
+
 function readInitialQuizFromDraft() {
   const d = loadQuizDraft();
   if (d?.phase === "quiz" && d.answers && typeof d.answers === "object" && typeof d.stepIndex === "number") {
+    const answers = sanitizeAnswersFromDraft(d.answers);
+    const incomplete = firstIncompleteStepIndex(answers);
+    const stepIndex = Math.min(Math.max(0, d.stepIndex), incomplete, QUESTION_ORDER.length - 1);
     return {
-      answers: d.answers,
-      stepIndex: Math.min(Math.max(0, d.stepIndex), QUESTION_ORDER.length - 1),
+      answers,
+      stepIndex,
       phase: "quiz",
-      hadDraft: Object.keys(d.answers).length > 0,
+      hadDraft: Object.keys(answers).length > 0,
     };
   }
   return { answers: {}, stepIndex: 0, phase: "quiz", hadDraft: false };
@@ -143,6 +165,7 @@ function ChoiceButton({ title, sub, active, disabled, onClick }) {
 export default function QuizPage() {
   const navigate = useNavigate();
   const session = getSession();
+  const leaveToPreviousPage = useNavigateBack(session ? "/choice" : "/");
   const { language, quizTickSound } = useUiPreferences();
   const initialQuiz = readInitialQuizFromDraft();
   const [answers, setAnswers] = useState(() => initialQuiz.answers);
@@ -191,11 +214,16 @@ export default function QuizPage() {
   const answeredCount = Object.keys(answers).length;
   const isLastQuestion = stepIndex === QUESTION_ORDER.length - 1;
   const progressPercent = Math.round((stepIndex / QUESTION_ORDER.length) * 100);
-  const stepLabelTpl = getText(language, "quizMeta", "step", `Question ${stepIndex + 1} sur ${QUESTION_ORDER.length}`);
+  const stepLabelTpl = getText(
+    language,
+    "quizMeta",
+    "step",
+    `Question ${stepIndex + 1} of ${QUESTION_ORDER.length}`,
+  );
   const progressText =
     stepIndex < QUESTION_ORDER.length
       ? stepLabelTpl.replace(/\{n\}/g, String(stepIndex + 1))
-      : getText(language, "quizMeta", "pathGenerated", "Parcours généré");
+      : getText(language, "quizMeta", "pathGenerated", "Path generated");
   const canBack = stepIndex > 0 || phase === "loading" || phase === "error";
   const canGoPrev = phase === "quiz" && stepIndex > 0;
   const canGoNext = phase === "quiz" && Boolean(currentAnswer) && !advancing;
@@ -243,52 +271,67 @@ export default function QuizPage() {
   })();
 
   const ui = {
-    back: getText(language, "quiz", "back", "Retour"),
-    home: getText(language, "quiz", "home", "Accueil"),
-    logout: getText(language, "quiz", "logout", "Se déconnecter"),
+    back: getText(language, "quiz", "back", "Back"),
+    home: getText(language, "quiz", "home", "Home"),
+    logout: getText(language, "quiz", "logout", "Sign out"),
     title: getText(language, "quiz", "title", "Moov'Up"),
-    intro: getText(language, "quiz", "intro", "Réponds à 10 questions pour obtenir un parcours clair, personnalisé et réaliste, du brevet jusqu'au bac+5."),
-    loadingTitle: getText(language, "quiz", "loadingTitle", "Analyse du profil en cours..."),
-    loadingBody: getText(language, "quiz", "loadingBody", "Je prépare un parcours simple, lisible et cohérent avec ton profil."),
-    unavailableTitle: getText(language, "quiz", "unavailableTitle", "Parcours indisponible"),
-    resultTitle: getText(language, "quiz", "resultTitle", "Ton parcours recommandé"),
-    restart: getText(language, "quiz", "restart", "Recommencer"),
-    questionLabel: getText(language, "quiz", "questionLabel", "Question"),
-    guidedPathway: getText(language, "quiz", "guidedPathway", "Parcours guidé"),
-    analyzedProfile: getText(language, "quiz", "analyzedProfile", "Profil détecté"),
-    currentLevel: getText(language, "quiz", "currentLevel", "Ton niveau actuel"),
-    pathwayLabel: getText(language, "quiz", "pathwayLabel", "Chemin"),
-    definitionLabel: getText(language, "quiz", "definitionLabel", "Définition"),
-    officialSheet: getText(language, "quiz", "officialSheet", "Voir la fiche officielle"),
-    invalidProfile: getText(language, "quiz", "invalidProfile", "Impossible de proposer un parcours pour ce profil. Vérifie tes réponses ou réessaie plus tard."),
-    questionNavAria: getText(language, "quizMeta", "questionNav", "Navigation du questionnaire"),
-    quizPrevAria: getText(language, "quizMeta", "quizPrev", "Question précédente"),
-    quizNextAria: getText(language, "quizMeta", "quizNext", "Question suivante"),
-    sidePanelAria: getText(language, "quizMeta", "sidePanelAria", "Résumé du parcours"),
-    chooseToContinue: getText(language, "quizMeta", "chooseToContinue", "Choisis une réponse pour continuer"),
+    intro: getText(
+      language,
+      "quiz",
+      "intro",
+      "Answer 10 questions to get a clear, personalized and realistic path from middle school to master's level.",
+    ),
+    loadingTitle: getText(language, "quiz", "loadingTitle", "Analyzing profile..."),
+    loadingBody: getText(
+      language,
+      "quiz",
+      "loadingBody",
+      "Preparing a simple, readable path aligned with your profile.",
+    ),
+    unavailableTitle: getText(language, "quiz", "unavailableTitle", "Path unavailable"),
+    resultTitle: getText(language, "quiz", "resultTitle", "Your recommended path"),
+    restart: getText(language, "quiz", "restart", "Restart"),
+    questionLabel: getText(language, "quizMeta", "questionLabel", "Question"),
+    guidedPathway: getText(language, "quizMeta", "guidedPathway", "Guided pathway"),
+    analyzedProfile: getText(language, "quizMeta", "analyzedProfile", "Detected profile"),
+    currentLevel: getText(language, "quizMeta", "currentLevel", "Your current level"),
+    pathwayLabel: getText(language, "quizMeta", "pathwayLabel", "Path"),
+    definitionLabel: getText(language, "quizMeta", "definitionLabel", "Definition"),
+    officialSheet: getText(language, "quizMeta", "officialSheet", "View official sheet"),
+    invalidProfile: getText(
+      language,
+      "quizMeta",
+      "invalidProfile",
+      "We could not suggest a path for this profile. Check your answers or try again later.",
+    ),
+    questionNavAria: getText(language, "quizMeta", "questionNav", "Questionnaire navigation"),
+    quizPrevAria: getText(language, "quizMeta", "quizPrev", "Previous question"),
+    quizNextAria: getText(language, "quizMeta", "quizNext", "Next question"),
+    sidePanelAria: getText(language, "quizMeta", "sidePanelAria", "Pathway summary"),
+    chooseToContinue: getText(language, "quizMeta", "chooseToContinue", "Choose an answer to continue"),
     sideArrowsBody: getText(
       language,
       "quizMeta",
       "sideArrowsBody",
-      "Les flèches te permettent de corriger ou confirmer ton parcours à tout moment pendant le questionnaire.",
+      "Use the arrows to correct or confirm your path at any time during the questionnaire.",
     ),
-    noAnswer: getText(language, "quizMeta", "noAnswer", "Aucune réponse"),
+    noAnswer: getText(language, "quizMeta", "noAnswer", "No answer"),
     selectOptionHint: getText(
       language,
       "quizMeta",
       "selectOption",
-      "Sélectionne une option pour voir le résumé ici.",
+      "Select an option to see the summary here.",
     ),
-    errorTitle: getText(language, "quizMeta", "errorTitle", "Une erreur est survenue"),
-    retry: getText(language, "quizMeta", "retry", "Réessayer"),
+    errorTitle: getText(language, "quizMeta", "errorTitle", "Something went wrong"),
+    retry: getText(language, "quizMeta", "retry", "Try again"),
     resumeDraftBody: getText(
       language,
       "quizMeta",
       "resumeDraftBody",
-      "Ton questionnaire a été repris automatiquement là où tu t'étais arrêté.",
+      "Your questionnaire was resumed automatically where you left off.",
     ),
     resumeDraftOk: getText(language, "quizMeta", "resumeDraftOk", "OK"),
-    questionProgress: getText(language, "quizMeta", "questionProgress", "{answered}/10 complétées"),
+    questionProgress: getText(language, "quizMeta", "questionProgress", "{answered}/10 completed"),
   };
 
   const answerQuestion = useCallback((questionId, value) => {
@@ -464,9 +507,16 @@ export default function QuizPage() {
   return (
     <div className="app quiz-app">
       <div className="top-actions quiz-top">
-        <Link to="/" className="quiz-site-link">← Moov&apos;Up</Link>
+        <button
+          type="button"
+          className="quiz-site-link"
+          onClick={leaveToPreviousPage}
+          aria-label={getText(language, "common", "navBackAria", "Revenir à la page précédente")}
+        >
+          ← {getText(language, "common", "back", "Retour")}
+        </button>
         <div className="quiz-top-btns">
-          <span className="user-pill">{session?.pseudo || getText(language, "coach", "visitor", "Utilisateur")}</span>
+          <span className="user-pill">{session?.pseudo || getText(language, "coach", "visitor", "User")}</span>
           <button type="button" className="nav-btn secondary" disabled={!canBack} onClick={goBack}>{ui.back}</button>
           <button type="button" className="nav-btn primary" onClick={goHome}>{ui.home}</button>
           <button type="button" className="nav-btn secondary" onClick={handleLogout}>{ui.logout}</button>
@@ -560,17 +610,17 @@ export default function QuizPage() {
 
           <aside className="quiz-side" aria-label={ui.sidePanelAria}>
             <div className="quiz-side-card quiz-side-card-highlight">
-              <p className="quiz-side-kicker">{getText(language, "quizMeta", "smoothNavigation", "Navigation fluide")}</p>
-              <h3>{getText(language, "quizMeta", "goBack", "Reviens en arrière sans perdre tes réponses.")}</h3>
+              <p className="quiz-side-kicker">{getText(language, "quizMeta", "smoothNavigation", "Smooth navigation")}</p>
+              <h3>{getText(language, "quizMeta", "goBack", "Go back without losing your answers.")}</h3>
               <p>{ui.sideArrowsBody}</p>
             </div>
             <div className="quiz-side-card">
-              <p className="quiz-side-kicker">{getText(language, "quizMeta", "currentAnswer", "Réponse actuelle")}</p>
+              <p className="quiz-side-kicker">{getText(language, "quizMeta", "currentAnswer", "Current answer")}</p>
               <h3>{currentChoice ? currentChoice.title : ui.noAnswer}</h3>
               <p>{currentChoice?.sub || ui.selectOptionHint}</p>
             </div>
             <div className="quiz-side-card">
-              <p className="quiz-side-kicker">{getText(language, "quizMeta", "questionRecap", "Rappel de la question")}</p>
+              <p className="quiz-side-kicker">{getText(language, "quizMeta", "questionRecap", "Question recap")}</p>
               <h3>{translatedQuestion?.title || currentQuestion.title}</h3>
               <p>{translatedQuestion?.body || currentQuestion.body}</p>
             </div>

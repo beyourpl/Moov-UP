@@ -20,6 +20,7 @@ dependencies = [
     "beautifulsoup4>=4.12",
     "python-multipart>=0.0.9",
     "slowapi>=0.1.9",
+    "pyotp>=2.9",
 ]
 
 [project.optional-dependencies]

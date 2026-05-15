@@ -4,10 +4,14 @@ import { getLastConversationId } from "../data/conversationStorage.js";
 import ReactMarkdown from "react-markdown";
 import { apiGet, apiPost } from "../data/apiClient.js";
 import { getSession, logoutUser } from "../data/authStorage.js";
+import { getPartenairesOffer } from "../data/partenairesSession.js";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import PathwaySummaryModal from "../components/PathwaySummaryModal.jsx";
 import { useTranslation } from "../hooks/useTranslation.js";
+import { useNavigateBack } from "../hooks/useNavigateBack.js";
 import { stripTrailingOnisepFromAssistantText } from "../data/chatMessageCleanup.js";
+import { detectLegacyCoachStubReply } from "../data/chatLegacyStub.js";
+import { getCoachQuotaState, reconcileCoachUsageAfterSend, syncCoachUsageFromHistory } from "../data/usageQuota.js";
 
 function useQueryParam(key) {
   const { search } = useLocation();
@@ -87,6 +91,7 @@ export default function ChatbotPage() {
   const { t, language } = useTranslation();
   const tc = (key, fallback) => t("coach", key, fallback);
   const navigate = useNavigate();
+  const goBackPage = useNavigateBack("/choice");
   const cid = useQueryParam("cid");
   const session = getSession();
   const userInitial = session?.email?.trim()?.[0] ?? "?";
@@ -98,6 +103,7 @@ export default function ChatbotPage() {
   const [error, setError] = useState("");
   const [pathwayOpen, setPathwayOpen] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
+  const [apiHealth, setApiHealth] = useState(null);
   const scrollRef = useRef(null);
   const textareaRef = useRef(null);
 
@@ -113,10 +119,19 @@ export default function ChatbotPage() {
 
   useEffect(() => {
     if (!cid) return;
+    apiGet("/api/health")
+      .then(setApiHealth)
+      .catch(() => setApiHealth(null));
+  }, [cid]);
+
+  useEffect(() => {
+    if (!cid) return;
     apiGet(`/api/conversations/${cid}`)
       .then((c) => {
         setConv(c);
-        setHistory(c.messages || []);
+        const msgs = c.messages || [];
+        syncCoachUsageFromHistory(msgs);
+        setHistory(msgs);
         setRecs(c.initial_recommendations || []);
       })
       .catch((e) => setError(e.message || tc("convNotFound", "Conversation introuvable")));
@@ -138,11 +153,27 @@ export default function ChatbotPage() {
     if (e) e.preventDefault();
     const trimmed = input.trim();
     if (!trimmed || sending) return;
-    setSending(true); setError("");
+    const quota = getCoachQuotaState();
+    if (!quota.isUnlimited && quota.blocked) {
+      setError(
+        tc(
+          "quotaExceeded",
+          "Tu as atteint la limite gratuite de messages. Passe à l’offre Premium pour continuer à utiliser Moov’Coach sans limite."
+        )
+      );
+      return;
+    }
+    setSending(true);
+    setError("");
     setHistory((h) => [...h, { role: "user", content: trimmed }]);
     setInput("");
     try {
-      const res = await apiPost("/api/chat", { conversation_id: Number(cid), message: trimmed });
+      const res = await apiPost("/api/chat", {
+        conversation_id: Number(cid),
+        message: trimmed,
+        language,
+      });
+      reconcileCoachUsageAfterSend(res.updated_history || []);
       setHistory(res.updated_history);
       setRecs(res.recommended_metiers);
     } catch (err) {
@@ -170,6 +201,17 @@ export default function ChatbotPage() {
       "Pose ta première question (ex : « Quel est le salaire ? », « Et en alternance ? »)."
     );
   }, [history.length, language, t]);
+
+  const legacyStubDetected = useMemo(() => {
+    const lastA = [...history].reverse().find((m) => m.role === "assistant");
+    return detectLegacyCoachStubReply(lastA?.content);
+  }, [history]);
+
+  const devApiMissingOpenRouter =
+    apiHealth?.flavor === "nodejs-dev-api" && apiHealth?.coach_llm_configured === false;
+
+  const premiumOffer = getPartenairesOffer()?.offer;
+  const coachQuota = useMemo(() => getCoachQuotaState(), [history.length, premiumOffer]);
 
   const shareUrl =
     cid && typeof window !== "undefined"
@@ -233,10 +275,20 @@ export default function ChatbotPage() {
     <div className="app chatbot-app">
       <header className="chatbot-navbar">
         <div className="chatbot-navbar-inner">
-          <Link to="/" className="chatbot-nav-brand" aria-label={tc("brandHomeAria", "Moov'Up — accueil")}>
-            <BrandMark />
-            <span>Moov&apos;Up</span>
-          </Link>
+          <div className="chatbot-nav-left">
+            <button
+              type="button"
+              className="chatbot-nav-back"
+              onClick={goBackPage}
+              aria-label={t("common", "navBackAria", "Revenir à la page précédente")}
+            >
+              ← {t("common", "back", "Retour")}
+            </button>
+            <Link to="/" className="chatbot-nav-brand" aria-label={tc("brandHomeAria", "Moov'Up — accueil")}>
+              <BrandMark />
+              <span>Moov&apos;Up</span>
+            </Link>
+          </div>
           <div className="chatbot-nav-actions">
             <TopBarAccountTools className="chatbot-topbar-tools" />
             <Link to="/demo" className="nav-btn secondary">{tc("retakeQuiz", "Refaire le quiz")}</Link>
@@ -263,6 +315,43 @@ export default function ChatbotPage() {
         </div>
       </section>
 
+      {(legacyStubDetected || devApiMissingOpenRouter) ? (
+        <div className="chatbot-health-banner" role="status">
+          <ReactMarkdown>
+            {(
+              legacyStubDetected
+                ? t("coach", "legacyCoachBanner", "")
+                : t("coach", "devApiNoOpenRouterBanner", "")
+            ).trim()}
+          </ReactMarkdown>
+        </div>
+      ) : null}
+
+      {cid ? (
+        <div
+          className={`chatbot-quota-banner${coachQuota.isUnlimited ? " chatbot-quota-banner--premium" : ""}${!coachQuota.isUnlimited && coachQuota.blocked ? " chatbot-quota-banner--blocked" : ""}`}
+        >
+          <ReactMarkdown>
+            {coachQuota.isUnlimited
+              ? tc(
+                  "quotaBannerPremium",
+                  "Tu es en **Premium B2C** : messages Moov’Coach illimités (dans cette démo)."
+                )
+              : tc(
+                  "quotaBanner",
+                  "Offre gratuite : il te reste **{remaining}** message(s) Moov’Coach sur **{limit}** inclus."
+                )
+                  .replace(/\{remaining\}/g, String(coachQuota.remaining))
+                  .replace(/\{limit\}/g, String(coachQuota.limit))}
+          </ReactMarkdown>
+          {!coachQuota.isUnlimited && coachQuota.blocked ? (
+            <Link to="/partenaires/offres" className="lp-btn lp-btn-primary lp-btn-sm chatbot-quota-cta">
+              {tc("quotaUpgradeCta", "Voir les offres et passer en Premium")}
+            </Link>
+          ) : null}
+        </div>
+      ) : null}
+
       <div className="chatbot-grid">
         <aside className="chatbot-aside" aria-label={tc("recJobsAsideAria", "Métiers recommandés")}>
           <div className="chatbot-aside-head">
@@ -276,28 +365,64 @@ export default function ChatbotPage() {
                 {hit.metier?.description && (
                   <p className="chatbot-rec-desc">{hit.metier.description.slice(0, 160)}…</p>
                 )}
-                {hit.metier?.lien_onisep && (
-                  <a href={hit.metier.lien_onisep} target="_blank" rel="noopener noreferrer" className="chatbot-rec-link">
-                    {tc("onisepSheet", "Fiche ONISEP →")}
-                  </a>
-                )}
-                {hit.formations?.length > 0 && (
-                  <details className="chatbot-rec-formations">
-                    <summary>
-                      {tc("formationsAccessible", "{count} formations accessibles").replace(
-                        "{count}",
-                        String(hit.formations.length)
-                      )}
-                    </summary>
-                    <ul>
-                      {hit.formations.slice(0, 5).map((f, j) => (
-                        <li key={j}>
-                          <a href={f.lien} target="_blank" rel="noopener noreferrer">{f.libelle}</a>
-                          {f.niveau_label && <span className="chatbot-rec-niveau"> · {f.niveau_label}</span>}
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
+                {(hit.metier?.lien_onisep || (hit.formations?.length > 0)) && (
+                  <div className="chatbot-rec-actions">
+                    {hit.metier?.lien_onisep && (
+                      <a
+                        href={hit.metier.lien_onisep}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="chatbot-rec-onisep"
+                      >
+                        <span className="chatbot-rec-onisep-icon" aria-hidden>
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                            <line x1="10" y1="9" x2="8" y2="9" />
+                          </svg>
+                        </span>
+                        <span className="chatbot-rec-onisep-label">{tc("onisepSheet", "Fiche ONISEP")}</span>
+                        <span className="chatbot-rec-onisep-external" aria-hidden>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                            <polyline points="15 3 21 3 21 9" />
+                            <line x1="10" y1="14" x2="21" y2="3" />
+                          </svg>
+                        </span>
+                      </a>
+                    )}
+                    {hit.formations?.length > 0 && (
+                      <details className="chatbot-rec-formations">
+                        <summary className="chatbot-rec-formations-summary">
+                          <span className="chatbot-rec-formations-chevron" aria-hidden>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="9 18 15 12 9 6" />
+                            </svg>
+                          </span>
+                          <span className="chatbot-rec-formations-label">
+                            {hit.formations.length === 1
+                              ? tc("formationsAccessibleOne", "1 formation accessible")
+                              : tc("formationsAccessible", "{count} formations accessibles").replace(
+                                  "{count}",
+                                  String(hit.formations.length)
+                                )}
+                          </span>
+                        </summary>
+                        <ul className="chatbot-rec-formations-list">
+                          {hit.formations.slice(0, 5).map((f, j) => (
+                            <li key={j}>
+                              <a href={f.lien} target="_blank" rel="noopener noreferrer">
+                                {f.libelle}
+                              </a>
+                              {f.niveau_label && <span className="chatbot-rec-niveau"> · {f.niveau_label}</span>}
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    )}
+                  </div>
                 )}
               </article>
             ))}
@@ -336,13 +461,13 @@ export default function ChatbotPage() {
                 onKeyDown={onKeyDown}
                 placeholder={tc("placeholder", "Pose ta question à Moov'Coach…")}
                 rows={1}
-                disabled={sending}
+                disabled={sending || (!coachQuota.isUnlimited && coachQuota.blocked)}
                 aria-label={tc("yourMessageAria", "Ton message")}
               />
               <button
                 type="submit"
                 className="chatbot-send-icon"
-                disabled={sending || !input.trim()}
+                disabled={sending || !input.trim() || (!coachQuota.isUnlimited && coachQuota.blocked)}
                 aria-label={tc("sendAria", "Envoyer le message")}
                 title={tc("sendTitle", "Envoyer (Entrée)")}
               >

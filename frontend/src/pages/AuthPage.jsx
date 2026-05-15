@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import PartenairesAudienceSwitch from "../components/PartenairesAudienceSwitch.jsx";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
-import { CLIENT_BUILD_ID } from "../clientBuildId.js";
-import { getSession, loginUser, logoutUser, registerUser } from "../data/authStorage.js";
+import { getSession, loginUser, logoutUser, registerUser, completeLogin2FA } from "../data/authStorage.js";
+import { getPostAuthLandingPath } from "../data/partenairesSession.js";
 import { useTranslation } from "../hooks/useTranslation.js";
+import { useNavigateBack } from "../hooks/useNavigateBack.js";
 
 function validateEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -11,6 +13,7 @@ function validateEmail(value) {
 
 export default function AuthPage() {
   const navigate = useNavigate();
+  const goBackPage = useNavigateBack("/");
   const { t, language } = useTranslation();
   const [session, setSession] = useState(() => getSession());
 
@@ -21,6 +24,8 @@ export default function AuthPage() {
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [twoFaTempToken, setTwoFaTempToken] = useState(null);
+  const [twoFaCode, setTwoFaCode] = useState("");
 
   const emailValid = useMemo(() => validateEmail(email), [email]);
   const isRegister = mode === "register";
@@ -87,6 +92,16 @@ export default function AuthPage() {
       pwdRuleLen: t("auth", "pwdRuleLen", "Au moins 10 caractères"),
       pwdRuleDigit: t("auth", "pwdRuleDigit", "Au moins 1 chiffre"),
       pwdRuleSymbol: t("auth", "pwdRuleSymbol", "Au moins 1 symbole (!@#$…)"),
+      twoFaTitle: t("auth", "twoFaTitle", "Code de double authentification"),
+      twoFaLead: t(
+        "auth",
+        "twoFaLead",
+        "Ouvre ton appli (Google Authenticator, Microsoft Authenticator, etc.) et saisis le code à 6 chiffres."
+      ),
+      twoFaCode: t("auth", "twoFaCode", "Code à 6 chiffres"),
+      twoFaSubmit: t("auth", "twoFaSubmit", "Valider et continuer"),
+      twoFaBack: t("auth", "twoFaBack", "Modifier email ou mot de passe"),
+      twoFaAppShort: t("auth", "twoFaAppShort", "Application d’authentification (TOTP)"),
     }),
     [t, language]
   );
@@ -107,6 +122,8 @@ export default function AuthPage() {
     setMode(next);
     setServerError("");
     setSubmitted(false);
+    setTwoFaTempToken(null);
+    setTwoFaCode("");
   };
 
   const handleLogout = () => {
@@ -122,9 +139,16 @@ export default function AuthPage() {
     setLoading(true);
     try {
       if (isRegister) await registerUser(email, password);
-      else await loginUser(email, password);
+      else {
+        const result = await loginUser(email, password);
+        if (result.needs2fa) {
+          setTwoFaTempToken(result.tempToken);
+          setLoading(false);
+          return;
+        }
+      }
       setSession(getSession());
-      navigate("/choice");
+      navigate(getPostAuthLandingPath(), { replace: true });
     } catch (err) {
       setServerError(
         err.message || t("auth", "errorServer", "Une erreur est survenue, réessaie.")
@@ -132,6 +156,34 @@ export default function AuthPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const submitTwoFa = async (e) => {
+    e.preventDefault();
+    setServerError("");
+    const clean = twoFaCode.replace(/\s/g, "");
+    if (!/^\d{6,8}$/.test(clean)) {
+      setServerError(t("auth", "twoFaInvalid", "Code incorrect."));
+      return;
+    }
+    setLoading(true);
+    try {
+      await completeLogin2FA(twoFaTempToken, clean);
+      setTwoFaTempToken(null);
+      setTwoFaCode("");
+      setSession(getSession());
+      navigate(getPostAuthLandingPath(), { replace: true });
+    } catch (err) {
+      setServerError(err.message || t("auth", "twoFaInvalid", "Code incorrect."));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const cancelTwoFa = () => {
+    setTwoFaTempToken(null);
+    setTwoFaCode("");
+    setServerError("");
   };
 
   const emailError = submitted && !emailValid ? ui.emailInvalid : "";
@@ -142,6 +194,15 @@ export default function AuthPage() {
         <div className="lp-header-inner">
           <Link to="/" className="lp-logo">Moov&apos;Up</Link>
           <nav className="lp-nav" aria-label={t("a11y", "mainNav", "Navigation principale")}>
+            <button
+              type="button"
+              className="lp-nav-back"
+              onClick={goBackPage}
+              aria-label={t("common", "navBackAria", "Revenir à la page précédente")}
+            >
+              ← {t("common", "back", "Retour")}
+            </button>
+            <PartenairesAudienceSwitch active="jeunes" />
             <Link to="/">{ui.home}</Link>
           </nav>
           <div className="lp-header-cta">
@@ -165,10 +226,14 @@ export default function AuthPage() {
           <div className="lp-container">
             <p className="lp-eyebrow auth-eyebrow">{ui.eyebrow}</p>
             <h1 className="lp-title auth-hero-title">
-              {isRegister ? ui.heroRegister : ui.heroLogin}
+              {twoFaTempToken ? ui.twoFaTitle : isRegister ? ui.heroRegister : ui.heroLogin}
             </h1>
             <p className="lp-lead auth-hero-lead">
-              {isRegister ? ui.leadRegister : ui.leadLogin}
+              {twoFaTempToken
+                ? ui.twoFaLead
+                : isRegister
+                  ? ui.leadRegister
+                  : ui.leadLogin}
             </p>
           </div>
         </section>
@@ -220,23 +285,56 @@ export default function AuthPage() {
                   <button
                     type="button"
                     role="tab"
-                    aria-selected={!isRegister}
-                    className={`auth-tab${!isRegister ? " active" : ""}`}
+                    aria-selected={!isRegister && !twoFaTempToken}
+                    className={`auth-tab${!isRegister && !twoFaTempToken ? " active" : ""}`}
                     onClick={() => switchMode("login")}
+                    disabled={Boolean(twoFaTempToken)}
                   >
                     {ui.loginTab}
                   </button>
                   <button
                     type="button"
                     role="tab"
-                    aria-selected={isRegister}
-                    className={`auth-tab${isRegister ? " active" : ""}`}
+                    aria-selected={!!isRegister && !twoFaTempToken}
+                    className={`auth-tab${isRegister && !twoFaTempToken ? " active" : ""}`}
                     onClick={() => switchMode("register")}
+                    disabled={Boolean(twoFaTempToken)}
                   >
                     {ui.registerTab}
                   </button>
                 </div>
 
+                {twoFaTempToken ? (
+                  <form className="auth-form" onSubmit={submitTwoFa} noValidate>
+                    <p className="auth-inline-hint">{ui.twoFaAppShort}</p>
+                    <label className="auth-field">
+                      <span className="auth-field-label">{ui.twoFaCode}</span>
+                      <input
+                        id="auth-2fa-code"
+                        type="text"
+                        name="otp"
+                        inputMode="numeric"
+                        autoComplete="one-time-code"
+                        placeholder="123456"
+                        value={twoFaCode}
+                        onChange={(e) => setTwoFaCode(e.target.value)}
+                        aria-invalid={Boolean(serverError)}
+                      />
+                    </label>
+                    {serverError ? (
+                      <p className="auth-error" role="alert">{serverError}</p>
+                    ) : null}
+                    <div className="auth-2fa-actions">
+                      <button type="button" className="auth-link auth-2fa-back" onClick={cancelTwoFa}>
+                        {ui.twoFaBack}
+                      </button>
+                      <button type="submit" className="auth-submit" disabled={loading}>
+                        <span>{loading ? "…" : ui.twoFaSubmit}</span>
+                        <span className="auth-submit-arrow" aria-hidden="true">→</span>
+                      </button>
+                    </div>
+                  </form>
+                ) : (
                 <form className="auth-form" onSubmit={submit} noValidate>
                   <label className="auth-field">
                     <span className="auth-field-label">{ui.email}</span>
@@ -308,9 +406,10 @@ export default function AuthPage() {
                     <span className="auth-submit-arrow" aria-hidden="true">→</span>
                   </button>
                 </form>
+                )}
 
                 <p className="auth-switch-row">
-                  {isRegister ? (
+                  {twoFaTempToken ? null : isRegister ? (
                     <>
                       {ui.alreadyAccount}{" "}
                       <button type="button" className="auth-link" onClick={() => switchMode("login")}>
@@ -325,9 +424,6 @@ export default function AuthPage() {
                       </button>
                     </>
                   )}
-                </p>
-                <p className="auth-build-id" title="Si ce libellé manque ou est ancien, le navigateur n’a pas le dernier déploiement.">
-                  {CLIENT_BUILD_ID}
                 </p>
               </div>
             </div>

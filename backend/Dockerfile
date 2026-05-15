@@ -10,7 +10,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 COPY pyproject.toml ./
-RUN pip install --upgrade pip && pip install -e ".[dev]"
+# PyTorch depuis PyPI embarque CUDA (~2 Go+ de wheels NVIDIA) : inutile sur VPS CPU.
+# On fixe d’abord torch CPU (index PyTorch), puis le reste — déploiements beaucoup plus rapides / légers.
+RUN pip install --upgrade pip \
+ && pip install --index-url https://download.pytorch.org/whl/cpu torch \
+ && pip install -e .
 
 COPY src/ ./src/
 COPY scripts/ ./scripts/

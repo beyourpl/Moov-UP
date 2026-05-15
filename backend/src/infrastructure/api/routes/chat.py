@@ -56,7 +56,10 @@ async def chat(
     ]
     logger.info("[chat] rag top_metiers (libellé, score): %s", metier_with_scores)
 
-    messages = build_prompt(conv.profile_text, history, rag_ctx, body.message)
+    lang = (body.language or "fr").strip().lower().split("-", 1)[0] or "fr"
+    messages = build_prompt(
+        conv.profile_text, history, rag_ctx, body.message, ui_language=lang
+    )
     logger.debug("[chat] prompt_system=%r", messages[0]["content"][:300])
     logger.debug("[chat] prompt_user_block=%r", messages[1]["content"][:1500])
 

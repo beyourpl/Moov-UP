@@ -18,7 +18,6 @@ export default function AccountProfileModal({ open, onClose }) {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
-    pseudo: "",
     age: "",
     city: "",
   });
@@ -31,7 +30,6 @@ export default function AccountProfileModal({ open, onClose }) {
     setForm({
       firstName: p.firstName || "",
       lastName: p.lastName || "",
-      pseudo: p.pseudo || "",
       age: p.age || "",
       city: p.city || "",
     });
@@ -96,7 +94,7 @@ export default function AccountProfileModal({ open, onClose }) {
             <p id="account-modal-desc" className="account-modal-lead">
               {ta(
                 "subtitle",
-                "Mets à jour les infos affichées sur ton compte. L’email reste celui de la connexion."
+                "Renseigne les informations ci-dessous : elles personnalisent ton affichage (accueil, questionnaire) et aident Moov’Coach à te répondre de façon adaptée. L’email reste ton identifiant de connexion et ne peut pas être modifié ici."
               )}
             </p>
           </div>
@@ -117,6 +115,7 @@ export default function AccountProfileModal({ open, onClose }) {
             </h3>
             <label className="account-field">
               <span>{ta("emailLabel", "Email (compte)")}</span>
+              <small className="account-field-hint">{ta("hintEmail", "Non modifiable : adresse utilisée pour te connecter.")}</small>
               <input
                 type="email"
                 className="account-input account-input--readonly"
@@ -132,28 +131,45 @@ export default function AccountProfileModal({ open, onClose }) {
             <h3 id="account-section-profile" className="account-modal-section-title">
               {ta("sectionProfile", "Identité")}
             </h3>
+            <p className="account-modal-section-intro">
+              {ta(
+                "identityIntro",
+                "À remplir par toi (tout est facultatif sauf si tu veux un profil plus précis) :"
+              )}
+            </p>
             <div className="account-grid">
               <label className="account-field">
                 <span>{ta("firstName", "Prénom")}</span>
+                <small className="account-field-hint">
+                  {ta("hintFirstName", "Ton prénom ou la forme courte avec laquelle tu veux être appelé·e.")}
+                </small>
                 <input type="text" value={form.firstName} onChange={onChange("firstName")} autoComplete="given-name" />
               </label>
               <label className="account-field">
                 <span>{ta("lastName", "Nom")}</span>
+                <small className="account-field-hint">
+                  {ta("hintLastName", "Ton nom de famille (utile pour les documents ou un ton plus formel).")}
+                </small>
                 <input type="text" value={form.lastName} onChange={onChange("lastName")} autoComplete="family-name" />
               </label>
             </div>
             <div className="account-grid">
-              <label className="account-field">
-                <span>{ta("pseudo", "Pseudo")}</span>
-                <input type="text" value={form.pseudo} onChange={onChange("pseudo")} autoComplete="nickname" />
-              </label>
-              <label className="account-field">
+              <label className="account-field account-field--span-full">
                 <span>{ta("age", "Âge")}</span>
+                <small className="account-field-hint">
+                  {ta("hintAge", "Ton âge en années (chiffres), pour calibrer le niveau de langue et les exemples.")}
+                </small>
                 <input type="text" inputMode="numeric" value={form.age} onChange={onChange("age")} />
               </label>
             </div>
             <label className="account-field">
-              <span>{ta("city", "Ville")}</span>
+              <span>{ta("city", "Ville ou région")}</span>
+              <small className="account-field-hint">
+                {ta(
+                  "hintCity",
+                  "Lieu où tu étudies ou où tu cherches une formation / un emploi, pour contextualiser les pistes."
+                )}
+              </small>
               <input type="text" value={form.city} onChange={onChange("city")} autoComplete="address-level2" />
             </label>
           </section>

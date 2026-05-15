@@ -1,0 +1,112 @@
+{
+  "tech": {
+    "cyber": { "title": "网络安全", "sub": "保护系统、网络与数据安全" },
+    "dev": { "title": "软件开发", "sub": "开发应用、网站、软件或服务" },
+    "reseaux": { "title": "网络与基础设施", "sub": "安装、维护与管理网络基础设施" },
+    "web": { "title": "网站建设", "sub": "制作网站界面与线上服务" },
+    "data": { "title": "数据分析", "sub": "处理、分析与利用数据" },
+    "ia": { "title": "人工智能", "sub": "设计智能自动化工具与应用" },
+    "cloud": { "title": "云计算", "sub": "部署远程服务与云上基础设施" },
+    "support": { "title": "IT支持与运维", "sub": "排障、维护与日常使用支持" },
+    "qa": { "title": "测试与质量", "sub": "验证、保障与强化软件质量" },
+    "autre-tech": { "title": "其他 / 还在了解", "sub": "更宽泛的科技方向或尚未选定" }
+  },
+  "business": {
+    "commerce": { "title": "商务拓展", "sub": "销售、客户关系与谈判" },
+    "marketing": { "title": "市场营销", "sub": "传播、策略与品牌" },
+    "management": { "title": "管理", "sub": "组织、协调与团队推进" },
+    "finance": { "title": "财务", "sub": "预算、分析与财务管控" },
+    "rh": { "title": "人力资源", "sub": "招聘、员工关系与人才管理" },
+    "entrepreneuriat": { "title": "创业", "sub": "发起、运营并发展项目" },
+    "vente": { "title": "销售", "sub": "推介、说服与拓展客户" },
+    "gestion-projet": { "title": "项目管理", "sub": "统筹进度、优先级与团队协作" },
+    "relation-client": { "title": "客户服务", "sub": "支持、留存与满足客户需求" },
+    "autre-business": { "title": "其他 / 还在了解", "sub": "更宽泛的商科方向或尚未选定" }
+  },
+  "creative": {
+    "graphisme": { "title": "平面设计", "sub": "视觉识别、海报与数字素材" },
+    "design": { "title": "数字设计", "sub": "面向屏幕与产品的视觉设计" },
+    "audiovisuel": { "title": "视听制作", "sub": "影像、视频、拍摄与叙事" },
+    "uxui": { "title": "UX/UI 设计", "sub": "设计好用又美观的界面" },
+    "animation": { "title": "动画", "sub": "让画面、视频或内容动起来" },
+    "photo": { "title": "摄影", "sub": "拍摄、构图、后期与叙事" },
+    "direction-artistique": { "title": "艺术指导", "sub": "把控视觉风格与创意概念" },
+    "montage": { "title": "剪辑", "sub": "组接节奏，完成视听叙事" },
+    "motion-design": { "title": "动效设计", "sub": "用动态图形解释或吸引注意" },
+    "autre-creative": { "title": "其他 / 还在了解", "sub": "更宽泛的创意方向或尚未选定" }
+  },
+  "sante": {
+    "medecine": { "title": "医学", "sub": "诊断、治疗与处方" },
+    "soins-infirmiers": { "title": "护理", "sub": "照护、协助与监护" },
+    "kinesitherapie": { "title": "康复治疗", "sub": "康复训练、行动与疼痛管理" },
+    "sage-femme": { "title": "助产", "sub": "产前产后照护与分娩支持" },
+    "pharmacie": { "title": "药学", "sub": "配药与用药指导" },
+    "odontologie": { "title": "口腔医学", "sub": "口腔治疗、修复与小型手术" },
+    "psychologie": { "title": "心理咨询", "sub": "倾听、评估与心理支持" },
+    "aide-soignante": { "title": "护理辅助", "sub": "协助日常生活照护" },
+    "ergotherapie": { "title": "作业治疗", "sub": "恢复独立生活能力与环境适应" },
+    "autre-sante": { "title": "其他 / 还在了解", "sub": "更宽泛的医疗健康方向或尚未选定" }
+  },
+  "education": {
+    "enseignant": { "title": "教师", "sub": "讲授与传承知识" },
+    "education-specialisee": { "title": "特殊教育", "sub": "支持学习困难或有特殊需求的学生" },
+    "direction-ecole": { "title": "学校管理", "sub": "负责学校运行与教育质量" },
+    "formation-adulte": { "title": "成人教育与培训", "sub": "为转型或在职成人提供培训" },
+    "soutien-scolaire": { "title": "课外辅导", "sub": "帮助学生补强学业" },
+    "animation": { "title": "活动带领", "sub": "组织并带领教学活动" },
+    "orientation": { "title": "升学与职业指导", "sub": "陪伴生涯与选课决策" },
+    "pedagogie": { "title": "教学研究", "sub": "设计教学方法与课程" },
+    "autre-education": { "title": "其他 / 还在了解", "sub": "更宽泛的教育方向或尚未选定" }
+  },
+  "droit": {
+    "avocat": { "title": "律师", "sub": "辩护、咨询与出庭" },
+    "magistrat": { "title": "法官", "sub": "审理案件、适用法律" },
+    "notaire": { "title": "公证员", "sub": "办理具有公信力的法律文书" },
+    "huissier": { "title": "执达员／司法送达", "sub": "送达文书与执行裁决" },
+    "juriste": { "title": "企业法务", "sub": "合规、合同与法律风险" },
+    "police-judiciaire": { "title": "刑侦与司法警务", "sub": "调查与取证工作" },
+    "droit-immobilier": { "title": "不动产法", "sub": "交易、租赁与产权相关" },
+    "droit-travail": { "title": "劳动与雇佣法", "sub": "雇佣关系与劳资争议" },
+    "autre-droit": { "title": "其他 / 还在了解", "sub": "更宽泛的法律方向或尚未选定" }
+  },
+  "industrie": {
+    "ingenierie": { "title": "工程与设计", "sub": "设计、计算与优化工艺" },
+    "production": { "title": "生产制造", "sub": "加工、组装与产线运行" },
+    "maintenance": { "title": "设备维护", "sub": "维修、保养与预防性维护" },
+    "qualite": { "title": "质量管控", "sub": "检验、认证与改进" },
+    "logistique": { "title": "物流与仓储", "sub": "供应链、入库与配送" },
+    "achats": { "title": "采购", "sub": "选商、议价与订货" },
+    "bureau-etudes": { "title": "设计室 / 工程制图", "sub": "图纸、方案与技术文件" },
+    "autre-industrie": { "title": "其他 / 还在了解", "sub": "更宽泛的工业方向或尚未选定" }
+  },
+  "batiment": {
+    "architecture": { "title": "建筑设计", "sub": "建筑方案与空间设计" },
+    "btp": { "title": "建筑施工", "sub": "土建、结构与装饰施工" },
+    "genie-civil": { "title": "土木工程", "sub": "路桥、管网等基础设施" },
+    "batiment-durable": { "title": "绿色建筑", "sub": "节能、环保建造技术" },
+    "architecture-interieur": { "title": "室内设计", "sub": "空间布局与软装陈设" },
+    "topographie": { "title": "测量测绘", "sub": "放点、测绘制图" },
+    "bet": { "title": "结构等技术设计室", "sub": "结构计算、技术诊断与施工图" },
+    "autre-batiment": { "title": "其他 / 还在了解", "sub": "更宽泛的建筑环境方向或尚未选定" }
+  },
+  "agriculture": {
+    "agriculture-elevage": { "title": "种植与养殖", "sub": "农作物与畜禽生产" },
+    "agronomie": { "title": "农学", "sub": "改进农业生产方式" },
+    "environnement": { "title": "环境与生态", "sub": "资源保护与生态修复" },
+    "agroalimentaire": { "title": "农产品加工", "sub": "食品生产与产业链" },
+    "paysage": { "title": "园林景观", "sub": "绿地设计、建设与养护" },
+    "foret": { "title": "林业", "sub": "林地经营、采伐与更新" },
+    "marine": { "title": "海洋与渔业", "sub": "海洋资源与水产业" },
+    "autre-agriculture": { "title": "其他 / 还在了解", "sub": "更宽泛的农业方向或尚未选定" }
+  },
+  "service": {
+    "tourisme": { "title": "旅游接待", "sub": "导览、讲解与行程安排" },
+    "hotellerie": { "title": "酒店餐饮", "sub": "住宿、餐饮与客户接待" },
+    "sport": { "title": "体育", "sub": "教练、教学与赛事支持" },
+    "evenementiel": { "title": "会展活动", "sub": "策划、执行与现场运营" },
+    "rh": { "title": "人力资源（服务行业）", "sub": "招聘、培训、薪酬等职能" },
+    "comptabilite": { "title": "会计", "sub": "记账、报税与财务资料" },
+    "banque": { "title": "银行与保险", "sub": "理财建议与金融产品服务" },
+    "autre-service": { "title": "其他 / 还在了解", "sub": "更宽泛的服务业方向或尚未选定" }
+  }
+}

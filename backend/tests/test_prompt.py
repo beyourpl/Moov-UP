@@ -49,7 +49,20 @@ def test_sanitize_chat_reply_strips_onisep_boilerplate_and_urls():
     assert "Voici un métier" in out
 
 
-    """Verifie que le system prompt contient les regles cles de continuite."""
+def test_sanitize_chat_reply_fixes_orphan_sur_la_after_url_removed():
+    raw = (
+        "Le salaire varie selon le profil (estimation hors fiche ONISEP). "
+        "Les détails officiels sont disponibles sur la "
+        "https://www.onisep.fr/http/redirection/metier/exemple/met-id\n"
+    )
+    out = sanitize_chat_reply(raw)
+    assert "onisep.fr" not in out.lower()
+    assert not out.lower().strip().endswith("sur la")
+    assert not out.endswith(":")
+    assert "salaire" in out.lower()
+
+
+def test_system_prompt_has_continuity_rules():
     expected_keywords = [
         "Historique",          # mention explicite de la section
         "implicite",           # gestion des references implicites
@@ -58,3 +71,10 @@ def test_sanitize_chat_reply_strips_onisep_boilerplate_and_urls():
     ]
     for kw in expected_keywords:
         assert kw.lower() in SYSTEM_PROMPT.lower(), f"Mot-cle manquant dans SYSTEM_PROMPT: {kw!r}"
+
+
+def test_build_prompt_non_french_ui_adds_language_block():
+    rag = [{"metier": {"libelle": "X", "domaine_sous_domaine": "", "niveau_min": "",
+                       "description": "", "centres_interet": [], "lien_onisep": ""}, "formations": []}]
+    msgs = build_prompt("Profil", [], rag, "Salary?", ui_language="en")
+    assert "English" in msgs[0]["content"]

@@ -51,7 +51,14 @@ app.add_middleware(
 @app.get("/api/health")
 @limiter.limit("60/minute")
 def health(request: Request):
-    return {"status": "ok"}
+    rag_ok = getattr(request.app.state, "rag", None) is not None
+    llm_ok = getattr(settings, "OPENROUTER_API_KEY", "") not in ("", "missing")
+    return {
+        "status": "ok",
+        "flavor": "fastapi",
+        "coach_llm_configured": llm_ok,
+        "coach_rag_available": rag_ok,
+    }
 
 
 from src.infrastructure.api.routes import auth as auth_routes

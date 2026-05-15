@@ -5,7 +5,7 @@ const MAX_AGE_MS = 14 * 24 * 60 * 60 * 1000;
 
 function draftKey() {
   const s = getSession();
-  const id = (s?.email || s?.pseudo || "session").trim() || "session";
+  const id = (s?.email || "session").trim() || "session";
   return `${PREFIX}_${id}`;
 }
 

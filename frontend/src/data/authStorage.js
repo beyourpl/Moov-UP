@@ -44,7 +44,6 @@ export function getSession() {
   if (!d) return null;
   const profile = readProfile(d.email);
   const pretty =
-    profile?.pseudo ||
     [profile?.firstName, profile?.lastName].filter(Boolean).join(" ").trim() ||
     d.email.split("@")[0];
   return { id: d.id, email: d.email, pseudo: pretty, profile: profile || null };
@@ -57,9 +56,37 @@ export async function registerUser(email, password) {
 }
 
 export async function loginUser(email, password) {
-  const { token, user } = await apiPost("/api/auth/login", { email, password });
+  const data = await apiPost("/api/auth/login", { email, password });
+  if (data.needs_2fa && data.temp_token) {
+    return {
+      needs2fa: true,
+      tempToken: data.temp_token,
+      user: data.user,
+    };
+  }
+  setToken(data.token);
+  return { needs2fa: false, user: data.user };
+}
+
+export async function completeLogin2FA(tempToken, code) {
+  const { token, user } = await apiPost("/api/auth/login/2fa", {
+    temp_token: tempToken,
+    code,
+  });
   setToken(token);
   return user;
+}
+
+export async function setupTwoFA() {
+  return apiPost("/api/auth/2fa/setup", {});
+}
+
+export async function enableTwoFA(code) {
+  await apiPost("/api/auth/2fa/enable", { code });
+}
+
+export async function disableTwoFA(password, code) {
+  await apiPost("/api/auth/2fa/disable", { password, code });
 }
 
 export function logoutUser() {
@@ -75,7 +102,6 @@ export function saveAccountProfile(email, data) {
   const next = {
     firstName: String(data.firstName || "").trim(),
     lastName: String(data.lastName || "").trim(),
-    pseudo: String(data.pseudo || "").trim(),
     age: String(data.age || "").trim(),
     city: String(data.city || "").trim(),
   };

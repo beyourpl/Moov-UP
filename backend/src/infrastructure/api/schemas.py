@@ -1,5 +1,5 @@
 import re
-from typing import Any
+from typing import Any, Literal
 from pydantic import BaseModel, EmailStr, field_validator
 
 
@@ -27,11 +27,58 @@ class LoginIn(BaseModel):
 class UserOut(BaseModel):
     id: int
     email: str
+    totp_enabled: bool = False
 
 
 class AuthOut(BaseModel):
     token: str
     user: UserOut
+
+
+class LoginNeeds2FAOut(BaseModel):
+    needs_2fa: Literal[True] = True
+    temp_token: str
+    user: UserOut
+
+
+class Login2FAIn(BaseModel):
+    temp_token: str
+    code: str
+
+    @field_validator("code")
+    @classmethod
+    def _code_nonempty(cls, v: str) -> str:
+        if not v or not str(v).strip():
+            raise ValueError("Code requis.")
+        return str(v).strip()
+
+
+class TwoFASetupOut(BaseModel):
+    otpauth_uri: str
+    secret: str
+
+
+class TwoFAEnableIn(BaseModel):
+    code: str
+
+    @field_validator("code")
+    @classmethod
+    def _code_nonempty(cls, v: str) -> str:
+        if not v or not str(v).strip():
+            raise ValueError("Code requis.")
+        return str(v).strip()
+
+
+class TwoFADisableIn(BaseModel):
+    password: str
+    code: str
+
+    @field_validator("code")
+    @classmethod
+    def _code_nonempty(cls, v: str) -> str:
+        if not v or not str(v).strip():
+            raise ValueError("Code requis.")
+        return str(v).strip()
 
 
 class QuizAnswers(BaseModel):
@@ -63,6 +110,7 @@ class ConversationOut(BaseModel):
 class ChatIn(BaseModel):
     conversation_id: int
     message: str
+    language: str = "fr"
 
 
 class ChatOut(BaseModel):

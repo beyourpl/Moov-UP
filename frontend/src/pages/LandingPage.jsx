@@ -7,23 +7,16 @@ import hassnaPhoto from "../assets/founders/hassna.png";
 import jalisPhoto from "../assets/founders/jalis.png";
 import leilaPhoto from "../assets/founders/leila.png";
 import ayoubPhoto from "../assets/founders/ayoub.png";
+import moovupLogoSquare from "../assets/moovup-logo-square.png";
 
 const GOOGLE_DEMO_URL = "https://forms.gle/QRdjqLB7D7kgnfZo7";
 const VIDEO_EMBED_URL = "";
 
 const FOUNDERS = [
-  { firstName: "Hassna", lastName: "Marjane", roleKey: "founder1Role", roleFallback: "Cofondatrice · Data Scientist", photo: hassnaPhoto },
-  { firstName: "Jalis", lastName: "Shoul", roleKey: "founder2Role", roleFallback: "Cofondateur · Data Scientist", photo: jalisPhoto },
-  { firstName: "Leila", lastName: "Serhir", roleKey: "founder3Role", roleFallback: "Cofondatrice · PMO / Cheffe de projet", photo: leilaPhoto },
-  {
-    firstName: "Ayoub",
-    lastName: "Touati",
-    roleKey: "founder4Role",
-    roleFallback: "Cofondateur · Data Analyst",
-    photo: ayoubPhoto,
-    photoZoom: 1.06,
-    photoObjectPosition: "center 38%",
-  },
+  { firstName: "Hassna", lastName: "Marjane", roleKey: "founder1Role", roleFallback: "Co-fondatrice · Data Scientist", photo: hassnaPhoto },
+  { firstName: "Jalis", lastName: "Shoul", roleKey: "founder2Role", roleFallback: "Co-fondateur · Data Scientist", photo: jalisPhoto },
+  { firstName: "Leila", lastName: "Serhir", roleKey: "founder3Role", roleFallback: "Co-fondatrice · PMO / Cheffe de projet", photo: leilaPhoto },
+  { firstName: "Ayoub", lastName: "Touati", roleKey: "founder4Role", roleFallback: "Co-fondateur · Data Analyst", photo: ayoubPhoto },
 ];
 
 export default function LandingPage() {
@@ -31,6 +24,7 @@ export default function LandingPage() {
   const session = getSession();
   const { t } = useTranslation();
   const lastConversationId = session ? getLastConversationId() : null;
+  const assistantHref = lastConversationId ? `/assistant?cid=${lastConversationId}` : "/assistant";
 
   const goGuided = () => navigate(session ? "/demo" : "/auth");
   const goTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -42,19 +36,39 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="lp fade-in">
+    <div className="lp fade-in lp-landing">
       {/* ─── HEADER ─── */}
       <header className="lp-header">
         <div className="lp-header-inner">
-          <Link to="/" className="lp-logo">Moov&apos;Up</Link>
+          <Link
+            to="/"
+            className="lp-logo lp-logo--mark"
+            aria-label={t("coach", "brandHomeAria", "Moov'Up — accueil")}
+          >
+            <img
+              src={moovupLogoSquare}
+              alt=""
+              className="lp-logo-img"
+              width={48}
+              height={48}
+              decoding="async"
+            />
+          </Link>
           <nav className="lp-nav" aria-label={t("a11y", "mainNav", "Navigation principale")}>
             <a href="#fondateurs">{t("landing", "navCoFounders", "Cofondateurs")}</a>
+            <Link to="/partenaires">{t("landing", "navPartenaires", "Missions locales")}</Link>
             <a href="#produit">{t("landing", "navProduct", "Produit")}</a>
             <a href="#parcours">{t("landing", "navSteps", "Comment ça marche")}</a>
             <a href="#faq">{t("landing", "navFaq", "FAQ")}</a>
           </nav>
           <div className="lp-header-cta">
             <TopBarAccountTools showGuestLabel={false} className="lp-header-tools" />
+            <Link to={assistantHref} className="lp-btn lp-btn-ghost lp-header-shortcut">
+              {t("landing", "navMoovCoach", "Moov'Coach")}
+            </Link>
+            <Link to="/cvlm" className="lp-btn lp-btn-ghost lp-header-shortcut">
+              {t("landing", "navCvLm", "CV & LM")}
+            </Link>
             <button type="button" className="lp-btn lp-btn-primary" onClick={goGuided}>
               {t("landing", "ctaPrimary", "Lancer le parcours")}
             </button>
@@ -100,14 +114,20 @@ export default function LandingPage() {
                 <button type="button" className="lp-btn lp-btn-primary lp-btn-lg" onClick={goGuided}>
                   {t("landing", "ctaPrimary", "Lancer le parcours guidé")}
                 </button>
-                <a href={GOOGLE_DEMO_URL} target="_blank" rel="noopener noreferrer" className="lp-btn lp-btn-ghost lp-btn-lg">
-                  {t("landing", "ctaSecondary", "Voir notre formulaire")}
-                </a>
-                {lastConversationId ? (
-                  <Link to={`/assistant?cid=${lastConversationId}`} className="lp-btn lp-btn-secondary lp-btn-lg">
+                <Link to={assistantHref} className="lp-btn lp-btn-secondary lp-btn-lg">
+                  {t("landing", "navMoovCoach", "Moov'Coach")}
+                </Link>
+                <Link to="/cvlm" className="lp-btn lp-btn-secondary lp-btn-lg">
+                  {t("landing", "navCvLm", "CV & LM")}
+                </Link>
+                {session ? (
+                  <Link to="/demo" className="lp-btn lp-btn-secondary lp-btn-lg">
                     {t("landing", "ctaMyResults", "Voir mes résultats")}
                   </Link>
                 ) : null}
+                <a href={GOOGLE_DEMO_URL} target="_blank" rel="noopener noreferrer" className="lp-btn lp-btn-ghost lp-btn-lg">
+                  {t("landing", "ctaSecondary", "Voir notre formulaire")}
+                </a>
               </div>
               <ul className="lp-trust">
                 <li>{t("landing", "trustItem1", "Gratuit et sans engagement")}</li>
@@ -117,17 +137,16 @@ export default function LandingPage() {
             </div>
 
             <div className="lp-hero-visual">
-              <div className="lp-hero-img-wrap">
+              <div className="lp-hero-img-wrap lp-hero-img-wrap--square-logo">
                 <img
-                  src="/moovup-hero.png"
-                  alt={t("landing", "heroImgAlt", "Avec Moov'Up, ton avenir commence ici")}
+                  src={moovupLogoSquare}
+                  alt={t("landing", "heroLogoAlt", "Moov'Up — logo")}
                   className="lp-hero-img"
+                  width={512}
+                  height={512}
+                  decoding="async"
                   onError={(e) => { e.target.style.display = "none"; }}
                 />
-                <div className="lp-hero-img-fallback" aria-hidden="true">
-                  <span className="lp-hero-fallback-logo">M</span>
-                  <p>Moov&apos;Up</p>
-                </div>
               </div>
             </div>
           </div>
@@ -434,26 +453,13 @@ export default function LandingPage() {
         {/* ─── CTA FINAL ─── */}
         <section className="lp-section">
           <div className="lp-container">
-            <div className="lp-cta-banner">
-              <div>
-                <h2 className="lp-h2" style={{ margin: "0 0 10px" }}>
-                  {t("landing", "ctaFinalTitle", "Prêt à trouver ta voie ?")}
-                </h2>
-                <p className="lp-sub" style={{ margin: 0 }}>
-                  {t("landing", "ctaFinalSub", "Gratuit · Sans inscription · Résultat en 2 minutes")}
-                </p>
-              </div>
+            <div className="lp-cta-banner lp-cta-banner--minimal">
               <div className="lp-cta-actions">
-                <button type="button" className="lp-btn lp-btn-primary lp-btn-lg" onClick={goGuided}>
-                  {t("landing", "ctaFinalBtn", "Lancer le parcours →")}
-                </button>
-                {lastConversationId ? (
-                  <Link to={`/assistant?cid=${lastConversationId}`} className="lp-btn lp-btn-secondary lp-btn-lg">
-                    {t("landing", "ctaMyResults", "Voir mes résultats")}
-                  </Link>
-                ) : null}
                 <button type="button" className="lp-btn lp-btn-ghost lp-btn-lg" onClick={goTop}>
                   ↑ {t("landing", "navTop", "Haut")}
+                </button>
+                <button type="button" className="lp-btn lp-btn-primary lp-btn-lg" onClick={goGuided}>
+                  {t("landing", "ctaPrimary", "Lancer le parcours")}
                 </button>
               </div>
             </div>
