@@ -25,6 +25,7 @@ export const specialtyConfig = {
     { value: "autre-business" },
   ],
   creative: [
+    { value: "journalisme" },
     { value: "graphisme" },
     { value: "design" },
     { value: "audiovisuel" },

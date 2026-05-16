@@ -84,6 +84,10 @@
     }
   },
   "creative": {
+    "journalisme": {
+      "title": "Journalisme & médias",
+      "sub": "Presse, reportage, rédaction, information et médias"
+    },
     "graphisme": {
       "title": "Graphisme",
       "sub": "Identité visuelle, affiches, supports numériques"

@@ -25,6 +25,15 @@ def test_build_profile_rejects_missing_required():
         build_profile({"q1": "tech"})
 
 
+def test_build_profile_specialty_journalisme():
+    answers = {
+        "q1": "creative", "q3": "terminale", "specialty": "journalisme",
+    }
+    text, _, _ = build_profile(answers)
+    assert "journalisme" in text.lower()
+    assert "presse" in text.lower()
+
+
 def test_build_profile_orientation_blocker_in_q4():
     answers = {
         "q1": "tech", "q2": "pratique", "q3": "terminale", "q4": "peur",

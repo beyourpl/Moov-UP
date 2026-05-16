@@ -24,6 +24,7 @@
     "autre-business": { "title": "其他 / 还在了解", "sub": "更宽泛的商科方向或尚未选定" }
   },
   "creative": {
+    "journalisme": { "title": "新闻与媒体", "sub": "报刊、报道、写作、资讯与媒体" },
     "graphisme": { "title": "平面设计", "sub": "视觉识别、海报与数字素材" },
     "design": { "title": "数字设计", "sub": "面向屏幕与产品的视觉设计" },
     "audiovisuel": { "title": "视听制作", "sub": "影像、视频、拍摄与叙事" },

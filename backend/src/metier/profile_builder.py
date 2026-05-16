@@ -2,6 +2,10 @@ from __future__ import annotations
 
 from src.metier.mappings import Q1_TO_ONISEP_DOMAINS, Q3_TO_NIVEAU_MAX, HUMAN_LABELS
 
+SPECIALTY_PROFILE_LABELS = {
+    "journalisme": "journalisme, presse, médias et communication d'information",
+}
+
 ORIENTATION_BLOCKER_LABELS = {
     "info": "je manque d'informations sur les métiers et les formations",
     "peur": "j'ai peur de me tromper dans mon choix d'orientation",
@@ -38,10 +42,14 @@ def build_profile(answers: dict) -> tuple[str, int, list[str]]:
     parts = [
         f"Je suis {niveau_txt} et je m'intéresse au domaine {q1} ({', '.join(domains)}).",
     ]
+    specialty = answers.get("specialty")
+    if specialty:
+        spec_txt = SPECIALTY_PROFILE_LABELS.get(specialty, specialty.replace("-", " "))
+        parts.append(f"Spécialité visée : {spec_txt}.")
     if q4:
         if q4 in ORIENTATION_BLOCKER_LABELS:
             parts.append(f"Principal frein à l'orientation : {ORIENTATION_BLOCKER_LABELS[q4]}.")
-        else:
+        elif not specialty:
             parts.append(f"Spécialité visée : {q4}.")
     if (l := _label("q2", answers.get("q2"))):
         parts.append(f"J'apprends {l}.")

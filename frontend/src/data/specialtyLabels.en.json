@@ -24,6 +24,7 @@
     "autre-business": { "title": "Other / not sure", "sub": "A broader business profile or still deciding" }
   },
   "creative": {
+    "journalisme": { "title": "Journalism & media", "sub": "Press, reporting, writing, news and media" },
     "graphisme": { "title": "Graphic design", "sub": "Visual identity, posters, digital assets" },
     "design": { "title": "Digital design", "sub": "Visual work for screens and real use" },
     "audiovisuel": { "title": "Audiovisual", "sub": "Image, video, filming, visual storytelling" },

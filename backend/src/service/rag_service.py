@@ -20,6 +20,26 @@ MODEL_NAME = "intfloat/multilingual-e5-base"
 
 logger = logging.getLogger("moovup.rag")
 
+DEFAULT_TOP_K = 8
+
+
+def _specialty_score_boost(metier: dict, specialty: str | None) -> float:
+    if not specialty:
+        return 0.0
+    ds = (metier.get("domaine_sous_domaine") or "").casefold()
+    key = specialty.casefold()
+    if key == "journalisme":
+        if "journalisme" in ds:
+            return 0.15
+        if "/presse" in ds or "presse/" in ds:
+            return 0.10
+        if "information-communication" in ds:
+            return 0.06
+    sous = _sous_domain_labels(_domain_paths(ds))
+    if key in sous or any(key in s for s in sous):
+        return 0.08
+    return 0.0
+
 
 def _split_top_domain(cell: str) -> str:
     return str(cell).split("|", 1)[0].strip().split("/", 1)[0].strip()
@@ -130,15 +150,40 @@ class RagService:
                 break
         return uniq
 
-    def initial_recommendations(self, profile_text: str, niveau_max: int, top_k: int = 5, q1: str | None = None) -> list[dict]:
+    def initial_recommendations(
+        self,
+        profile_text: str,
+        niveau_max: int,
+        top_k: int = DEFAULT_TOP_K,
+        q1: str | None = None,
+        specialty: str | None = None,
+    ) -> list[dict]:
         vec = self.embedder.encode(["query: " + profile_text], normalize_embeddings=True)
-        return self._search_and_join(np.asarray(vec, dtype="float32"), niveau_max, top_k, q1=q1)
+        return self._search_and_join(
+            np.asarray(vec, dtype="float32"), niveau_max, top_k, q1=q1, specialty=specialty,
+        )
 
-    def search_for_message(self, user_message: str, niveau_max: int, top_k: int = 5, q1: str | None = None) -> list[dict]:
+    def search_for_message(
+        self,
+        user_message: str,
+        niveau_max: int,
+        top_k: int = DEFAULT_TOP_K,
+        q1: str | None = None,
+        specialty: str | None = None,
+    ) -> list[dict]:
         vec = self.embedder.encode(["query: " + user_message], normalize_embeddings=True)
-        return self._search_and_join(np.asarray(vec, dtype="float32"), niveau_max, top_k, q1=q1)
+        return self._search_and_join(
+            np.asarray(vec, dtype="float32"), niveau_max, top_k, q1=q1, specialty=specialty,
+        )
 
-    def _search_and_join(self, vec: np.ndarray, niveau_max: int, top_k: int, q1: str | None = None) -> list[dict]:
+    def _search_and_join(
+        self,
+        vec: np.ndarray,
+        niveau_max: int,
+        top_k: int,
+        q1: str | None = None,
+        specialty: str | None = None,
+    ) -> list[dict]:
         # On oversample (top_k * 3) car on dedup ensuite par libellé : la CSV ONISEP
         # contient parfois plusieurs entrées avec le même libellé (variantes de domaine).
         # Sans oversampling, le filtre dédup pourrait laisser moins de top_k résultats.
@@ -167,7 +212,7 @@ class RagService:
         ]
         logger.info("[rag] raw top hits (before dedup): %s", trace)
 
-        results = []
+        ranked: list[tuple[float, float, int, dict]] = []
         seen_pos: set[int] = set()
         seen_libelle: set[str] = set()
         for score, i in zip(scores[0], ids[0]):
@@ -176,15 +221,44 @@ class RagService:
             seen_pos.add(int(i))
             m = self.metiers_meta[int(i)]
             libelle = m.get("libelle", "")
-            # Dedup par libellé : la CSV peut avoir le même métier dans plusieurs domaines
             if libelle in seen_libelle:
                 logger.info("[rag] skip duplicate libellé %r (score=%.4f)", libelle[:60], float(score))
                 continue
             seen_libelle.add(libelle)
+            faiss_score = float(score)
+            boost = _specialty_score_boost(m, specialty)
+            ranked.append((faiss_score + boost, faiss_score, int(i), m))
 
+        ranked.sort(key=lambda row: (-row[0], -row[1]))
+
+        results = []
+        for effective, faiss_score, _idx, m in ranked:
             formations = self._formations_for_metier(m, niveau_max)
-            results.append({"metier": m, "formations": formations, "score": round(float(score), 4)})
+            results.append({
+                "metier": m,
+                "formations": formations,
+                "score": round(faiss_score, 4),
+            })
             if len(results) >= top_k:
+                break
+
+        if specialty == "journalisme" and not any(
+            "journalisme" in (r["metier"].get("domaine_sous_domaine") or "").casefold()
+            for r in results
+        ):
+            for _eff, faiss_score, idx, m in ranked:
+                if "journalisme" not in (m.get("domaine_sous_domaine") or "").casefold():
+                    continue
+                libelle = m.get("libelle", "")
+                if any(r["metier"].get("libelle") == libelle for r in results):
+                    continue
+                results.append({
+                    "metier": m,
+                    "formations": self._formations_for_metier(m, niveau_max),
+                    "score": round(faiss_score, 4),
+                })
+                if len(results) > top_k:
+                    results = results[:top_k]
                 break
 
         logger.info("[rag] final top-%d (deduped): %s",

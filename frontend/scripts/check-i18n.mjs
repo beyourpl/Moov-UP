@@ -15,7 +15,7 @@ import {
   getQuizQuestionText,
   getQuizChoiceText,
 } from "../src/data/translations.js";
-import { QUESTION_ORDER } from "../src/data/questionOrder.js";
+import { BASE_QUESTION_ORDER } from "../src/data/questionOrder.js";
 import { specialtyConfig } from "../src/data/specialtyConfig.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -75,7 +75,7 @@ for (const lang of SUPPORTED_LANGUAGES) {
     }
   }
 
-  for (const qid of QUESTION_ORDER) {
+  for (const qid of [...BASE_QUESTION_ORDER, "qSpec"]) {
     const t = getQuizQuestionText(lang, qid);
     if (!t || !t.title || !t.body) {
       issues.push({ kind: "question", lang, scope: "quiz.questions", key: qid });

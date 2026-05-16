@@ -1,3 +1,4 @@
+import json
 import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -49,7 +50,14 @@ async def chat(
     logger.info("[chat] user=%s conv=%s msg=%r history_msgs=%d",
                 current.email, conv.id, body.message, len(history))
 
-    rag_ctx = rag.search_for_message(body.message, niveau_max=conv.niveau_max, top_k=5, q1=conv.q1)
+    try:
+        qa = json.loads(conv.quiz_answers_json or "{}")
+    except json.JSONDecodeError:
+        qa = {}
+    specialty = qa.get("specialty")
+    rag_ctx = rag.search_for_message(
+        body.message, niveau_max=conv.niveau_max, q1=conv.q1, specialty=specialty,
+    )
     metier_with_scores = [
         (hit["metier"].get("libelle", "?")[:50], hit.get("score"))
         for hit in rag_ctx

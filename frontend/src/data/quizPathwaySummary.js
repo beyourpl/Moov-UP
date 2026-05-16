@@ -1,4 +1,5 @@
 import { getPathwayTrajectoryBundle } from "./pathwayTrajectory.js";
+import { getSpecialtyChoiceText } from "./specialtyLabels.js";
 import { getQuizChoiceText, getText } from "./translations.js";
 const BLOCKER_VALUES = new Set(["info", "peur", "pression", "indecision"]);
 
@@ -33,12 +34,17 @@ export function buildQuizAnswerChips(quiz, language = "fr") {
     const v = choiceTitle(language, "q3", quiz.q3);
     if (v) chips.push({ key: "q3", label: L("chipCurrentLevel", "Niveau actuel"), value: v });
   }
-  if (quiz.q4) {
-    const label = BLOCKER_VALUES.has(quiz.q4)
-      ? L("chipBlocker", "Frein principal")
-      : L("chipSpecialty", "Spécialité");
+  if (quiz.specialty) {
+    const spec = getSpecialtyChoiceText(language, d, quiz.specialty, {});
+    const v = spec?.title || quiz.specialty;
+    if (v) chips.push({ key: "specialty", label: L("chipSpecialty", "Spécialité"), value: v });
+  } else if (quiz.q4 && !BLOCKER_VALUES.has(quiz.q4)) {
+    const v = getSpecialtyChoiceText(language, d, quiz.q4, {}).title || quiz.q4;
+    if (v) chips.push({ key: "q4", label: L("chipSpecialty", "Spécialité"), value: v });
+  }
+  if (quiz.q4 && BLOCKER_VALUES.has(quiz.q4)) {
     const v = choiceTitle(language, "q10", quiz.q4) || quiz.q4;
-    if (v) chips.push({ key: "q4", label, value: v });
+    if (v) chips.push({ key: "q4", label: L("chipBlocker", "Frein principal"), value: v });
   }
   if (quiz.q5) {
     const v = choiceTitle(language, "q5", quiz.q5);

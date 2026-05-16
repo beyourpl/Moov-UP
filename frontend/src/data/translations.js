@@ -612,6 +612,10 @@ export const TEXTS = {
       back: "Retour",
       questions: {
         q1: { title: "Qu’est-ce qui t’intéresse le plus ?", body: "Choisis les domaines qui t’attirent naturellement." },
+        qSpec: {
+          title: "Dans ce domaine, quelle piste te parle le plus ?",
+          body: "On cible la famille de métiers et les études qui y mènent.",
+        },
         q2: { title: "Dans ton futur métier, qu’est-ce qui compte le plus pour toi ?", body: "Chaque personne recherche quelque chose de différent dans son avenir." },
         q3: { title: "Tu préfères travailler :", body: "L’environnement de travail joue beaucoup sur l’épanouissement." },
         q4: { title: "Quand tu apprends quelque chose, tu préfères :", body: "Ça permet d’identifier les formations où tu pourrais être le plus à l’aise." },
@@ -1444,7 +1448,11 @@ export const TEXTS = {
       back: "Back",
       questions: {
         q1: { title: "Which broad field of work draws you most for your future job?", body: "We start with job families (digital, health, business…) before narrowing down." },
-        q2: { title: "Do you learn best by doing, by discussing, or by reading and theory?", body: "This hints at labs vs lectures vs project heavy programs." },
+        qSpec: {
+          title: "In that field, which track or specialty speaks to you most?",
+          body: "We target the job family and the studies that lead there.",
+        },
+        q2: { title: "What matters most to you in your future job?", body: "Everyone looks for something different in their career path." },
         q3: { title: "What is your current school level (or latest diploma)?", body: "Needed to suggest pathways that match where you actually are." },
         q4: { title: "In that field, which track or specialty speaks to you most?", body: "We target the job family and the studies that lead there." },
         q5: { title: "Do you see yourself mostly at a desk, in the field, often traveling, or remote?", body: "This is about workplace setting, not how long your studies last." },

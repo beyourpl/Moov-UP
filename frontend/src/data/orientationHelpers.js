@@ -1,7 +1,7 @@
 import { specialtyConfig } from "./specialtyConfig.js";
 import { getSpecialtyChoiceText } from "./specialtyLabels.js";
 
-export { QUESTION_ORDER } from "./questionOrder.js";
+export { QUESTION_ORDER, getQuestionOrder, BASE_QUESTION_ORDER } from "./questionOrder.js";
 export { specialtyConfig };
 
 const specialtyNormalize = {
@@ -30,6 +30,7 @@ const specialtyNormalize = {
     "autre-business": "management",
   },
   creative: {
+    journalisme: "journalisme",
     graphisme: "graphisme",
     design: "design",
     audiovisuel: "audiovisuel",

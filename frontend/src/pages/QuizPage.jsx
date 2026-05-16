@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiPost } from "../data/apiClient.js";
 import { getSession, logoutUser } from "../data/authStorage.js";
@@ -9,7 +9,8 @@ import { mapUiQuizAnswersToBackend } from "../data/quizAnswerMapping.js";
 import { playQuizTickSound } from "../data/quizTickSound.js";
 import { useUiPreferences } from "../hooks/useUiPreferences.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
-import { QUESTION_ORDER } from "../data/orientationHelpers.js";
+import { getQuestionOrder, specialtyConfig } from "../data/orientationHelpers.js";
+import { getSpecialtyChoiceText } from "../data/specialtyLabels.js";
 
 /** Pause après chaque choix avant la question suivante (ou avant l’analyse finale), en ms. */
 const QUIZ_ADVANCE_DELAY_MS = 500;
@@ -160,7 +161,8 @@ function scrollToEl(element) {
 function sanitizeAnswersFromDraft(raw) {
   if (!raw || typeof raw !== "object") return {};
   const out = {};
-  for (const qid of QUESTION_ORDER) {
+  const order = getQuestionOrder(raw);
+  for (const qid of order) {
     const v = raw[qid];
     if (v != null && String(v).trim() !== "") out[qid] = v;
     else break;
@@ -169,10 +171,33 @@ function sanitizeAnswersFromDraft(raw) {
 }
 
 function firstIncompleteStepIndex(answers) {
-  for (let i = 0; i < QUESTION_ORDER.length; i++) {
-    if (!answers[QUESTION_ORDER[i]]) return i;
+  const order = getQuestionOrder(answers);
+  for (let i = 0; i < order.length; i++) {
+    if (!answers[order[i]]) return i;
   }
-  return QUESTION_ORDER.length;
+  return order.length;
+}
+
+function resolveQuestion(questionId, answers, language) {
+  if (questionId === "qSpec") {
+    const domain = answers.q1;
+    const items = specialtyConfig[domain] || [];
+    const translated = getQuizQuestionText(language, "qSpec");
+    return {
+      id: "qSpec",
+      title: translated?.title || "Dans ce domaine, quelle piste te parle le plus ?",
+      body: translated?.body || "On cible la famille de métiers et les études qui y mènent.",
+      choices: items.map(({ value }) => {
+        const t = getSpecialtyChoiceText(language, domain, value, {});
+        return {
+          value,
+          title: t.title || value,
+          sub: t.sub || "",
+        };
+      }),
+    };
+  }
+  return BASE_QUESTIONS.find((q) => q.id === questionId) || null;
 }
 
 function readInitialQuizFromDraft() {
@@ -180,7 +205,8 @@ function readInitialQuizFromDraft() {
   if (d?.phase === "quiz" && d.answers && typeof d.answers === "object" && typeof d.stepIndex === "number") {
     const answers = sanitizeAnswersFromDraft(d.answers);
     const incomplete = firstIncompleteStepIndex(answers);
-    const stepIndex = Math.min(Math.max(0, d.stepIndex), incomplete, QUESTION_ORDER.length - 1);
+    const orderLen = getQuestionOrder(answers).length;
+    const stepIndex = Math.min(Math.max(0, d.stepIndex), incomplete, orderLen - 1);
     return {
       answers,
       stepIndex,
@@ -240,8 +266,10 @@ export default function QuizPage() {
     },
     [clearAdvanceTimer],
   );
-  const currentQuestionId = QUESTION_ORDER[stepIndex];
-  const currentQuestion = BASE_QUESTIONS.find((q) => q.id === currentQuestionId);
+  const questionOrder = useMemo(() => getQuestionOrder(answers), [answers]);
+  const questionTotal = questionOrder.length;
+  const currentQuestionId = questionOrder[stepIndex];
+  const currentQuestion = resolveQuestion(currentQuestionId, answers, language);
   const translatedQuestion = getQuizQuestionText(language, currentQuestionId);
   const translatedChoices = currentQuestion?.choices?.map((choice) => {
     const translatedChoice = getQuizChoiceText(language, currentQuestionId, choice.value, choice);
@@ -253,17 +281,19 @@ export default function QuizPage() {
   }) || [];
   const currentAnswer = answers[currentQuestionId];
   const answeredCount = Object.keys(answers).length;
-  const isLastQuestion = stepIndex === QUESTION_ORDER.length - 1;
-  const progressPercent = Math.round((stepIndex / QUESTION_ORDER.length) * 100);
+  const isLastQuestion = stepIndex === questionTotal - 1;
+  const progressPercent = Math.round((stepIndex / questionTotal) * 100);
   const stepLabelTpl = getText(
     language,
     "quizMeta",
     "step",
-    `Question ${stepIndex + 1} of ${QUESTION_ORDER.length}`,
+    `Question ${stepIndex + 1} of ${questionTotal}`,
   );
   const progressText =
-    stepIndex < QUESTION_ORDER.length
-      ? stepLabelTpl.replace(/\{n\}/g, String(stepIndex + 1))
+    stepIndex < questionTotal
+      ? stepLabelTpl
+          .replace(/\{n\}/g, String(stepIndex + 1))
+          .replace(/\{total\}/g, String(questionTotal))
       : getText(language, "quizMeta", "pathGenerated", "Path generated");
   const canBack = stepIndex > 0 || phase === "loading" || phase === "error";
   const canGoPrev = phase === "quiz" && stepIndex > 0;
@@ -368,7 +398,7 @@ export default function QuizPage() {
       "Your questionnaire was resumed automatically where you left off.",
     ),
     resumeDraftOk: getText(language, "quizMeta", "resumeDraftOk", "OK"),
-    questionProgress: getText(language, "quizMeta", "questionProgress", "{answered}/10 completed"),
+    questionProgress: getText(language, "quizMeta", "questionProgress", "{answered}/{total} completed"),
   };
 
   const answerQuestion = useCallback((questionId, value) => {
@@ -376,12 +406,6 @@ export default function QuizPage() {
     advancingSyncRef.current = true;
     clearAdvanceTimer();
     setAdvancing(true);
-    setAnswers((prev) => {
-      const next = { ...prev };
-      QUESTION_ORDER.slice(QUESTION_ORDER.indexOf(questionId) + 1).forEach((q) => delete next[q]);
-      next[questionId] = value;
-      return next;
-    });
 
     const finish = () => {
       advanceTimerRef.current = null;
@@ -389,20 +413,29 @@ export default function QuizPage() {
       setAdvancing(false);
     };
 
-    if (questionId === QUESTION_ORDER[QUESTION_ORDER.length - 1]) {
-      advanceTimerRef.current = setTimeout(() => {
-        setStepIndex(QUESTION_ORDER.length);
-        setPhase("loading");
-        finish();
-      }, QUIZ_ADVANCE_DELAY_MS);
-      return;
-    }
+    setAnswers((prev) => {
+      const next = { ...prev };
+      getQuestionOrder({ ...prev, [questionId]: value })
+        .slice(getQuestionOrder(prev).indexOf(questionId) + 1)
+        .forEach((q) => delete next[q]);
+      next[questionId] = value;
+      const orderAfter = getQuestionOrder(next);
 
-    const qIdx = QUESTION_ORDER.indexOf(questionId);
-    advanceTimerRef.current = setTimeout(() => {
-      setStepIndex(qIdx + 1);
-      finish();
-    }, QUIZ_ADVANCE_DELAY_MS);
+      if (questionId === orderAfter[orderAfter.length - 1]) {
+        advanceTimerRef.current = setTimeout(() => {
+          setStepIndex(orderAfter.length);
+          setPhase("loading");
+          finish();
+        }, QUIZ_ADVANCE_DELAY_MS);
+      } else {
+        const qIdx = orderAfter.indexOf(questionId);
+        advanceTimerRef.current = setTimeout(() => {
+          setStepIndex(qIdx + 1);
+          finish();
+        }, QUIZ_ADVANCE_DELAY_MS);
+      }
+      return next;
+    });
   }, [clearAdvanceTimer]);
 
   useEffect(() => {
@@ -441,6 +474,13 @@ export default function QuizPage() {
     return () => window.clearTimeout(id);
   }, [answers, stepIndex, phase]);
 
+  useEffect(() => {
+    if (phase !== "quiz") return;
+    if (stepIndex >= questionTotal) {
+      setStepIndex(Math.max(0, questionTotal - 1));
+    }
+  }, [phase, stepIndex, questionTotal]);
+
   const resetQuestionnaire = () => {
     clearAdvanceTimer();
     advancingSyncRef.current = false;
@@ -460,7 +500,7 @@ export default function QuizPage() {
     if (phase === "loading" || phase === "error") {
       setPhase("quiz");
       setApiError("");
-      setStepIndex(QUESTION_ORDER.length - 1);
+      setStepIndex(Math.max(0, questionTotal - 1));
       return;
     }
     if (stepIndex > 0) setStepIndex((s) => s - 1);
@@ -479,14 +519,14 @@ export default function QuizPage() {
     };
     if (isLastQuestion) {
       advanceTimerRef.current = setTimeout(() => {
-        setStepIndex(QUESTION_ORDER.length);
+        setStepIndex(questionTotal);
         setPhase("loading");
         finish();
       }, QUIZ_ADVANCE_DELAY_MS);
       return;
     }
     advanceTimerRef.current = setTimeout(() => {
-      setStepIndex((s) => Math.min(s + 1, QUESTION_ORDER.length - 1));
+      setStepIndex((s) => Math.min(s + 1, questionTotal - 1));
       finish();
     }, QUIZ_ADVANCE_DELAY_MS);
   };
@@ -565,7 +605,11 @@ export default function QuizPage() {
                 <h2>{translatedQuestion?.title || currentQuestion.title}</h2>
               </div>
               <div className={`quiz-step-badge${checkPulse ? " is-validating" : ""}`}>
-                <span>{ui.questionProgress.replace(/\{answered\}/g, String(answeredCount))}</span>
+                <span>
+                  {ui.questionProgress
+                    .replace(/\{answered\}/g, String(answeredCount))
+                    .replace(/\{total\}/g, String(questionTotal))}
+                </span>
                 {checkPulse ? <span className="quiz-step-check" aria-hidden="true">✓</span> : null}
               </div>
             </div>
@@ -641,7 +685,7 @@ export default function QuizPage() {
         <section className="panel" style={{ maxWidth: 600, margin: "0 auto" }}>
           <h3>{ui.errorTitle}</h3>
           <p>{apiError}</p>
-          <button type="button" className="nav-btn primary" onClick={() => { setApiError(""); setPhase("quiz"); setStepIndex(QUESTION_ORDER.length - 1); }}>
+          <button type="button" className="nav-btn primary" onClick={() => { setApiError(""); setPhase("quiz"); setStepIndex(Math.max(0, questionTotal - 1)); }}>
             {ui.retry}
           </button>
         </section>

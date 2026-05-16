@@ -10,6 +10,7 @@ export function normalizeQuizAnswer(value) {
  */
 export function mapUiQuizAnswersToBackend(ui) {
   const n = normalizeQuizAnswer;
+  const specialty = n(ui.qSpec);
   return {
     q1: n(ui.q1),
     q2: n(ui.q4),
@@ -21,5 +22,6 @@ export function mapUiQuizAnswersToBackend(ui) {
     q8: n(ui.q5),
     q9: n(ui.q2),
     q10: n(ui.q9),
+    ...(specialty ? { specialty } : {}),
   };
 }
