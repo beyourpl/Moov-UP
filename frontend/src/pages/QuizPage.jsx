@@ -68,9 +68,10 @@ const Q6_CHOICES = [
 ];
 
 const Q7_CHOICES = [
-  { value: "encadre", title: "Encadré", sub: "J'ai besoin d'un cadre clair et régulier" },
-  { value: "mixte", title: "Mixte", sub: "Un mélange de guidance et d'autonomie" },
-  { value: "autonome", title: "Autonome", sub: "J'aime apprendre seul et décider" },
+  { value: "insertion", title: "Trouver un emploi rapidement", sub: "Entrer vite dans la vie active" },
+  { value: "expertise", title: "Devenir expert·e", sub: "Viser la spécialisation dans un domaine" },
+  { value: "flexibilite", title: "Garder des options ouvertes", sub: "Ne pas se fermer trop tôt" },
+  { value: "creation", title: "Créer mon activité", sub: "Entrepreneuriat, freelance, projet perso" },
 ];
 
 const Q8_CHOICES = [
@@ -136,8 +137,8 @@ const BASE_QUESTIONS = [
   },
   {
     id: "q7",
-    title: "Tu aimerais avoir un métier :",
-    body: "Le rythme et le mode de vie comptent aussi dans une orientation.",
+    title: "Dans ton futur métier, qu’est-ce qui compte le plus pour toi ?",
+    body: "Chaque personne recherche quelque chose de différent dans son avenir.",
     choices: Q7_CHOICES,
   },
   {

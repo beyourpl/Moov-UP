@@ -81,6 +81,28 @@ export const TEXTS = {
       brandPositioningText: "Moov'Up relie orientation, emploi et accompagnement dans une expérience simple.",
     },
     quiz: {
+      questions: {
+        q1: { title: "Quels domaines t’attirent le plus ?", body: "Choisis les secteurs qui t’intéressent naturellement." },
+        qSpec: {
+          title: "Dans ce domaine, quelle piste te parle le plus ?",
+          body: "On cible la famille de métiers et les études qui y mènent.",
+        },
+        q2: {
+          title: "Qu’est-ce que tu préfères faire naturellement ?",
+          body: "Choisis les activités dans lesquelles tu te reconnais le plus.",
+        },
+        q3: { title: "Tu préfères travailler :", body: "L’environnement de travail joue beaucoup sur l’épanouissement." },
+        q4: { title: "Quand tu apprends quelque chose, tu préfères :", body: "Ça permet d’identifier les formations où tu pourrais être le plus à l’aise." },
+        q5: { title: "Les matières logiques (maths, code, analyse…) c’est plutôt :", body: "Certaines filières demandent plus de logique ou d’analyse que d’autres." },
+        q6: { title: "Tu te considères plutôt comme quelqu’un de :", body: "Il n’y a pas de bon profil, seulement des métiers plus adaptés à chacun." },
+        q7: {
+          title: "Dans ton futur métier, qu’est-ce qui compte le plus pour toi ?",
+          body: "Chaque personne recherche quelque chose de différent dans son avenir.",
+        },
+        q8: { title: "Aujourd’hui, tu es :", body: "Ça nous aide à proposer des formations réalistes et accessibles." },
+        q9: { title: "Pour tes études ou ton travail, tu serais prêt·e à :", body: "La mobilité peut ouvrir plus ou moins d’opportunités." },
+        q10: { title: "Aujourd’hui, qu’est-ce qui te bloque le plus dans ton orientation ?", body: "Comprendre tes freins nous aide à mieux t’accompagner." },
+      },
       choices: {
         q1: {
           tech: { title: "Technologie", sub: "Informatique, IA, cybersécurité, code, data" },
@@ -128,9 +150,10 @@ export const TEXTS = {
           autonome: { title: "Autonome", sub: "J'aime apprendre seul et décider" },
         },
         q7: {
-          encadre: { title: "Encadré", sub: "J'ai besoin d'un cadre clair et régulier" },
-          mixte: { title: "Mixte", sub: "Un mélange de guidance et d'autonomie" },
-          autonome: { title: "Autonome", sub: "J'aime apprendre seul et décider" },
+          insertion: { title: "Trouver un emploi rapidement", sub: "Entrer vite dans la vie active" },
+          expertise: { title: "Devenir expert·e", sub: "Viser la spécialisation dans un domaine" },
+          flexibilite: { title: "Garder des options ouvertes", sub: "Ne pas se fermer trop tôt" },
+          creation: { title: "Créer mon activité", sub: "Entrepreneuriat, freelance, projet perso" },
         },
         q8: {
           college: { title: "Collège", sub: "Je suis au collège (3e ou moins)" },
@@ -158,7 +181,7 @@ export const TEXTS = {
     quizMeta: {
       title: "Moov'Up",
       intro: "Réponds à 10 questions pour obtenir un parcours clair, personnalisé et réaliste, du brevet jusqu'au bac+5.",
-      step: "Question {n} sur 10",
+      step: "Question {n} sur {total}",
       questionRecap: "Rappel de la question",
       pathGenerated: "Parcours généré",
       smoothNavigation: "Navigation fluide",
@@ -630,7 +653,10 @@ export const TEXTS = {
         q4: { title: "Quand tu apprends quelque chose, tu préfères :", body: "Ça permet d’identifier les formations où tu pourrais être le plus à l’aise." },
         q5: { title: "Les matières logiques (maths, code, analyse…) c’est plutôt :", body: "Certaines filières demandent plus de logique ou d’analyse que d’autres." },
         q6: { title: "Tu te considères plutôt comme quelqu’un de :", body: "Il n’y a pas de bon profil, seulement des métiers plus adaptés à chacun." },
-        q7: { title: "Tu aimerais avoir un métier :", body: "Le rythme et le mode de vie comptent aussi dans une orientation." },
+        q7: {
+          title: "Dans ton futur métier, qu’est-ce qui compte le plus pour toi ?",
+          body: "Chaque personne recherche quelque chose de différent dans son avenir.",
+        },
         q8: { title: "Aujourd’hui, tu es :", body: "Ça nous aide à proposer des formations réalistes et accessibles." },
         q9: { title: "Pour tes études ou ton travail, tu serais prêt·e à :", body: "La mobilité peut ouvrir plus ou moins d’opportunités." },
         q10: { title: "Aujourd’hui, qu’est-ce qui te bloque le plus dans ton orientation ?", body: "Comprendre tes freins nous aide à mieux t’accompagner." },
@@ -682,9 +708,10 @@ export const TEXTS = {
           autonome: { title: "Autonome", sub: "J'aime apprendre seul et décider" },
         },
         q7: {
-          encadre: { title: "Encadré", sub: "J'ai besoin d'un cadre clair et régulier" },
-          mixte: { title: "Mixte", sub: "Un mélange de guidance et d'autonomie" },
-          autonome: { title: "Autonome", sub: "J'aime apprendre seul et décider" },
+          insertion: { title: "Trouver un emploi rapidement", sub: "Entrer vite dans la vie active" },
+          expertise: { title: "Devenir expert·e", sub: "Viser la spécialisation dans un domaine" },
+          flexibilite: { title: "Garder des options ouvertes", sub: "Ne pas se fermer trop tôt" },
+          creation: { title: "Créer mon activité", sub: "Entrepreneuriat, freelance, projet perso" },
         },
         q8: {
           college: { title: "Collège", sub: "Je suis au collège (3e ou moins)" },
@@ -1409,7 +1436,7 @@ export const TEXTS = {
     quizMeta: {
       title: "Moov'Up",
       intro: "Answer 10 questions to get a clear, personalized and realistic path from middle school to master's level.",
-      step: "Question {n} of 10",
+      step: "Question {n} of {total}",
       questionRecap: "Question recap",
       pathGenerated: "Path generated",
       smoothNavigation: "Smooth navigation",
@@ -1461,60 +1488,67 @@ export const TEXTS = {
       logout: "Sign out",
       back: "Back",
       questions: {
-        q1: { title: "Which broad field of work draws you most for your future job?", body: "We start with job families (digital, health, business…) before narrowing down." },
+        q1: { title: "Which fields attract you most?", body: "Choose the sectors that naturally interest you." },
         qSpec: {
-          title: "In that field, which track or specialty speaks to you most?",
+          title: "In that field, which track speaks to you most?",
           body: "We target the job family and the studies that lead there.",
         },
-        q2: { title: "What matters most to you in your future job?", body: "Everyone looks for something different in their career path." },
-        q3: { title: "What is your current school level (or latest diploma)?", body: "Needed to suggest pathways that match where you actually are." },
-        q4: { title: "In that field, which track or specialty speaks to you most?", body: "We target the job family and the studies that lead there." },
-        q5: { title: "Do you see yourself mostly at a desk, in the field, often traveling, or remote?", body: "This is about workplace setting, not how long your studies last." },
-        q6: { title: "When moving through a program, do you prefer tight pacing and clear milestones, a balance, or strong independence?", body: "This is about how you progress in studies, not your workplace or geography." },
-        q7: { title: "With teachers, tutors, or staff, do you want step by step guidance, a middle ground, or to drive your own choices?", body: "This is about human support, distinct from the previous question." },
-        q8: { title: "Math, stats, and logical reasoning: a strength, okay, or something you’d rather avoid?", body: "Helps steer away from very quantitative tracks if that’s not you." },
-        q9: { title: "Over the next few years, is the priority quick hire, deep expertise, keeping options open, or building your own venture?", body: "Shapes job first vs specialist vs flexible vs entrepreneurial tracks." },
-        q10: { title: "Geographically: stay near home, move nationwide, go abroad, or study fully online?", body: "Filters training by mobility and on site vs distance." },
+        q2: {
+          title: "What do you prefer doing naturally?",
+          body: "Choose the activities you relate to most.",
+        },
+        q3: { title: "You prefer working:", body: "Work environment matters a lot for fulfillment." },
+        q4: { title: "When you learn something, you prefer:", body: "This helps identify programs where you will feel most comfortable." },
+        q5: { title: "Logical subjects (math, code, analysis…) are:", body: "Some paths require more logic and analysis than others." },
+        q6: { title: "You see yourself as someone who is:", body: "There is no right profile, only jobs that fit better." },
+        q7: {
+          title: "In your future job, what matters most to you?",
+          body: "Everyone looks for something different in their career path.",
+        },
+        q8: { title: "Right now, you are:", body: "This helps us suggest realistic and accessible programs." },
+        q9: { title: "For studies or work, you would be willing to:", body: "Mobility can open more or fewer opportunities." },
+        q10: { title: "What blocks you most in your career planning today?", body: "Understanding your barriers helps us support you better." },
       },
       choices: {
         q1: {
-          tech: { title: "Technology", sub: "IT, code, data, cybersecurity" },
-          business: { title: "Business", sub: "Commerce, management, finance, marketing" },
-          creative: { title: "Creative", sub: "Design, graphics, audiovisual, communication" },
-          sante: { title: "Health", sub: "Medical, paramedical, well being" },
-          education: { title: "Education", sub: "Teaching, training" },
-          droit: { title: "Law", sub: "Legal, lawyer, notary" },
-          industrie: { title: "Industry", sub: "Production, engineering, maintenance" },
-          batiment: { title: "Construction", sub: "Building, architecture, construction" },
-          agriculture: { title: "Agriculture", sub: "Agrifood, environment, nature" },
-          service: { title: "Services", sub: "Tourism, sports, events" },
+          tech: { title: "Technology", sub: "IT, AI, cybersecurity, code, data" },
+          business: { title: "Business & commerce", sub: "Marketing, sales, finance, management" },
+          communication: { title: "Communication & media", sub: "Journalism, social media, advertising, content" },
+          creative: { title: "Visual creation", sub: "Design, graphics, audiovisual, animation" },
+          sante: { title: "Health & wellness", sub: "Medical, psychology, sport, support roles" },
+          education: { title: "Education & social", sub: "Teaching, care, inclusion, education" },
+          droit: { title: "Law & politics", sub: "Justice, lawyer, institutions, geopolitics" },
+          industrie: { title: "Industry & engineering", sub: "Production, mechanics, engineering, maintenance" },
+          batiment: { title: "Construction & architecture", sub: "Building, urban planning, architecture" },
+          agriculture: { title: "Environment & agriculture", sub: "Nature, ecology, farming, sustainability" },
+          service: { title: "Tourism & events", sub: "Travel, hospitality, event organization" },
         },
         q2: {
+          "creer-visuels": { title: "Create visuals or videos", sub: "Imagine, design, film, edit" },
+          "ecrire-raconter": { title: "Write or tell stories", sub: "Write, inform, narrate, share" },
+          "parler-convaincre": { title: "Speak, persuade or debate", sub: "Communicate, present, interview" },
+          "aider-accompagner": { title: "Help and support people", sub: "Listen, advise, support" },
+          "analyser-comprendre": { title: "Analyze and understand topics", sub: "Research, reflect, investigate" },
+          "creer-projets": { title: "Create projects or start ventures", sub: "Launch ideas, build something" },
+          "resoudre-tech": { title: "Solve technical problems", sub: "Find solutions, code, repair" },
+          "organiser-gerer": { title: "Organize and manage", sub: "Plan, coordinate, lead teams" },
+        },
+        q3: {
+          bureau: { title: "Office", sub: "In a company, structured setting" },
+          laboratoire: { title: "Lab", sub: "Research or experimentation" },
+          terrain: { title: "Field", sub: "On site, direct contact" },
+          itinerant: { title: "On the move", sub: "Multiple locations" },
+          distanciel: { title: "Remote", sub: "Remote work or online" },
+        },
+        q4: {
           pratique: { title: "Hands on", sub: "I like to handle, test, build" },
           equilibre: { title: "Balanced", sub: "I like practice and theory equally" },
           theorie: { title: "Theoretical", sub: "I like to understand before applying" },
         },
-        q3: {
-          college: { title: "Middle school", sub: "I am in middle school or below" },
-          seconde: { title: "10th grade", sub: "I am in 10th or 11th grade" },
-          terminale: { title: "Final year", sub: "I am preparing for graduation this year" },
-          bac: { title: "Graduated", sub: "I already have my diploma" },
-          bac2: { title: "2 year postgrad", sub: "Associate degree, short cycle higher ed" },
-          bac3: { title: "3 year postgrad", sub: "Bachelor's degree" },
-          bac5: { title: "Master's level", sub: "Master, engineering school, MBA" },
-        },
-        q4: {
-          bureau: { title: "Office", sub: "Structured setting, team work" },
-          terrain: { title: "Field", sub: "More hands on and movement" },
-          itinerant: { title: "Travel based", sub: "Frequent travel, across sites" },
-          distanciel: { title: "Remote", sub: "Work or training online" },
-        },
         q5: {
-          bureau: { title: "Office", sub: "In a company, in a structured setting" },
-          laboratoire: { title: "Lab", sub: "In research or experimentation" },
-          terrain: { title: "Field", sub: "On site, in direct contact" },
-          itinerant: { title: "Travel based", sub: "Moving between multiple locations" },
-          distanciel: { title: "Remote", sub: "Remote work or online" },
+          fort: { title: "Comfortable", sub: "I like numbers and logic" },
+          moyen: { title: "Okay", sub: "I manage without making it a priority" },
+          faible: { title: "Not my strength", sub: "I prefer other approaches" },
         },
         q6: {
           encadre: { title: "Guided", sub: "I need a clear and regular framework" },
@@ -1522,26 +1556,31 @@ export const TEXTS = {
           autonome: { title: "Autonomous", sub: "I like to learn and decide on my own" },
         },
         q7: {
-          encadre: { title: "Guided", sub: "I need a clear and regular framework" },
-          mixte: { title: "Mixed", sub: "A balance between guidance and autonomy" },
-          autonome: { title: "Autonomous", sub: "I like to learn and decide on my own" },
+          insertion: { title: "Find a job quickly", sub: "Enter working life fast" },
+          expertise: { title: "Become an expert", sub: "Aim for specialization in a field" },
+          flexibilite: { title: "Keep options open", sub: "Don't close doors too early" },
+          creation: { title: "Start my own venture", sub: "Entrepreneurship, freelance, personal project" },
         },
         q8: {
-          fort: { title: "Comfortable", sub: "I like numbers and logic" },
-          moyen: { title: "Okay", sub: "I manage without making it a priority" },
-          faible: { title: "Not my strength", sub: "I prefer other approaches" },
+          college: { title: "Middle school", sub: "Grade 9 or below" },
+          seconde: { title: "Grade 10", sub: "Grade 10 or 11" },
+          terminale: { title: "Final year", sub: "Preparing graduation this year" },
+          bac: { title: "Graduated", sub: "Already have high school diploma" },
+          bac2: { title: "2 year degree", sub: "Associate, short higher ed" },
+          bac3: { title: "Bachelor's", sub: "Bachelor's degree" },
+          bac5: { title: "Master's level", sub: "Master, engineering school, MBA" },
         },
         q9: {
-          insertion: { title: "Get a job", sub: "Enter working life quickly" },
-          expertise: { title: "Expertise", sub: "Become a specialist in a field" },
-          flexibilite: { title: "Flexibility", sub: "Keep several options open" },
-          creation: { title: "Build my business", sub: "Entrepreneurship, freelancing" },
+          local: { title: "Near home", sub: "Stay in my region" },
+          mobile: { title: "Mobile", sub: "Can move within the country" },
+          international: { title: "International", sub: "Can go abroad" },
+          distanciel: { title: "Remote", sub: "Prefer online programs" },
         },
         q10: {
-          local: { title: "Near home", sub: "I stay in my region" },
-          mobile: { title: "Mobile", sub: "I can move around the country" },
-          international: { title: "International", sub: "I can go abroad" },
-          distanciel: { title: "Remote", sub: "I prefer online training" },
+          info: { title: "Lack of information", sub: "I don't know what jobs or programs exist" },
+          peur: { title: "Fear of choosing wrong", sub: "Afraid of making the wrong choice" },
+          pression: { title: "Family or social pressure", sub: "Others' expectations weigh on me" },
+          indecision: { title: "Too many options", sub: "Torn between several paths" },
         },
       },
     },
@@ -6406,23 +6445,21 @@ export function getText(language, scope, key, fallback) {
   return fallback;
 }
 
+function quizCopyUsesNewFormat(bundle) {
+  return Boolean(bundle?.quiz?.choices?.q2?.["creer-visuels"]);
+}
+
 export function getQuizQuestionText(language, questionId) {
   const lang = canonicalLanguageForTexts(language);
-  const q = TEXTS[lang]?.quiz?.questions?.[questionId];
-  if (q) return q;
-  if (lang === "fr") {
-    return TEXTS.fr?.quiz?.questions?.[questionId] || TEXTS.universal?.quiz?.questions?.[questionId] || null;
-  }
-  return TEXTS.en?.quiz?.questions?.[questionId] || null;
+  const localized = TEXTS[lang]?.quiz?.questions?.[questionId];
+  if (localized && (lang === "fr" || quizCopyUsesNewFormat(TEXTS[lang]))) return localized;
+  return TEXTS.fr?.quiz?.questions?.[questionId] || localized || null;
 }
 
 export function getQuizChoiceText(language, questionId, choiceValue, fallback = {}) {
   const lang = canonicalLanguageForTexts(language);
   const pick = (bundle) => bundle?.quiz?.choices?.[questionId]?.[choiceValue];
   const localized = pick(TEXTS[lang]);
-  if (localized) return localized;
-  if (lang === "fr") {
-    return pick(TEXTS.universal) || fallback;
-  }
-  return pick(TEXTS.en) || fallback;
+  if (localized && (lang === "fr" || quizCopyUsesNewFormat(TEXTS[lang]))) return localized;
+  return pick(TEXTS.fr) || pick(TEXTS.universal) || localized || fallback;
 }

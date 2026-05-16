@@ -67,7 +67,7 @@ export function buildQuizAnswerChips(quiz, language = "fr") {
     if (v) chips.push({ key: "q8", label: L("chipNumbers", "Chiffres & logique"), value: v });
   }
   if (quiz.q9) {
-    const v = choiceTitle(language, "q9", quiz.q9);
+    const v = choiceTitle(language, "q7", quiz.q9);
     if (v) chips.push({ key: "q9", label: L("chipCareerGoal", "Objectif pro"), value: v });
   }
   if (quiz.q10) {
