@@ -93,6 +93,7 @@ class QuizAnswers(BaseModel):
     q9: str | None = None
     q10: str | None = None
     specialty: str | None = None
+    activity: str | None = None
 
 
 class ConversationCreateIn(BaseModel):

@@ -9,6 +9,7 @@ Q1_TO_ONISEP_DOMAINS: dict[str, list[str]] = {
     "tech":        ["informatique, Internet", "électricité, électronique, robotique"],
     "business":    ["commerce, marketing, vente", "gestion des entreprises, comptabilité"],
     "creative":    ["arts, culture, artisanat", "information-communication, audiovisuel"],
+    "communication": ["information-communication, audiovisuel", "commerce, marketing, vente"],
     "sante":       ["santé, social, sport"],
     "education":   ["lettres, langues, enseignement"],
     "droit":       ["économie, droit, politique"],

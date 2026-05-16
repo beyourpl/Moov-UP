@@ -17,23 +17,28 @@ import { getSpecialtyChoiceText } from "../data/specialtyLabels.js";
 const QUIZ_ADVANCE_DELAY_MS = 500;
 
 const Q1_CHOICES = [
-  { value: "tech", title: "Tech", sub: "Informatique, code, données, cybersécurité" },
-  { value: "business", title: "Business", sub: "Commerce, gestion, finance, marketing" },
-  { value: "creative", title: "Créatif", sub: "Design, graphisme, audiovisuel, communication" },
-  { value: "sante", title: "Santé", sub: "Médical, paramédical, bien être" },
-  { value: "education", title: "Éducation", sub: "Enseignement, formation" },
-  { value: "droit", title: "Droit", sub: "Juridique, avocat, notariat" },
-  { value: "industrie", title: "Industrie", sub: "Production, ingénierie, maintenance" },
-  { value: "batiment", title: "Bâtiment", sub: "Construction, architecture, BTP" },
-  { value: "agriculture", title: "Agriculture", sub: "Agro, environnement, nature" },
-  { value: "service", title: "Services", sub: "Tourisme, sport, événementiel" },
+  { value: "tech", title: "Technologie", sub: "Informatique, IA, cybersécurité, code, data" },
+  { value: "business", title: "Business & commerce", sub: "Marketing, vente, finance, gestion" },
+  { value: "communication", title: "Communication & médias", sub: "Journalisme, réseaux sociaux, publicité, contenu" },
+  { value: "creative", title: "Création visuelle", sub: "Design, graphisme, audiovisuel, animation" },
+  { value: "sante", title: "Santé & bien-être", sub: "Médical, psychologie, sport, accompagnement" },
+  { value: "education", title: "Éducation & social", sub: "Enseignement, aide, insertion, éducation" },
+  { value: "droit", title: "Droit & politique", sub: "Justice, avocat, institutions, géopolitique" },
+  { value: "industrie", title: "Industrie & ingénierie", sub: "Production, mécanique, ingénierie, maintenance" },
+  { value: "batiment", title: "Bâtiment & architecture", sub: "Construction, urbanisme, architecture" },
+  { value: "agriculture", title: "Environnement & agriculture", sub: "Nature, écologie, agriculture, développement durable" },
+  { value: "service", title: "Tourisme & événementiel", sub: "Voyage, hôtellerie, organisation d’événements" },
 ];
 
 const Q2_CHOICES = [
-  { value: "insertion", title: "Trouver un emploi rapidement", sub: "Entrer vite dans la vie active" },
-  { value: "expertise", title: "Devenir expert·e", sub: "Viser la spécialisation dans un domaine" },
-  { value: "flexibilite", title: "Garder des options ouvertes", sub: "Ne pas se fermer trop tôt" },
-  { value: "creation", title: "Créer mon activité", sub: "Entrepreneuriat, freelance, projet perso" },
+  { value: "creer-visuels", title: "Créer des visuels ou vidéos", sub: "Imaginer, designer, filmer, monter" },
+  { value: "ecrire-raconter", title: "Écrire ou raconter des histoires", sub: "Rédiger, informer, raconter, transmettre" },
+  { value: "parler-convaincre", title: "Parler, convaincre ou débattre", sub: "Communiquer, présenter, interviewer" },
+  { value: "aider-accompagner", title: "Aider et accompagner des personnes", sub: "Écouter, conseiller, soutenir" },
+  { value: "analyser-comprendre", title: "Analyser et comprendre des sujets", sub: "Chercher, réfléchir, enquêter" },
+  { value: "creer-projets", title: "Créer des projets ou entreprendre", sub: "Lancer des idées, construire quelque chose" },
+  { value: "resoudre-tech", title: "Résoudre des problèmes techniques", sub: "Trouver des solutions, coder, réparer" },
+  { value: "organiser-gerer", title: "Organiser et gérer", sub: "Planifier, coordonner, gérer des équipes" },
 ];
 
 const Q3_CHOICES = [
@@ -95,14 +100,14 @@ const Q10_CHOICES = [
 const BASE_QUESTIONS = [
   {
     id: "q1",
-    title: "Qu’est-ce qui t’intéresse le plus ?",
-    body: "Choisis les domaines qui t’attirent naturellement.",
+    title: "Quels domaines t’attirent le plus ?",
+    body: "Choisis les secteurs qui t’intéressent naturellement.",
     choices: Q1_CHOICES,
   },
   {
     id: "q2",
-    title: "Dans ton futur métier, qu’est-ce qui compte le plus pour toi ?",
-    body: "Chaque personne recherche quelque chose de différent dans son avenir.",
+    title: "Qu’est-ce que tu préfères faire naturellement ?",
+    body: "Choisis les activités dans lesquelles tu te reconnais le plus.",
     choices: Q2_CHOICES,
   },
   {

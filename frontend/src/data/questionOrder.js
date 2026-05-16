@@ -1,10 +1,12 @@
 /** Ordre fixe des 10 questions principales. */
 export const BASE_QUESTION_ORDER = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"];
 
-/** Ordre effectif du questionnaire (spécialité créative insérée après le domaine). */
+const QSPEC_DOMAIN_KEYS = new Set(["creative", "communication"]);
+
+/** Ordre effectif du questionnaire (spécialité insérée après certains domaines). */
 export function getQuestionOrder(answers = {}) {
   const order = ["q1"];
-  if (answers.q1 === "creative") order.push("qSpec");
+  if (QSPEC_DOMAIN_KEYS.has(answers.q1)) order.push("qSpec");
   return [...order, ...BASE_QUESTION_ORDER.slice(1)];
 }
 

@@ -34,6 +34,18 @@ def test_build_profile_specialty_journalisme():
     assert "presse" in text.lower()
 
 
+def test_build_profile_communication_domain_and_activity():
+    answers = {
+        "q1": "communication",
+        "q3": "terminale",
+        "activity": "ecrire-raconter",
+        "specialty": "journalisme",
+    }
+    text, _, domains = build_profile(answers)
+    assert "information-communication" in ",".join(domains)
+    assert "écrire" in text.lower() or "raconter" in text.lower()
+
+
 def test_build_profile_orientation_blocker_in_q4():
     answers = {
         "q1": "tech", "q2": "pratique", "q3": "terminale", "q4": "peur",

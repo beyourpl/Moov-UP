@@ -23,7 +23,8 @@ export function getSpecialtyChoiceText(language, domain, value, fallback = {}) {
             : lang === "ja"
               ? specialtyJa
               : specialtyEn;
-  const row = pack[domain]?.[value];
+  const domainKey = domain === "communication" ? "creative" : domain;
+  const row = pack[domainKey]?.[value];
   if (row?.title != null && row.title !== "" && row?.sub != null && row.sub !== "") {
     return { title: row.title, sub: row.sub };
   }

@@ -26,8 +26,12 @@ export function buildQuizAnswerChips(quiz, language = "fr") {
   const chips = [];
   const q1t = choiceTitle(language, "q1", d);
   if (q1t) chips.push({ key: "q1", label: L("chipDomain", "Domaine"), value: q1t });
+  if (quiz.activity) {
+    const v = choiceTitle(language, "q2", quiz.activity);
+    if (v) chips.push({ key: "activity", label: L("chipActivity", "Activité naturelle"), value: v });
+  }
   if (quiz.q2) {
-    const v = choiceTitle(language, "q2", quiz.q2);
+    const v = choiceTitle(language, "q4", quiz.q2);
     if (v) chips.push({ key: "q2", label: L("chipLearning", "Apprentissage"), value: v });
   }
   if (quiz.q3) {

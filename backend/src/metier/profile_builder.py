@@ -6,6 +6,17 @@ SPECIALTY_PROFILE_LABELS = {
     "journalisme": "journalisme, presse, médias et communication d'information",
 }
 
+ACTIVITY_LABELS = {
+    "creer-visuels": "créer des visuels ou des vidéos (design, tournage, montage)",
+    "ecrire-raconter": "écrire ou raconter des histoires (rédaction, information, narration)",
+    "parler-convaincre": "parler, convaincre ou débattre (communication orale, présentation)",
+    "aider-accompagner": "aider et accompagner des personnes (écoute, conseil, soutien)",
+    "analyser-comprendre": "analyser et comprendre des sujets (recherche, réflexion, enquête)",
+    "creer-projets": "créer des projets ou entreprendre (idées, lancement, construction)",
+    "resoudre-tech": "résoudre des problèmes techniques (solutions, code, réparation)",
+    "organiser-gerer": "organiser et gérer (planification, coordination d'équipes)",
+}
+
 ORIENTATION_BLOCKER_LABELS = {
     "info": "je manque d'informations sur les métiers et les formations",
     "peur": "j'ai peur de me tromper dans mon choix d'orientation",
@@ -43,6 +54,10 @@ def build_profile(answers: dict) -> tuple[str, int, list[str]]:
         f"Je suis {niveau_txt} et je m'intéresse au domaine {q1} ({', '.join(domains)}).",
     ]
     specialty = answers.get("specialty")
+    activity = answers.get("activity")
+    if activity:
+        act_txt = ACTIVITY_LABELS.get(activity, activity.replace("-", " "))
+        parts.append(f"Activité naturelle préférée : {act_txt}.")
     if specialty:
         spec_txt = SPECIALTY_PROFILE_LABELS.get(specialty, specialty.replace("-", " "))
         parts.append(f"Spécialité visée : {spec_txt}.")
