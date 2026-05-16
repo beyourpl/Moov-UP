@@ -220,7 +220,9 @@ export const TEXTS = {
       resumeDraftBody:
         "Ton questionnaire a été repris automatiquement là où tu t'étais arrêté.",
       resumeDraftOk: "OK",
-      questionProgress: "{answered}/10 complétées",
+      questionProgress: "{answered}/{total} complétées",
+      q2BodyAfterDomain:
+        "Tu as choisi {domain} : quelle activité te ressemble le plus au quotidien ? (ça affine ton profil au-delà du secteur seul.)",
     },
     landing: {
       navCoFounders: "Cofondateurs",
@@ -1473,7 +1475,9 @@ export const TEXTS = {
       retry: "Try again",
       resumeDraftBody: "Your questionnaire was resumed automatically where you left off.",
       resumeDraftOk: "OK",
-      questionProgress: "{answered}/10 completed",
+      questionProgress: "{answered}/{total} completed",
+      q2BodyAfterDomain:
+        "You chose {domain}: which activity feels most like you day to day? (This refines your profile beyond the sector alone.)",
     },
     quiz: {
       title: "Moov'Up",

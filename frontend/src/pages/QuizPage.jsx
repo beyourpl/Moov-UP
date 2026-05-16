@@ -11,6 +11,7 @@ import { useUiPreferences } from "../hooks/useUiPreferences.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import { getQuestionOrder, specialtyConfig } from "../data/orientationHelpers.js";
+import { orderActivityChoicesForDomain } from "../data/quizQuestionHelpers.js";
 import { getSpecialtyChoiceText } from "../data/specialtyLabels.js";
 
 /** Pause après chaque choix avant la question suivante (ou avant l’analyse finale), en ms. */
@@ -29,6 +30,8 @@ const Q1_CHOICES = [
   { value: "agriculture", title: "Environnement & agriculture", sub: "Nature, écologie, agriculture, développement durable" },
   { value: "service", title: "Tourisme & événementiel", sub: "Voyage, hôtellerie, organisation d’événements" },
 ];
+
+const Q1_DOMAIN_LABELS = Object.fromEntries(Q1_CHOICES.map((c) => [c.value, c.title]));
 
 const Q2_CHOICES = [
   { value: "creer-visuels", title: "Créer des visuels ou vidéos", sub: "Imaginer, designer, filmer, monter" },
@@ -186,6 +189,24 @@ function firstIncompleteStepIndex(answers) {
 }
 
 function resolveQuestion(questionId, answers, language) {
+  if (questionId === "q2" && answers.q1) {
+    const base = BASE_QUESTIONS.find((q) => q.id === "q2");
+    if (!base) return null;
+    const translated = getQuizQuestionText(language, "q2");
+    const domainLabel = Q1_DOMAIN_LABELS[answers.q1] || answers.q1;
+    const bodyTpl = getText(
+      language,
+      "quizMeta",
+      "q2BodyAfterDomain",
+      "Tu as choisi {domain} : quelle activité te ressemble le plus au quotidien ? (ça affine ton profil au-delà du secteur seul.)",
+    );
+    return {
+      ...base,
+      title: translated?.title || base.title,
+      body: bodyTpl.replace(/\{domain\}/g, domainLabel),
+      choices: orderActivityChoicesForDomain(answers.q1, base.choices),
+    };
+  }
   if (questionId === "qSpec") {
     const domain = answers.q1;
     const items = specialtyConfig[domain] || [];
@@ -614,7 +635,7 @@ export default function QuizPage() {
               <div className={`quiz-step-badge${checkPulse ? " is-validating" : ""}`}>
                 <span>
                   {ui.questionProgress
-                    .replace(/\{answered\}/g, String(answeredCount))
+                    .replace(/\{answered\}/g, String(stepIndex + 1))
                     .replace(/\{total\}/g, String(questionTotal))}
                 </span>
                 {checkPulse ? <span className="quiz-step-check" aria-hidden="true">✓</span> : null}
