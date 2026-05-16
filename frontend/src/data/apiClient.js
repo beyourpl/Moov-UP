@@ -27,6 +27,36 @@ export function setToken(t) {
   else localStorage.removeItem(TOKEN_KEY);
 }
 
+/** FastAPI renvoie souvent `detail` en string, tableau ou objet — évite un message vide côté UI. */
+export function formatApiErrorDetail(detail, fallback = "") {
+  if (detail == null || detail === "") return fallback;
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail)) {
+    const parts = detail
+      .map((item) => {
+        if (typeof item === "string") return item;
+        if (item && typeof item === "object") {
+          const loc = Array.isArray(item.loc) ? item.loc.join(".") : "";
+          const msg = item.msg || item.message || "";
+          return loc && msg ? `${loc}: ${msg}` : msg || JSON.stringify(item);
+        }
+        return String(item);
+      })
+      .filter(Boolean);
+    return parts.join(" · ") || fallback;
+  }
+  if (typeof detail === "object") {
+    const msg = detail.msg || detail.message;
+    if (msg) return String(msg);
+    try {
+      return JSON.stringify(detail);
+    } catch {
+      return fallback;
+    }
+  }
+  return String(detail) || fallback;
+}
+
 async function request(method, path, body) {
   const API_URL = resolveApiBase();
   const headers = { "Content-Type": "application/json" };
@@ -72,7 +102,7 @@ async function request(method, path, body) {
     } catch {
       detail = res.statusText;
     }
-    throw new Error(detail || res.statusText);
+    throw new Error(formatApiErrorDetail(detail, res.statusText || "Erreur serveur"));
   }
   if (res.status === 204) return null;
   return res.json();

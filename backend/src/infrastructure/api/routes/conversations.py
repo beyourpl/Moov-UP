@@ -50,7 +50,7 @@ def create_conversation(
         user_id=current.id,
         profile_text=profile_text,
         niveau_max=niveau_max,
-        q1=q1,
+        q1=str(qa.get("q1") or ""),
         initial_metiers=json.dumps(recs, ensure_ascii=False),
         quiz_answers_json=json.dumps(qa_dump, ensure_ascii=False),
     )

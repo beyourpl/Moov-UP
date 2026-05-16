@@ -12,9 +12,9 @@ def client_with_user():
     init_db()
 
     class FakeRag:
-        def initial_recommendations(self, profile, niveau_max, top_k=5, q1=None):
+        def initial_recommendations(self, profile, niveau_max, top_k=5, q1=None, specialty=None, quiz_answers=None):
             return [{"metier": {"libelle": "dev", "sous_domaine_key": "informatique"}, "formations": []}]
-        def search_for_message(self, msg, niveau_max, top_k=5, q1=None):
+        def search_for_message(self, msg, niveau_max, top_k=5, q1=None, specialty=None, quiz_answers=None):
             return [{"metier": {"libelle": "dev", "sous_domaine_key": "informatique"}, "formations": []}]
 
     app.state.rag = FakeRag()
