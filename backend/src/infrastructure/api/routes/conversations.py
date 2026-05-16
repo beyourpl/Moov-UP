@@ -30,19 +30,22 @@ def create_conversation(
     rag = request.app.state.rag
     if rag is None:
         raise HTTPException(status_code=503, detail="RAG index not built yet — run scripts.scrape and scripts.build_index")
-    q1 = body.quiz_answers.q1
-    specialty = body.quiz_answers.specialty
+    qa = body.quiz_answers.model_dump()
     recs = rag.initial_recommendations(
-        profile_text, niveau_max=niveau_max, q1=q1, specialty=specialty,
+        profile_text,
+        niveau_max=niveau_max,
+        q1=qa.get("q1"),
+        specialty=qa.get("specialty"),
+        quiz_answers=qa,
     )
     import logging
     logging.getLogger("moovup.conversations").info(
-        "[create_conversation] user=%s q1=%s niveau_max=%d top5=%s",
-        current.email, q1, niveau_max,
+        "[create_conversation] user=%s q1=%s niveau_max=%d top=%s",
+        current.email, qa.get("q1"), niveau_max,
         [(r["metier"].get("libelle", "?")[:50], r.get("score")) for r in recs],
     )
 
-    qa_dump: dict[str, Any] = body.quiz_answers.model_dump()
+    qa_dump: dict[str, Any] = qa
     conv = Conversation(
         user_id=current.id,
         profile_text=profile_text,

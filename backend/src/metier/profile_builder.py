@@ -6,6 +6,17 @@ SPECIALTY_PROFILE_LABELS = {
     "journalisme": "journalisme, presse, médias et communication d'information",
 }
 
+ACTIVITY_EMBED_HINTS = {
+    "creer-visuels": "métiers du design, du graphisme, de la photo et de l'audiovisuel",
+    "ecrire-raconter": "métiers de la rédaction, du journalisme et de l'information",
+    "parler-convaincre": "métiers de la communication, de la vente et de la négociation",
+    "aider-accompagner": "métiers du soin, de l'accompagnement social et de l'éducation",
+    "analyser-comprendre": "métiers de l'analyse, de la recherche et du conseil",
+    "creer-projets": "métiers de l'entrepreneuriat, du management de projet et de la création d'entreprise",
+    "resoudre-tech": "métiers du développement informatique, des données, des réseaux et de la cybersécurité",
+    "organiser-gerer": "métiers du management, de la gestion et de la coordination",
+}
+
 ACTIVITY_LABELS = {
     "creer-visuels": "créer des visuels ou des vidéos (design, tournage, montage)",
     "ecrire-raconter": "écrire ou raconter des histoires (rédaction, information, narration)",
@@ -58,6 +69,8 @@ def build_profile(answers: dict) -> tuple[str, int, list[str]]:
     if activity:
         act_txt = ACTIVITY_LABELS.get(activity, activity.replace("-", " "))
         parts.append(f"Activité naturelle préférée : {act_txt}.")
+        if hint := ACTIVITY_EMBED_HINTS.get(activity):
+            parts.append(f"Pistes métiers recherchées : {hint}.")
     if specialty:
         spec_txt = SPECIALTY_PROFILE_LABELS.get(specialty, specialty.replace("-", " "))
         parts.append(f"Spécialité visée : {spec_txt}.")

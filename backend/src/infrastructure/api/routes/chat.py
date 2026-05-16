@@ -54,9 +54,12 @@ async def chat(
         qa = json.loads(conv.quiz_answers_json or "{}")
     except json.JSONDecodeError:
         qa = {}
-    specialty = qa.get("specialty")
     rag_ctx = rag.search_for_message(
-        body.message, niveau_max=conv.niveau_max, q1=conv.q1, specialty=specialty,
+        body.message,
+        niveau_max=conv.niveau_max,
+        q1=conv.q1,
+        specialty=qa.get("specialty"),
+        quiz_answers=qa,
     )
     metier_with_scores = [
         (hit["metier"].get("libelle", "?")[:50], hit.get("score"))

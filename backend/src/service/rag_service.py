@@ -13,6 +13,7 @@ from sentence_transformers import SentenceTransformer
 
 from src.config import settings
 from src.metier.mappings import Q1_TO_ONISEP_DOMAINS
+from src.metier.quiz_rag_boost import quiz_answers_score_boost
 
 
 DATA_DIR = Path(settings.DATA_DIR)
@@ -20,7 +21,7 @@ MODEL_NAME = "intfloat/multilingual-e5-base"
 
 logger = logging.getLogger("moovup.rag")
 
-DEFAULT_TOP_K = 8
+DEFAULT_TOP_K = 10
 
 
 def _journalisme_libelle_priority(libelle: str) -> int:
@@ -214,10 +215,16 @@ class RagService:
         top_k: int = DEFAULT_TOP_K,
         q1: str | None = None,
         specialty: str | None = None,
+        quiz_answers: dict | None = None,
     ) -> list[dict]:
         vec = self.embedder.encode(["query: " + profile_text], normalize_embeddings=True)
         return self._search_and_join(
-            np.asarray(vec, dtype="float32"), niveau_max, top_k, q1=q1, specialty=specialty,
+            np.asarray(vec, dtype="float32"),
+            niveau_max,
+            top_k,
+            q1=q1,
+            specialty=specialty,
+            quiz_answers=quiz_answers,
         )
 
     def search_for_message(
@@ -227,10 +234,16 @@ class RagService:
         top_k: int = DEFAULT_TOP_K,
         q1: str | None = None,
         specialty: str | None = None,
+        quiz_answers: dict | None = None,
     ) -> list[dict]:
         vec = self.embedder.encode(["query: " + user_message], normalize_embeddings=True)
         return self._search_and_join(
-            np.asarray(vec, dtype="float32"), niveau_max, top_k, q1=q1, specialty=specialty,
+            np.asarray(vec, dtype="float32"),
+            niveau_max,
+            top_k,
+            q1=q1,
+            specialty=specialty,
+            quiz_answers=quiz_answers,
         )
 
     def _search_and_join(
@@ -240,11 +253,12 @@ class RagService:
         top_k: int,
         q1: str | None = None,
         specialty: str | None = None,
+        quiz_answers: dict | None = None,
     ) -> list[dict]:
         # On oversample (top_k * 3) car on dedup ensuite par libellé : la CSV ONISEP
         # contient parfois plusieurs entrées avec le même libellé (variantes de domaine).
         # Sans oversampling, le filtre dédup pourrait laisser moins de top_k résultats.
-        oversample_factor = 6 if specialty == "journalisme" else 3
+        oversample_factor = 6 if specialty == "journalisme" else 4
         oversample_k = min(top_k * oversample_factor, len(self.metiers_meta))
         candidate_ids: list[int] | None = None
         if q1 and q1 in Q1_TO_ONISEP_DOMAINS:
@@ -286,7 +300,7 @@ class RagService:
                 continue
             seen_libelle.add(libelle)
             faiss_score = float(score)
-            boost = _specialty_score_boost(m, specialty)
+            boost = _specialty_score_boost(m, specialty) + quiz_answers_score_boost(m, quiz_answers)
             ranked.append((faiss_score + boost, faiss_score, int(i), m))
 
         ranked.sort(key=lambda row: (-row[0], -row[1]))

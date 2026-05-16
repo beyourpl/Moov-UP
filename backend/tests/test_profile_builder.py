@@ -34,6 +34,12 @@ def test_build_profile_specialty_journalisme():
     assert "presse" in text.lower()
 
 
+def test_build_profile_activity_embed_hint_for_tech():
+    answers = {"q1": "tech", "q3": "terminale", "activity": "resoudre-tech"}
+    text, _, _ = build_profile(answers)
+    assert "développement informatique" in text.lower() or "informatique" in text.lower()
+
+
 def test_build_profile_communication_domain_and_activity():
     answers = {
         "q1": "communication",
