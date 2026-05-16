@@ -9,6 +9,7 @@ import { mapUiQuizAnswersToBackend } from "../data/quizAnswerMapping.js";
 import { playQuizTickSound } from "../data/quizTickSound.js";
 import { useUiPreferences } from "../hooks/useUiPreferences.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
+import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import { getQuestionOrder, specialtyConfig } from "../data/orientationHelpers.js";
 import { getSpecialtyChoiceText } from "../data/specialtyLabels.js";
 
@@ -235,7 +236,7 @@ export default function QuizPage() {
   const navigate = useNavigate();
   const session = getSession();
   const leaveToPreviousPage = useNavigateBack(session ? "/choice" : "/");
-  const { language, quizTickSound } = useUiPreferences();
+  const { language, theme, quizTickSound } = useUiPreferences();
   const initialQuiz = readInitialQuizFromDraft();
   const [answers, setAnswers] = useState(() => initialQuiz.answers);
   const [stepIndex, setStepIndex] = useState(() => initialQuiz.stepIndex);
@@ -550,7 +551,7 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="app quiz-app">
+    <div className={`app quiz-app ${theme}`}>
       <div className="top-actions quiz-top">
         <button
           type="button"
@@ -561,7 +562,7 @@ export default function QuizPage() {
           ← {getText(language, "common", "back", "Retour")}
         </button>
         <div className="quiz-top-btns">
-          <span className="user-pill">{session?.pseudo || getText(language, "coach", "visitor", "User")}</span>
+          <TopBarAccountTools className="quiz-top-tools" />
           <button type="button" className="nav-btn secondary" disabled={!canBack} onClick={goBack}>{ui.back}</button>
           <button type="button" className="nav-btn primary" onClick={goHome}>{ui.home}</button>
           <button type="button" className="nav-btn secondary" onClick={handleLogout}>{ui.logout}</button>
