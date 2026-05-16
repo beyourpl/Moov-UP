@@ -806,9 +806,13 @@ export const TEXTS = {
       authJeunesLink: "Compte jeune ? Connexion classique",
       backStructures: "Espace structures",
       offersEyebrow: "Choix d’offre",
-      offersTitle: "Choisis l’offre qui te correspond",
+      offersTitle: "Quelle formule pour votre structure ?",
       offersSubtitle:
-        "Freemium pour commencer, Premium B2C pour tout débloquer (coach, CV…), ou Licences B2B pour les structures : lycées, missions locales, grands réseaux.",
+        "Les jeunes peuvent utiliser Freemium ou Premium B2C ; votre structure active les Licences B2B pour le tableau de bord collectif (missions locales, lycées, réseaux).",
+      authConnectedLead:
+        "Vous êtes connecté·e. Accédez à l’espace Moov’Up partenaires ou ouvrez directement votre tableau de bord.",
+      authConnectedIntro: "Espace missions locales & partenaires",
+      authConnectedOffers: "Voir les offres",
       offerFreemiumTitle: "FREEMIUM",
       offerFreemiumPrice: "Gratuit",
       offerFreemiumDesc: "Accès au diagnostic de base avec échanges Moov’Coach limités.",
@@ -2030,23 +2034,251 @@ export const TEXTS = {
       brandPositioningTitle: "التموضع",
       brandPositioningText: "يربط Moov'Up التوجيه والتوظيف والدعم في تجربة بسيطة.",
     },
+    partenaires: {
+      navAria: "مساحة الشركاء",
+      navJeunes: "تسجيل دخول الشباب",
+      navSegmentStructures: "المؤسسات",
+      navSegmentJeunes: "الشباب",
+      navAudienceSwitchAria: "التبديل بين مساحة الشركاء وتسجيل دخول الشباب",
+      ctaLogin: "تسجيل دخول المؤسسة",
+      eyebrow: "مؤسسات · مهام التوجيه المحلية · منشآت",
+      title: "مساحة مهام التوجيه المحلية والشركاء",
+      lead:
+        "لوحة تحكم جماعية لمتابعة الشباب الذين وافقوا على مشاركة مؤشرات التوجيه: الحجم، التوزيع والاتجاهات — دون كشف بيانات شخصية خارج الإطار المتفق عليه.",
+      bullet1: "تسجيل الدخول مخصص لحسابات مؤسستك",
+      bullet2: "بعد الدخول: اختيار عرض Freemium أو Premium أو تراخيص B2B",
+      bullet3: "الوصول إلى لوحة التحكم بالإحصاءات المجمعة الموافق عليها",
+      ctaOffers: "عرض العروض",
+      authEyebrow: "تسجيل دخول المؤسسة",
+      authTitle: "دخول الشركاء",
+      authLead:
+        "استخدم حساب مهمة التوجيه المحلية أو المدرسة أو شبكتك. بعد الدخول تختار العرض المناسب (Freemium أو Premium أو تراخيص B2B).",
+      authSubmit: "تسجيل الدخول",
+      authJeunesLink: "حساب شاب؟ تسجيل الدخول العادي",
+      backStructures: "مساحة الشركاء",
+      offersEyebrow: "اختيار العرض",
+      offersTitle: "أي صيغة تناسب مؤسستك؟",
+      offersSubtitle:
+        "يمكن للشباب استخدام Freemium أو Premium B2C؛ تفعّل مؤسستك تراخيص B2B للوحة التحكم الجماعية (مهام التوجيه المحلية، مدارس، شبكات).",
+      authConnectedLead:
+        "أنت مسجّل الدخول. ادخل إلى مساحة Moov'Up للشركاء أو افتح لوحة التحكم مباشرة.",
+      authConnectedIntro: "مساحة مهام التوجيه المحلية والشركاء",
+      authConnectedOffers: "عرض العروض",
+      offerFreemiumTitle: "FREEMIUM",
+      offerFreemiumPrice: "مجاني",
+      offerFreemiumDesc: "وصول إلى تشخيص أساسي مع تبادلات MoovCoach محدودة.",
+      offerFreemiumF1: "تشخيص أساسي",
+      offerFreemiumF2: "توصيات محدودة",
+      offerFreemiumF3: "MoovCoach محدود",
+      offerPremiumTitle: "PREMIUM B2C",
+      offerPremiumBadge: "★ الأكثر شعبية",
+      offerPremiumPrice: "1,99 € / شهر",
+      offerPremiumDesc: "وصول غير محدود، إنشاء السيرة الذاتية، أدوات متقدمة.",
+      offerPremiumF1: "وصول غير محدود",
+      offerPremiumF2: "إنشاء السيرة الذاتية وخطاب التقديم",
+      offerPremiumF3: "التحضير للمقابلات",
+      offerPremiumF4: "MoovCoach غير محدود",
+      offerB2bTitle: "تراخيص B2B",
+      offerB2bPrice: "ابتداءً من 2 000 € / سنة",
+      offerB2bDesc:
+        "للمدارس الثانوية ومهام التوجيه المحلية ومنشآت الإدماج والمؤسسات الكبرى.",
+      offerB2bF1: "لوحة تحكم جماعية",
+      offerB2bF2: "متابعة المجموعات",
+      offerB2bF3: "تقارير وإحصاءات",
+      offerB2bF4: "مرافقة مخصصة",
+      offerFreemiumTagline: "محرك الاكتساب",
+      offerPremiumTagline: "محرك الربح",
+      offerB2bTagline: "محرك الاستقرار",
+      offerFreemiumDescPrefix: "وصول إلى ",
+      offerFreemiumDescEm: "تشخيص أساسي",
+      offerFreemiumDescMid: " مع تبادلات ",
+      offerMoovcoachName: "MoovCoach",
+      offerFreemiumDescSuffix: " محدودة.",
+      offerPremiumDescPrefix: "وصول ",
+      offerPremiumDescEm: "غير محدود",
+      offerPremiumDescSuffix: "، إنشاء السيرة الذاتية، أدوات متقدمة.",
+      offerB2bDescPrefix: "مخصص لـ ",
+      offerB2bDescEm1: "المدارس الثانوية",
+      offerB2bDescMid: "، مهام التوجيه المحلية، منشآت الإدماج، ",
+      offerB2bDescEm2: "المؤسسات الكبرى",
+      offerB2bDescEnd: ".",
+      subscribeBackOffers: "العودة إلى العروض",
+      subscribePremiumTitle: "Premium B2C — كيف يعمل؟",
+      subscribePremiumLead:
+        "إليك السير المتوقع عند ربط الدفع الإلكتروني. حاليًا يمكنك تفعيل العرض في **وضع تجريبي** (دون خصم).",
+      subscribePremiumPriceLine:
+        "السعر المعروض: **1,99 € شاملة الضريبة / شهر** — اشتراك بتجديد تلقائي شهري، قابل للإلغاء.",
+      subscribePremiumH1: "آلية الدفع",
+      subscribePremiumP1:
+        "تدفع بـ **بطاقة بنكية** (مزود دفع آمن مثل Stripe): تأكيد أولي، ثم خصم شهري في نفس اليوم من كل شهر.",
+      subscribePremiumP2:
+        "تستلم **إيصالًا أو فاتورة** بالبريد بعد كل دفعة؛ يمكنك تحديث بطاقتك أو عنوان الفوترة من حسابك.",
+      subscribePremiumP3:
+        "عند فشل الدفع قد يُعلّق الوصول Premium حتى التسوية — يُرسل إشعار بالبريد.",
+      subscribePremiumP4:
+        "ميزات «غير المحدود» في الواجهة هي **تجريبية**؛ الحدود الفعلية تعتمد على العقد المربوط بالإنتاج.",
+      subscribePremiumLegal:
+        "الشروط التعاقدية النهائية (الشروط، المدة، الإلغاء): يقدّمها فريقك القانوني / التجاري.",
+      subscribePremiumActivate: "تفعيل Premium (تجريبي)",
+      subscribeAlreadyPremium:
+        "أنت بالفعل على عرض Premium B2C. يمكنك فتح مساحتك أو العودة إلى العروض.",
+      subscribeGoPremiumHub: "فتح مساحة Premium",
+      subscribeB2bTitle: "تراخيص B2B — كيف يعمل؟",
+      subscribeB2bLead:
+        "تُفاوض **التراخيص السنوية** مع الفريق التجاري: عرض سعر، أمر شراء أو اتفاقية إطار، ثم الفوترة.",
+      subscribeB2bPriceLine:
+        "ابتداءً من **2 000 € غير شامل الضريبة / سنة** حسب النطاق (عدد المواقع، حجم المستخدمين، الخيارات).",
+      subscribeB2bH1: "آلية الفوترة",
+      subscribeB2bP1:
+        "بعد التوقيع تستلم **فاتورة** وتُفعَّل حسابات المؤسسات (مرجعون، SSO أو قوائم بريد حسب الإعداد).",
+      subscribeB2bP2:
+        "**لوحة التحكم الجماعية** والتصديرات المتقدمة مشمولة في الترخيص؛ تُجدول المرافقة المخصصة مع مسؤول Moov'Up.",
+      subscribeB2bP3:
+        "هنا تفعّل الترخيص في **وضع تجريبي** لاستكشاف الواجهة دون عقد حقيقي.",
+      subscribeB2bLegal:
+        "لعرض سعر حقيقي: تواصل مع فريق التراخيص من لوحة التحكم (رابط الدعم).",
+      subscribeB2bActivate: "تفعيل ترخيص B2B (تجريبي)",
+      subscribeAlreadyB2b:
+        "أنت بالفعل على تراخيص B2B. يمكنك فتح لوحة التحكم أو العودة إلى العروض.",
+      subscribeGoB2bDashboard: "فتح لوحة التحكم",
+      currentOfferPremiumBanner:
+        "العرض النشط: Premium B2C — 1,99 € شاملة الضريبة / شهر. لا خصم حقيقي في الوضع التجريبي؛ سيُربط الدفع لاحقًا.",
+      currentOfferB2bBanner:
+        "العرض النشط: تراخيص B2B — ابتداءً من 2 000 € غير شامل الضريبة / سنة. تفعيل تجريبي: لا عقد ولا فوترة حقيقية حتى يُنهي الفريق التجاري ملفك.",
+      premiumHubTitle: "مساحة Premium B2C",
+      premiumHubLead:
+        "كل ما يشمله اشتراكك — تذكير بالمزايا وروابط مباشرة للأدوات.",
+      premiumWrongOffer:
+        "هذه المساحة مخصصة لعرض Premium B2C. اختر هذا العرض للوصول إليها.",
+      premiumIncludedTitle: "مشمول في Premium",
+      premiumPillarAccessBody:
+        "استبيان موجّه، نتائج ومسارات: الكل مفتوح دون سقف في هذه الواجهة (تجريبي).",
+      premiumPillarCvBody:
+        "نماذج، تحليل بالذكاء الاصطناعي واقتراحات لمواءمة سيرتك وخطابك مع توقعات المُوظّفين وأنظمة ATS.",
+      premiumPillarInterviewBody:
+        "تدرّب مع MoovCoach: أسئلة شائعة، إعادة صياغة، أسلوب ورسائل أساسية قبل مقابلة أو امتحان شفوي.",
+      premiumPillarCoachBody:
+        "اطرح ما تشاء عن المهن والتكوين والمسارات — المدرب يعتمد على مصادر موثوقة.",
+      premiumCtaQuiz: "فتح المسار الموجّه",
+      premiumCtaCv: "فتح السيرة الذاتية وخطاب التقديم",
+      premiumCtaInterview: "التحضير لمقابلة",
+      premiumCtaCoach: "فتح MoovCoach",
+      premiumDemoNote:
+        "الفوترة الحقيقية وحدود الخادم ستتبع عرضك التجاري؛ «غير المحدود» هنا عرض تجريبي للواجهة.",
+      offerChoose: "اختيار",
+      goDashboard: "فتح لوحة التحكم",
+      goOffers: "العودة إلى العروض",
+      needLogin: "يلزم تسجيل الدخول.",
+      authOffersEyebrow: "العروض",
+      authOffersTitle: "الأسعار والميزات",
+      authOffersLead: "بعد الدخول تختار الصيغة المناسبة لمؤسستك أو شبكتك.",
+      authOffersFoot: "مساحة الشركاء: عرض وتقديم",
+      authOffersFootLink: "عرض صفحة الشركاء",
+      dashTitle: "لوحة تحكم الشركاء",
+      dashLead:
+        "مؤشرات مجمعة من الشباب الذين وافقوا على المشاركة في نطاقك (بيانات تجريبية).",
+      wrongOffer:
+        "لوحة التحكم الجماعية مشمولة في عرض تراخيص B2B. اختر هذا العرض للوصول إليها.",
+    },
     coach: {
       visitor: "مستخدم",
       title: "Moov'Coach",
-      description: "يفتح روبوت الإرشاد مباشرة بعد تسجيل الدخول. يمكنك طرح الأسئلة أو إعادة الاستبيان أو استكشاف المسارات المقترحة.",
+      description:
+        "يفتح روبوت الإرشاد مباشرة بعد تسجيل الدخول. يمكنك طرح الأسئلة أو إعادة الاستبيان أو استكشاف المسارات المقترحة.",
       eyebrow: "مساعد التوجيه",
       share: "مشاركة الرابط",
       home: "الرئيسية",
       recommendedJobs: "المهن الموصى بها لملفك",
       userPathway: "مسار المستخدم المرئي",
       pathwayType: "مسار نموذجي",
-      noPathway: "لم يتم إرسال مسار مفصل. إعادة الاستبيان توفر تصورًا كاملًا.",
+      noPathway: "لم يُرسل مسار مفصّل. إعادة الاستبيان تعطيك تصورًا كاملًا.",
       chatbotQuestions: "أسئلة إضافية",
       otherJobs: "مهن أخرى مقترحة",
       exchangeChatbot: "التحدث مع الروبوت",
       perfect: "ممتاز، اطرح أسئلتك المحددة",
       chatbotEnabled: "Moov'Coach جاهز للإجابة.",
-      askDetails: "يمكنك طلب تفاصيل حول المهن والدراسة والتخرج أو المستويات المتوقعة بناءً على ملفك الحالي",
+      askDetails:
+        "يمكنك طلب تفاصيل حول المهن والدراسة والفرص أو المستويات المتوقعة وفق ملفك الحالي",
+      loading: "جاري التحميل…",
+      brandHomeAria: "Moov'Up — الرئيسية",
+      retakeQuiz: "إعادة الاستبيان",
+      heroLead: "اطرح أسئلتك عن المهن والتكوينات الموصى بها لملفك.",
+      viewMyPath: "عرض مساري",
+      cvLmLink: "السيرة الذاتية وخطاب التقديم",
+      sharePath: "مشاركة مساري",
+      linkCopied: "تم نسخ الرابط",
+      recJobsAsideAria: "المهن الموصى بها",
+      asideJobsTitle: "المهن الموصى بها",
+      onisepSheet: "ورقة ONISEP",
+      formationsAccessible: "{count} مسار تكويني",
+      formationsAccessibleOne: "مسار تكويني واحد",
+      chatHead: "محادثة مع Moov'Coach",
+      chatHeadHint: "اطرح سؤالك أدناه. افتح «عرض مساري» للملخص الكامل.",
+      chatSectionAria: "المحادثة",
+      detailedPath: "مسار مفصّل",
+      greetingFirst: "اطرح سؤالك الأول (مثال: «ما الراتب؟»، «وماذا عن التناوب؟»).",
+      convNotFound: "المحادثة غير موجودة",
+      shareNativeTitle: "مساري على Moov'Up",
+      shareNativeText: "إليك مساري بعد استبيان Moov'Up.",
+      placeholder: "اسأل Moov'Coach…",
+      yourMessageAria: "رسالتك",
+      sendAria: "إرسال الرسالة",
+      sendTitle: "إرسال (Enter)",
+      composerHint: "Enter للإرسال · Shift+Enter لسطر جديد",
+      youTitle: "أنت",
+      typingAria: "المساعد يكتب…",
+      coachAvatarTitle: "Moov'Coach",
+      legacyCoachBanner:
+        "واجهة تطوير قديمة: أوقف كل عمليات Node على المنفذ **8787**، اسحب آخر الكود، ثم `npm run dev` من مستودع tempo.",
+      devApiNoOpenRouterBanner:
+        "واجهة dev-api المحلية بلا **OPENROUTER_API_KEY** صالحة في `backend/.env`: لا يمكن استدعاء النموذج حتى تُضبط المفتاح وتُعاد التشغيل.",
+      quotaBanner:
+        "العرض المجاني: تبقى **{remaining}** من **{limit}** رسالة Moov'Coach.",
+      quotaBannerPremium:
+        "أنت على **Premium B2C**: رسائل Moov'Coach غير محدودة (في هذا العرض التجريبي).",
+      quotaExceeded:
+        "استنفدت رسائل Moov'Coach المجانية. انتقل إلى **Premium** للمتابعة، أو اختر عرضًا آخر.",
+      quotaUpgradeCta: "عرض العروض والترقية إلى Premium",
+    },
+    pathwaySummary: {
+      chipDomain: "المجال",
+      chipLearning: "أسلوب التعلم",
+      chipCurrentLevel: "المستوى الحالي",
+      chipSpecialty: "التخصص",
+      chipTargetFrame: "الإطار المستهدف",
+      chipStudyPace: "إيقاع الدراسة",
+      chipSupport: "المرافقة",
+      chipNumbers: "الأرقام والمنطق",
+      chipCareerGoal: "الهدف المهني",
+      chipMobility: "التنقل",
+      closeScrim: "إغلاق نافذة المسار",
+      eyebrow: "مسار موجّه",
+      title: "مسار شهاداتك",
+      lead: "مبني من إجابات الاستبيان ومستويات التكوين المقترحة لملفك.",
+      closeBtn: "إغلاق",
+      sectionChipsAria: "إجاباتك في الاستبيان",
+      chipsTitle: "ما أشرت إليه",
+      chipsSub: "كل إجابة تؤثر على تصفية المستوى ومسارات الدراسة.",
+      sectionTimelineAria: "خط زمني للدراسة",
+      timelineSub: "منطق دراسي متوافق مع مستواك الدراسي وأولوياتك.",
+      sectionLevelsAria: "المستويات في التوصيات",
+      levelsTitle: "الشهادات الموجودة في تكويناتك المقترحة",
+      levelsSub: "تسميات المستوى من بطاقات التكوين (ONISEP / قاعدة Moov'Up).",
+      sectionProfileAria: "ملخص نصي",
+      profileTitle: "ملخص للذكاء الاصطناعي",
+      profileSub: "نص مبني من الاستبيان (نفس أساس Moov'Coach).",
+      sectionMetiersAria: "المهن الموصى بها",
+      metiersTitle: "المهن والوصول",
+      metiersSub: "لكل مهنة: مستوى الوصول، وصف قصير، تكوينات مرتبطة.",
+      metierFallback: "مهنة {n}",
+      accessTag: "الوصول",
+      salaryPrefix: "مؤشر راتب:",
+      salaryDisclaimer: "(يُؤكَّد على المصادر الرسمية)",
+      onisepLink: "ورقة ONISEP — رواتب وآفاق →",
+      formationFallback: "تكوين",
+      emptyState: "لا توصيات مهنية بعد، تابع المحادثة أو أعد الاستبيان.",
+      footnote:
+        "الرواتب والآفاق تختلف حسب القطاع والخبرة: قارن دائمًا مع أوراق ONISEP وإجابات Moov'Coach.",
     },
     quizMeta: {
       title: "Moov'Up",
@@ -5719,21 +5951,32 @@ export function canonicalLanguageForTexts(language) {
   return raw;
 }
 
+function pickScopeText(bundle, key) {
+  if (bundle && Object.prototype.hasOwnProperty.call(bundle, key)) {
+    return bundle[key];
+  }
+  return undefined;
+}
+
 export function getText(language, scope, key, fallback) {
   const lang = canonicalLanguageForTexts(language);
-  const localized = TEXTS[lang]?.[scope]?.[key];
-  if (localized != null && localized !== "") return localized;
+  const localized = pickScopeText(TEXTS[lang]?.[scope], key);
+  if (localized !== undefined) return localized;
   if (lang === "fr") {
-    return TEXTS.fr?.[scope]?.[key] || TEXTS.universal?.[scope]?.[key] || fallback;
+    const frVal = pickScopeText(TEXTS.fr?.[scope], key);
+    if (frVal !== undefined) return frVal;
+    const uniVal = pickScopeText(TEXTS.universal?.[scope], key);
+    if (uniVal !== undefined) return uniVal;
+    return fallback;
   }
-  const enVal = TEXTS.en?.[scope]?.[key];
-  if (enVal != null && enVal !== "") return enVal;
+  const enVal = pickScopeText(TEXTS.en?.[scope], key);
+  if (enVal !== undefined) return enVal;
   // `universal.quiz` / `quizMeta` are French; using them for ja/zh/… caused mixed EN choice cards + FR chrome.
   if (lang !== "fr" && (scope === "quiz" || scope === "quizMeta")) {
     return fallback;
   }
-  const uniVal = TEXTS.universal?.[scope]?.[key];
-  if (uniVal != null && uniVal !== "") return uniVal;
+  const uniVal = pickScopeText(TEXTS.universal?.[scope], key);
+  if (uniVal !== undefined) return uniVal;
   return fallback;
 }
 
