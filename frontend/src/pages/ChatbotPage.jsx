@@ -108,16 +108,18 @@ export default function ChatbotPage() {
   const scrollRef = useRef(null);
   const textareaRef = useRef(null);
 
-  const focusComposerForMetier = (metierLabel) => {
-    const name = String(metierLabel || "").trim();
-    setInput((prev) => {
-      if (prev.trim()) return prev;
-      if (!name) return prev;
-      return tc("askFormationPrompt", "Quelles formations me conseilles pour devenir {metier} ?").replace(
-        "{metier}",
-        name
-      );
-    });
+  const focusComposerForFormation = (metierLabel, formation) => {
+    const metier = String(metierLabel || "").trim();
+    const form = String(formation?.libelle || formation || "").trim();
+    let prompt = tc(
+      "askFormationPromptSingle",
+      "Parle-moi de la formation « {formation} » pour le métier {metier} : contenu, débouchés, conditions d'accès et si elle me convient."
+    );
+    if (form) prompt = prompt.replace(/\{formation\}/g, form);
+    else prompt = prompt.replace(/[«"]?\{formation\}[»"]?\s*/g, "");
+    if (metier) prompt = prompt.replace(/\{metier\}/g, metier);
+    else prompt = prompt.replace(/\{metier\}/g, "que tu m'as recommandé");
+    setInput(prompt);
     requestAnimationFrame(() => {
       const el = textareaRef.current;
       el?.focus();
@@ -381,34 +383,36 @@ export default function ChatbotPage() {
               <article key={i} className="chatbot-rec chatbot-rec-interactive">
                 <h4 className="chatbot-rec-title">{hit.metier?.libelle}</h4>
                 {hit.formations?.length > 0 ? (
-                      <section className="chatbot-rec-formations-open">
-                        <h5 className="chatbot-rec-formations-heading">
-                          {hit.formations.length === 1
-                            ? tc("formationsAccessibleOne", "1 formation accessible")
-                            : tc("formationsAccessible", "{count} formations accessibles").replace(
-                                "{count}",
-                                String(hit.formations.length)
-                              )}
-                        </h5>
-                        <p className="chatbot-rec-formations-intro">
-                          {tc(
-                            "formationsIntro",
-                            "Toutes les formations compatibles avec ton niveau, du plus proche de ce métier au plus général — explore-les ici avant de quitter Moov'Up."
+                  <section
+                    className="chatbot-rec-formations-open"
+                    aria-label={
+                      hit.formations.length === 1
+                        ? tc("formationsAccessibleOne", "1 formation accessible")
+                        : tc("formationsAccessible", "{count} formations accessibles").replace(
+                            "{count}",
+                            String(hit.formations.length)
+                          )
+                    }
+                  >
+                    <p className="chatbot-rec-formations-count">
+                      {hit.formations.length === 1
+                        ? tc("formationsAccessibleOne", "1 formation accessible")
+                        : tc("formationsAccessible", "{count} formations accessibles").replace(
+                            "{count}",
+                            String(hit.formations.length)
                           )}
-                        </p>
-                        <ul className="chatbot-rec-formations-list">
-                          {hit.formations.map((f, j) => (
-                            <RecommendedFormationItem key={j} f={f} t={tc} />
-                          ))}
-                        </ul>
-                        <button
-                          type="button"
-                          className="chatbot-rec-formations-cta"
-                          onClick={() => focusComposerForMetier(hit.metier?.libelle)}
-                        >
-                          {tc("askFormationCoach", "Demander le détail à Moov'Coach →")}
-                        </button>
-                      </section>
+                    </p>
+                    <ul className="chatbot-rec-formations-list">
+                      {hit.formations.map((f, j) => (
+                        <RecommendedFormationItem
+                          key={`${f.libelle}-${j}`}
+                          f={f}
+                          t={tc}
+                          onAskCoach={() => focusComposerForFormation(hit.metier?.libelle, f)}
+                        />
+                      ))}
+                    </ul>
+                  </section>
                 ) : null}
                 {hit.metier?.description && (
                   <p className="chatbot-rec-desc">{hit.metier.description.slice(0, 140)}…</p>

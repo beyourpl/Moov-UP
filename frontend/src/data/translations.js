@@ -524,7 +524,7 @@ export const TEXTS = {
       formationsAccessible: "{count} formations accessibles",
       formationsAccessibleOne: "1 formation accessible",
       formationsIntro:
-        "Toutes les formations compatibles avec ton niveau, du plus proche de ce métier au plus général — explore-les ici avant de quitter Moov'Up.",
+        "Formations ONISEP compatibles avec ton niveau actuel, classées du plus proche au métier au plus général.",
       formationUntitled: "Formation",
       formationMetaAria: "Caractéristiques de la formation",
       formationDomain: "Domaine : {domain}",
@@ -532,7 +532,10 @@ export const TEXTS = {
       formationOnisepHint: "Fiche officielle ONISEP — détails, établissements, conditions d’accès",
       onisepSheetSecondary: "Fiche métier ONISEP (externe)",
       askFormationCoach: "Demander le détail à Moov'Coach →",
+      askFormationCoachShort: "Demander le détail →",
       askFormationPrompt: "Quelles formations me conseilles pour devenir {metier} ?",
+      askFormationPromptSingle:
+        "Parle-moi de la formation « {formation} » pour le métier {metier} : contenu, débouchés, conditions d'accès et si elle me convient.",
       chatHead: "Conversation avec Moov'Coach",
       chatHeadHint: "Pose une question ci dessous. Ouvre « Voir mon parcours » pour le résumé complet.",
       chatSectionAria: "Conversation",
@@ -1357,7 +1360,10 @@ export const TEXTS = {
       formationOnisepHint: "Official ONISEP sheet — details, schools, entry requirements",
       onisepSheetSecondary: "Job sheet on ONISEP (external)",
       askFormationCoach: "Ask Moov'Coach for details →",
+      askFormationCoachShort: "Ask for details →",
       askFormationPrompt: "What training paths do you recommend to become a {metier}?",
+      askFormationPromptSingle:
+        "Tell me about the « {formation} » program for the job {metier}: content, career paths, entry requirements, and whether it fits me.",
       chatHead: "Conversation with Moov'Coach",
       chatHeadHint: "Ask your question below. Open “View my pathway” for the full summary.",
       chatSectionAria: "Conversation",

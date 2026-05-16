@@ -253,9 +253,11 @@ export default function PathwaySummaryModal({
                           <ul className="pathway-metier-form-list chatbot-rec-formations-list">
                             {formations.map((f, j) => (
                               <RecommendedFormationItem
-                                key={j}
+                                key={`${f.libelle}-${j}`}
                                 f={f}
                                 t={(key, fb) => pt(key, fb)}
+                                compact
+                                showOnisepLink
                               />
                             ))}
                           </ul>
