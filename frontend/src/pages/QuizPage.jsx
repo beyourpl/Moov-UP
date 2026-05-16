@@ -710,7 +710,7 @@ export default function QuizPage() {
       )}
 
       {phase === "error" && (
-        <section className="panel" style={{ maxWidth: 600, margin: "0 auto" }}>
+        <section className="panel quiz-error-panel">
           <h3>{ui.errorTitle}</h3>
           <p>{apiError}</p>
           <button type="button" className="nav-btn primary" onClick={() => { setApiError(""); setPhase("quiz"); setStepIndex(Math.max(0, questionTotal - 1)); }}>

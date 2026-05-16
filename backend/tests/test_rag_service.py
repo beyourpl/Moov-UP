@@ -25,12 +25,26 @@ def fake_data(tmp_path, monkeypatch):
     faiss.write_index(idx, str(tmp_path / "metiers.faiss"))
 
     pd.DataFrame([
-        {"libellé formation principal": "Master Info", "niveau de certification": 7,
-         "libellé niveau de certification": "niveau 7", "durée": "2 ans",
-         "URL et ID Onisep": "u1", "domaine/sous-domaine": "informatique, Internet/informatique"},
-        {"libellé formation principal": "BTS SIO", "niveau de certification": 5,
-         "libellé niveau de certification": "niveau 5", "durée": "2 ans",
-         "URL et ID Onisep": "u2", "domaine/sous-domaine": "informatique, Internet/informatique"},
+        {
+            "libellé formation principal": "Master Info",
+            "libellé type formation": "master",
+            "niveau de certification": 7,
+            "libellé niveau de certification": "niveau 7",
+            "niveau de sortie indicatif": "bac + 5",
+            "durée": "2 ans",
+            "URL et ID Onisep": "u1",
+            "domaine/sous-domaine": "informatique, Internet/informatique",
+        },
+        {
+            "libellé formation principal": "BTS SIO",
+            "libellé type formation": "brevet de technicien supérieur",
+            "niveau de certification": 5,
+            "libellé niveau de certification": "niveau 5",
+            "niveau de sortie indicatif": "bac + 2",
+            "durée": "2 ans",
+            "URL et ID Onisep": "u2",
+            "domaine/sous-domaine": "informatique, Internet/informatique",
+        },
     ]).to_csv(tmp_path / "fiche_formation.csv", sep=";", index=False)
 
     monkeypatch.setattr("src.service.rag_service.DATA_DIR", tmp_path)
@@ -54,6 +68,9 @@ def test_initial_recommendations_returns_top_metiers_with_filtered_formations(fa
     libs = [f["libelle"] for f in res[0]["formations"]]
     assert "BTS SIO" in libs
     assert "Master Info" not in libs
+    bts = next(f for f in res[0]["formations"] if f["libelle"] == "BTS SIO")
+    assert bts.get("resume")
+    assert bts.get("niveau_sortie") or bts.get("niveau_label")
 
 
 def test_search_for_message_uses_message_only(fake_data):

@@ -5,6 +5,7 @@ import {
   collectFormationLevelsFromRecs,
 } from "../data/quizPathwaySummary.js";
 import { useTranslation } from "../hooks/useTranslation.js";
+import RecommendedFormationItem from "./RecommendedFormationItem.jsx";
 
 function truncate(text, max = 320) {
   if (!text || typeof text !== "string") return "";
@@ -211,7 +212,6 @@ export default function PathwaySummaryModal({
                     m.fourchette_salaire ||
                     null;
                   const metierFallback = pt("metierFallback", "Métier {n}").replace("{n}", String(i + 1));
-                  const formFb = pt("formationFallback", "Formation");
                   return (
                     <li key={i} className="pathway-metier-card">
                       <div className="pathway-metier-card-top">
@@ -234,35 +234,43 @@ export default function PathwaySummaryModal({
                           ) : null}
                         </div>
                       </div>
+                      {formations.length > 0 ? (
+                        <>
+                          <h5 className="pathway-metier-form-heading">
+                            {formations.length === 1
+                              ? pt("formationsAccessibleOne", "1 formation accessible")
+                              : pt("formationsAccessible", "{count} formations accessibles").replace(
+                                  "{count}",
+                                  String(formations.length)
+                                )}
+                          </h5>
+                          <p className="pathway-metier-form-intro">
+                            {pt(
+                              "formationsIntro",
+                              "Toutes les formations compatibles avec ton niveau, du plus proche au métier au plus général."
+                            )}
+                          </p>
+                          <ul className="pathway-metier-form-list chatbot-rec-formations-list">
+                            {formations.map((f, j) => (
+                              <RecommendedFormationItem
+                                key={j}
+                                f={f}
+                                t={(key, fb) => pt(key, fb)}
+                              />
+                            ))}
+                          </ul>
+                        </>
+                      ) : null}
                       {m.description ? <p className="pathway-metier-desc">{truncate(m.description, 360)}</p> : null}
                       {m.lien_onisep || m.lien_canonique ? (
                         <a
-                          className="pathway-metier-onisep"
+                          className="pathway-metier-onisep pathway-metier-onisep--subtle"
                           href={m.lien_onisep || m.lien_canonique}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {pt("onisepLink", "Fiche ONISEP — salaires & débouchés →")}
+                          {pt("onisepLinkSecondary", "Fiche métier ONISEP (externe)")}
                         </a>
-                      ) : null}
-                      {formations.length > 0 ? (
-                        <ul className="pathway-metier-form-list">
-                          {formations.map((f, j) => (
-                            <li key={j}>
-                              {f.lien ? (
-                                <a href={f.lien} target="_blank" rel="noopener noreferrer">
-                                  {f.libelle || formFb}
-                                </a>
-                              ) : (
-                                <span>{f.libelle || formFb}</span>
-                              )}
-                              <span className="pathway-metier-form-meta">
-                                {f.niveau_label ? ` · ${f.niveau_label}` : ""}
-                                {f.duree ? ` · ${f.duree}` : ""}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
                       ) : null}
                     </li>
                   );

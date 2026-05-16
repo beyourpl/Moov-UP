@@ -13,6 +13,7 @@ from sentence_transformers import SentenceTransformer
 
 from src.config import settings
 from src.metier.mappings import Q1_TO_ONISEP_DOMAINS
+from src.metier.formation_info import formation_row_from_csv
 from src.metier.quiz_rag_boost import quiz_answers_score_boost
 
 
@@ -22,6 +23,8 @@ MODEL_NAME = "intfloat/multilingual-e5-base"
 logger = logging.getLogger("moovup.rag")
 
 DEFAULT_TOP_K = 10
+# 0 = toutes les formations accessibles (filtre niveau + domaine), sans plafond
+FORMATIONS_PER_METIER = 0
 
 
 def _journalisme_libelle_priority(libelle: str) -> int:
@@ -116,22 +119,16 @@ class RagService:
                 top = _split_top_domain(part)
                 if not top:
                     continue
-                niveau = row.get("niveau de certification")
-                try:
-                    niveau_int = int(niveau)
-                except (ValueError, TypeError):
+                domain_paths = _domain_paths(ds)
+                parsed = formation_row_from_csv(row, domain_paths)
+                if not parsed.get("libelle") or not parsed.get("niveau_certif"):
                     continue
-                out[top].append({
-                    "libelle": str(row.get("libellé formation principal", "")),
-                    "niveau_certif": niveau_int,
-                    "niveau_label": str(row.get("libellé niveau de certification", "")),
-                    "duree": str(row.get("durée", "")),
-                    "lien": str(row.get("URL et ID Onisep", "")),
-                    "domain_paths": _domain_paths(ds),
-                })
+                out[top].append(parsed)
         return dict(out)
 
-    def _formations_for_metier(self, metier: dict, niveau_max: int, limit: int = 5) -> list[dict]:
+    def _formations_for_metier(
+        self, metier: dict, niveau_max: int, limit: int = FORMATIONS_PER_METIER
+    ) -> list[dict]:
         paths = _domain_paths(metier.get("domaine_sous_domaine") or metier.get("sous_domaine_key") or "")
         if not paths:
             paths = [_split_top_domain(metier.get("sous_domaine_key", "") or "")]
@@ -163,7 +160,7 @@ class RagService:
                 continue
             seen.add(f["libelle"])
             uniq.append(f)
-            if len(uniq) >= limit:
+            if limit > 0 and len(uniq) >= limit:
                 break
         return uniq
 

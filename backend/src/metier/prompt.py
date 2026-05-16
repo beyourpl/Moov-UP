@@ -135,7 +135,16 @@ def _serialize_rag(rag_context: list[dict]) -> str:
         out.append(f"- Lien : {m.get('lien_onisep','')}")
         out.append("- Formations accessibles :")
         for f in hit["formations"]:
-            out.append(f"  - [{f.get('niveau_label','')}] {f['libelle']} ({f.get('duree','')}) — {f.get('lien','')}")
+            meta = f.get("resume") or f.get("niveau_label", "")
+            dom = f.get("domain_label", "")
+            line = f"  - {f['libelle']}"
+            if meta:
+                line += f" — {meta}"
+            if dom:
+                line += f" (domaine : {dom})"
+            if f.get("lien"):
+                line += f" — {f['lien']}"
+            out.append(line)
         out.append("")
     return "\n".join(out)
 

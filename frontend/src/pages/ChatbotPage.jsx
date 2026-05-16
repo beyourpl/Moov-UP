@@ -7,6 +7,7 @@ import { getSession, logoutUser } from "../data/authStorage.js";
 import { getPartenairesOffer } from "../data/partenairesSession.js";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import PathwaySummaryModal from "../components/PathwaySummaryModal.jsx";
+import RecommendedFormationItem from "../components/RecommendedFormationItem.jsx";
 import { useTranslation } from "../hooks/useTranslation.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
 import { stripTrailingOnisepFromAssistantText } from "../data/chatMessageCleanup.js";
@@ -106,6 +107,23 @@ export default function ChatbotPage() {
   const [apiHealth, setApiHealth] = useState(null);
   const scrollRef = useRef(null);
   const textareaRef = useRef(null);
+
+  const focusComposerForMetier = (metierLabel) => {
+    const name = String(metierLabel || "").trim();
+    setInput((prev) => {
+      if (prev.trim()) return prev;
+      if (!name) return prev;
+      return tc("askFormationPrompt", "Quelles formations me conseilles pour devenir {metier} ?").replace(
+        "{metier}",
+        name
+      );
+    });
+    requestAnimationFrame(() => {
+      const el = textareaRef.current;
+      el?.focus();
+      el?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  };
 
   useEffect(() => {
     if (cid) return;
@@ -362,68 +380,49 @@ export default function ChatbotPage() {
             {recs.map((hit, i) => (
               <article key={i} className="chatbot-rec chatbot-rec-interactive">
                 <h4 className="chatbot-rec-title">{hit.metier?.libelle}</h4>
-                {hit.metier?.description && (
-                  <p className="chatbot-rec-desc">{hit.metier.description.slice(0, 160)}…</p>
-                )}
-                {(hit.metier?.lien_onisep || (hit.formations?.length > 0)) && (
-                  <div className="chatbot-rec-actions">
-                    {hit.metier?.lien_onisep && (
-                      <a
-                        href={hit.metier.lien_onisep}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="chatbot-rec-onisep"
-                      >
-                        <span className="chatbot-rec-onisep-icon" aria-hidden>
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                            <polyline points="14 2 14 8 20 8" />
-                            <line x1="16" y1="13" x2="8" y2="13" />
-                            <line x1="16" y1="17" x2="8" y2="17" />
-                            <line x1="10" y1="9" x2="8" y2="9" />
-                          </svg>
-                        </span>
-                        <span className="chatbot-rec-onisep-label">{tc("onisepSheet", "Fiche ONISEP")}</span>
-                        <span className="chatbot-rec-onisep-external" aria-hidden>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                            <polyline points="15 3 21 3 21 9" />
-                            <line x1="10" y1="14" x2="21" y2="3" />
-                          </svg>
-                        </span>
-                      </a>
-                    )}
-                    {hit.formations?.length > 0 && (
-                      <details className="chatbot-rec-formations">
-                        <summary className="chatbot-rec-formations-summary">
-                          <span className="chatbot-rec-formations-chevron" aria-hidden>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                              <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                          </span>
-                          <span className="chatbot-rec-formations-label">
-                            {hit.formations.length === 1
-                              ? tc("formationsAccessibleOne", "1 formation accessible")
-                              : tc("formationsAccessible", "{count} formations accessibles").replace(
-                                  "{count}",
-                                  String(hit.formations.length)
-                                )}
-                          </span>
-                        </summary>
+                {hit.formations?.length > 0 ? (
+                      <section className="chatbot-rec-formations-open">
+                        <h5 className="chatbot-rec-formations-heading">
+                          {hit.formations.length === 1
+                            ? tc("formationsAccessibleOne", "1 formation accessible")
+                            : tc("formationsAccessible", "{count} formations accessibles").replace(
+                                "{count}",
+                                String(hit.formations.length)
+                              )}
+                        </h5>
+                        <p className="chatbot-rec-formations-intro">
+                          {tc(
+                            "formationsIntro",
+                            "Toutes les formations compatibles avec ton niveau, du plus proche de ce métier au plus général — explore-les ici avant de quitter Moov'Up."
+                          )}
+                        </p>
                         <ul className="chatbot-rec-formations-list">
                           {hit.formations.map((f, j) => (
-                            <li key={j}>
-                              <a href={f.lien} target="_blank" rel="noopener noreferrer">
-                                {f.libelle}
-                              </a>
-                              {f.niveau_label && <span className="chatbot-rec-niveau"> · {f.niveau_label}</span>}
-                            </li>
+                            <RecommendedFormationItem key={j} f={f} t={tc} />
                           ))}
                         </ul>
-                      </details>
-                    )}
-                  </div>
+                        <button
+                          type="button"
+                          className="chatbot-rec-formations-cta"
+                          onClick={() => focusComposerForMetier(hit.metier?.libelle)}
+                        >
+                          {tc("askFormationCoach", "Demander le détail à Moov'Coach →")}
+                        </button>
+                      </section>
+                ) : null}
+                {hit.metier?.description && (
+                  <p className="chatbot-rec-desc">{hit.metier.description.slice(0, 140)}…</p>
                 )}
+                {hit.metier?.lien_onisep ? (
+                  <a
+                    href={hit.metier.lien_onisep}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="chatbot-rec-onisep-subtle"
+                  >
+                    {tc("onisepSheetSecondary", "Fiche métier ONISEP (externe)")}
+                  </a>
+                ) : null}
               </article>
             ))}
           </div>
