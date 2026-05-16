@@ -34,8 +34,9 @@ def build_profile(answers: dict) -> tuple[str, int, list[str]]:
     domains = Q1_TO_ONISEP_DOMAINS[q1]
     q4 = answers.get("q4", "")
 
+    niveau_txt = _label("q3", q3) or q3
     parts = [
-        f"Je suis {_label('q3', q3) or q3} et je m'intéresse au domaine {q1} ({', '.join(domains)}).",
+        f"Je suis {niveau_txt} et je m'intéresse au domaine {q1} ({', '.join(domains)}).",
     ]
     if q4:
         if q4 in ORIENTATION_BLOCKER_LABELS:

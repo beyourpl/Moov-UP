@@ -111,7 +111,15 @@ def test_formations_filtered_by_sous_domain_overlap(fake_data, monkeypatch):
             "libellé niveau de certification": "niveau 6",
             "durée": "3 ans",
             "URL et ID Onisep": "u2",
-            "domaine/sous-domaine": "informatique, Internet/développement, programmation, logiciel",
+            "domaine/sous-domaine": "arts, culture, artisanat/arts graphiques | informatique, Internet/développement, programmation, logiciel",
+        },
+        {
+            "libellé formation principal": "études professionnelles en danse",
+            "niveau de certification": 5,
+            "libellé niveau de certification": "niveau 5",
+            "durée": "2 ans",
+            "URL et ID Onisep": "u3",
+            "domaine/sous-domaine": "arts, culture, artisanat/arts du spectacle",
         },
     ]).to_csv(fake_data / "fiche_formation.csv", sep=";", index=False)
 

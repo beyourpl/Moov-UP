@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from collections import defaultdict
 from pathlib import Path
 
@@ -36,6 +37,32 @@ def _sous_domain_labels(paths: list[str]) -> set[str]:
     return labels
 
 
+def _full_paths_casefold(paths: list[str]) -> set[str]:
+    return {p.strip().casefold() for p in paths if p.strip()}
+
+
+def _formation_matches_metier_paths(metier_paths: list[str], formation_paths: list[str]) -> bool:
+    if not metier_paths or not formation_paths:
+        return False
+    if _full_paths_casefold(metier_paths) & _full_paths_casefold(formation_paths):
+        return True
+    metier_sous = _sous_domain_labels(metier_paths)
+    form_sous = _sous_domain_labels(formation_paths)
+    return bool(metier_sous & form_sous) if metier_sous and form_sous else False
+
+
+def _formation_relevance_score(metier: dict, formation: dict, metier_paths: list[str]) -> int:
+    score = 0
+    if _formation_matches_metier_paths(metier_paths, formation.get("domain_paths", [])):
+        score += 20
+    blob = f"{metier.get('libelle', '')} {metier.get('description', '')[:300]}".casefold()
+    flib = formation.get("libelle", "").casefold()
+    for tok in re.findall(r"[a-zàâäçéèêëïîôùûüœæ']{4,}", blob):
+        if tok in flib:
+            score += 3
+    return score
+
+
 class RagService:
     def __init__(self) -> None:
         self.embedder = SentenceTransformer(MODEL_NAME)
@@ -67,12 +94,11 @@ class RagService:
                 })
         return dict(out)
 
-    def _formations_for_metier(self, metier: dict, niveau_max: int, limit: int = 8) -> list[dict]:
+    def _formations_for_metier(self, metier: dict, niveau_max: int, limit: int = 5) -> list[dict]:
         paths = _domain_paths(metier.get("domaine_sous_domaine") or metier.get("sous_domaine_key") or "")
         if not paths:
             paths = [_split_top_domain(metier.get("sous_domaine_key", "") or "")]
         tops = {_split_top_domain(p) for p in paths}
-        metier_sous = _sous_domain_labels(paths)
 
         candidates: list[dict] = []
         seen_lib: set[str] = set()
@@ -81,25 +107,21 @@ class RagService:
                 if f["libelle"] in seen_lib:
                     continue
                 seen_lib.add(f["libelle"])
+                if f["niveau_certif"] > niveau_max:
+                    continue
+                if not _formation_matches_metier_paths(paths, f.get("domain_paths", [])):
+                    continue
                 candidates.append(f)
 
-        def niveau_ok(f: dict) -> bool:
-            return f["niveau_certif"] <= niveau_max
-
-        def sous_ok(f: dict) -> bool:
-            if not metier_sous:
-                return True
-            f_sous = _sous_domain_labels(f.get("domain_paths", []))
-            return bool(metier_sous & f_sous) if f_sous else True
-
-        filtered = [f for f in candidates if sous_ok(f) and niveau_ok(f)]
-        if not filtered:
-            filtered = [f for f in candidates if niveau_ok(f)]
-
-        filtered.sort(key=lambda f: f["niveau_certif"])
+        candidates.sort(
+            key=lambda f: (
+                -_formation_relevance_score(metier, f, paths),
+                f["niveau_certif"],
+            ),
+        )
         uniq: list[dict] = []
         seen: set[str] = set()
-        for f in filtered:
+        for f in candidates:
             if f["libelle"] in seen:
                 continue
             seen.add(f["libelle"])
