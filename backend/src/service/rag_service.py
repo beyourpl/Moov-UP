@@ -23,6 +23,17 @@ logger = logging.getLogger("moovup.rag")
 DEFAULT_TOP_K = 8
 
 
+def _journalisme_libelle_priority(libelle: str) -> int:
+    l = libelle.casefold().strip()
+    if l in ("journaliste", "journaliste / journaliste", "journaliste / journaliste"):
+        return 0
+    if l.startswith("journaliste") and "sportif" not in l and "reporter" not in l and "radio" not in l:
+        return 1
+    if "journaliste" in l:
+        return 2
+    return 3
+
+
 def _specialty_score_boost(metier: dict, specialty: str | None) -> float:
     if not specialty:
         return 0.0
@@ -30,11 +41,16 @@ def _specialty_score_boost(metier: dict, specialty: str | None) -> float:
     key = specialty.casefold()
     if key == "journalisme":
         if "journalisme" in ds:
-            return 0.15
-        if "/presse" in ds or "presse/" in ds:
-            return 0.10
-        if "information-communication" in ds:
-            return 0.06
+            boost = 0.15
+        elif "/presse" in ds or "presse/" in ds:
+            boost = 0.10
+        elif "information-communication" in ds:
+            boost = 0.06
+        else:
+            boost = 0.0
+        if "journaliste" in (metier.get("libelle") or "").casefold():
+            return max(boost, 0.12)
+        return boost
     sous = _sous_domain_labels(_domain_paths(ds))
     if key in sous or any(key in s for s in sous):
         return 0.08
@@ -150,6 +166,47 @@ class RagService:
                 break
         return uniq
 
+    def _ensure_journalisme_in_results(
+        self,
+        results: list[dict],
+        top_k: int,
+        niveau_max: int,
+        candidate_ids: list[int] | None,
+    ) -> list[dict]:
+        if any(
+            "journalisme" in (r["metier"].get("domaine_sous_domaine") or "").casefold()
+            for r in results
+        ):
+            return results[:top_k]
+
+        pool = candidate_ids if candidate_ids is not None else list(range(len(self.metiers_meta)))
+        exclude = {r["metier"].get("libelle", "") for r in results}
+        best_m: dict | None = None
+        best_pri = 999
+        for idx in pool:
+            m = self.metiers_meta[int(idx)]
+            lib = m.get("libelle", "")
+            if lib in exclude:
+                continue
+            if "journalisme" not in (m.get("domaine_sous_domaine") or "").casefold():
+                continue
+            pri = _journalisme_libelle_priority(lib)
+            if pri < best_pri:
+                best_pri = pri
+                best_m = m
+
+        if best_m is None:
+            return results[:top_k]
+
+        anchor_score = results[0]["score"] if results else 0.55
+        entry = {
+            "metier": best_m,
+            "formations": self._formations_for_metier(best_m, niveau_max),
+            "score": anchor_score,
+        }
+        deduped = [entry] + [r for r in results if r["metier"].get("libelle") != best_m.get("libelle")]
+        return deduped[:top_k]
+
     def initial_recommendations(
         self,
         profile_text: str,
@@ -187,7 +244,9 @@ class RagService:
         # On oversample (top_k * 3) car on dedup ensuite par libellé : la CSV ONISEP
         # contient parfois plusieurs entrées avec le même libellé (variantes de domaine).
         # Sans oversampling, le filtre dédup pourrait laisser moins de top_k résultats.
-        oversample_k = min(top_k * 3, len(self.metiers_meta))
+        oversample_factor = 6 if specialty == "journalisme" else 3
+        oversample_k = min(top_k * oversample_factor, len(self.metiers_meta))
+        candidate_ids: list[int] | None = None
         if q1 and q1 in Q1_TO_ONISEP_DOMAINS:
             allowed = Q1_TO_ONISEP_DOMAINS[q1]
             candidate_ids = [
@@ -197,10 +256,11 @@ class RagService:
             if not candidate_ids:
                 logger.info("[rag] q1=%s -> 0 candidates, returning []", q1)
                 return []
+            oversample_k = min(oversample_k, len(candidate_ids))
             logger.info("[rag] q1=%s -> %d candidates pre-filter, oversample_k=%d", q1, len(candidate_ids), oversample_k)
             sel = faiss.IDSelectorBatch(np.array(candidate_ids, dtype="int64"))
             params = faiss.SearchParameters(sel=sel)
-            scores, ids = self.index.search(vec, min(oversample_k, len(candidate_ids)), params=params)
+            scores, ids = self.index.search(vec, oversample_k, params=params)
         else:
             logger.info("[rag] no q1 filter, oversample_k=%d (over %d total)", oversample_k, len(self.metiers_meta))
             scores, ids = self.index.search(vec, oversample_k)
@@ -242,24 +302,8 @@ class RagService:
             if len(results) >= top_k:
                 break
 
-        if specialty == "journalisme" and not any(
-            "journalisme" in (r["metier"].get("domaine_sous_domaine") or "").casefold()
-            for r in results
-        ):
-            for _eff, faiss_score, idx, m in ranked:
-                if "journalisme" not in (m.get("domaine_sous_domaine") or "").casefold():
-                    continue
-                libelle = m.get("libelle", "")
-                if any(r["metier"].get("libelle") == libelle for r in results):
-                    continue
-                results.append({
-                    "metier": m,
-                    "formations": self._formations_for_metier(m, niveau_max),
-                    "score": round(faiss_score, 4),
-                })
-                if len(results) > top_k:
-                    results = results[:top_k]
-                break
+        if specialty == "journalisme":
+            results = self._ensure_journalisme_in_results(results, top_k, niveau_max, candidate_ids)
 
         logger.info("[rag] final top-%d (deduped): %s",
                     len(results),

@@ -138,6 +138,53 @@ def test_formations_filtered_by_sous_domain_overlap(fake_data, monkeypatch):
     assert "bachelor dev jeu vidéo" not in libs
 
 
+def test_journalisme_specialty_guarantees_journaliste_in_top(fake_data, monkeypatch):
+    meta = [
+        {
+            "libelle": "graphiste",
+            "domaine_sous_domaine": "arts, culture, artisanat/arts graphiques",
+            "sous_domaine_key": "arts, culture, artisanat/arts graphiques",
+            "niveau_min": "bac",
+            "description": "visuel",
+            "centres_interet": [],
+            "lien_onisep": "x",
+        },
+        {
+            "libelle": "journaliste",
+            "domaine_sous_domaine": "information-communication, audiovisuel/journalisme, édition, publicité",
+            "sous_domaine_key": "information-communication, audiovisuel/journalisme, édition, publicité",
+            "niveau_min": "bac+3",
+            "description": "presse information",
+            "centres_interet": [],
+            "lien_onisep": "y",
+        },
+    ]
+    (fake_data / "metiers_meta.json").write_text(json.dumps(meta))
+    vecs = np.array([[1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]], dtype="float32")
+    idx = faiss.IndexFlatIP(8)
+    idx.add(vecs)
+    faiss.write_index(idx, str(fake_data / "metiers.faiss"))
+
+    class FakeST:
+        def __init__(self, *a, **k):
+            pass
+
+        def encode(self, texts, **k):
+            return np.array([[1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]], dtype="float32")
+
+    monkeypatch.setattr("src.service.rag_service.SentenceTransformer", FakeST)
+    monkeypatch.setattr(
+        "src.service.rag_service.Q1_TO_ONISEP_DOMAINS",
+        {"creative": ["arts, culture, artisanat", "information-communication, audiovisuel"]},
+    )
+    svc = RagService()
+    res = svc.initial_recommendations(
+        "profil créatif design", niveau_max=7, top_k=1, q1="creative", specialty="journalisme",
+    )
+    assert len(res) == 1
+    assert res[0]["metier"]["libelle"] == "journaliste"
+
+
 def test_filter_with_unknown_q1_falls_back_to_full_search(fake_data, monkeypatch):
     monkeypatch.setattr(
         "src.service.rag_service.Q1_TO_ONISEP_DOMAINS",
