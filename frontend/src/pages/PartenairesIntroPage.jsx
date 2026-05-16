@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PartenairesAudienceSwitch from "../components/PartenairesAudienceSwitch.jsx";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import { getSession } from "../data/authStorage.js";
+import { getStructureEntryPath } from "../data/partenairesSession.js";
 import { useTranslation } from "../hooks/useTranslation.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
 
@@ -9,6 +10,7 @@ export default function PartenairesIntroPage() {
   const { t } = useTranslation();
   const goBackPage = useNavigateBack("/");
   const session = getSession();
+  const structureEntry = session ? getStructureEntryPath() : "/partenaires/connexion";
 
   return (
     <div className="lp fade-in partenaires-page">
@@ -31,7 +33,7 @@ export default function PartenairesIntroPage() {
           </nav>
           <div className="lp-header-cta">
             <TopBarAccountTools className="lp-header-tools" />
-            <Link to="/partenaires/connexion" className="lp-btn lp-btn-primary">
+            <Link to={structureEntry} className="lp-btn lp-btn-primary">
               {t("partenaires", "ctaLogin", "Connexion structure")}
             </Link>
           </div>
@@ -79,7 +81,7 @@ export default function PartenairesIntroPage() {
         </div>
 
         <div className="partenaires-intro-actions">
-          <Link to="/partenaires/connexion" className="lp-btn lp-btn-primary lp-btn-lg">
+          <Link to={structureEntry} className="lp-btn lp-btn-primary lp-btn-lg">
             {t("partenaires", "ctaLogin", "Connexion structure")}
           </Link>
           {session ? (

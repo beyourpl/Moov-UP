@@ -5,14 +5,11 @@ import { getSession, logoutUser } from "../data/authStorage.js";
 import { clearQuizDraft, loadQuizDraft, saveQuizDraft } from "../data/quizDraftStorage.js";
 import { setLastConversationId } from "../data/conversationStorage.js";
 import { getQuizChoiceText, getQuizQuestionText, getText } from "../data/translations.js";
-import { getSpecialtyChoiceText } from "../data/specialtyLabels.js";
+import { mapUiQuizAnswersToBackend } from "../data/quizAnswerMapping.js";
 import { playQuizTickSound } from "../data/quizTickSound.js";
 import { useUiPreferences } from "../hooks/useUiPreferences.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
-import {
-  QUESTION_ORDER,
-  specialtyConfig,
-} from "../data/orientationHelpers.js";
+import { QUESTION_ORDER } from "../data/orientationHelpers.js";
 
 /** Pause après chaque choix avant la question suivante (ou avant l’analyse finale), en ms. */
 const QUIZ_ADVANCE_DELAY_MS = 500;
@@ -31,34 +28,30 @@ const Q1_CHOICES = [
 ];
 
 const Q2_CHOICES = [
-  { value: "pratique", title: "Pratique", sub: "J'aime manipuler, tester, construire" },
-  { value: "equilibre", title: "Équilibré", sub: "J'aime autant la pratique que la théorie" },
-  { value: "theorie", title: "Théorique", sub: "J'aime comprendre avant d'appliquer" },
+  { value: "insertion", title: "Trouver un emploi rapidement", sub: "Entrer vite dans la vie active" },
+  { value: "expertise", title: "Devenir expert·e", sub: "Viser la spécialisation dans un domaine" },
+  { value: "flexibilite", title: "Garder des options ouvertes", sub: "Ne pas se fermer trop tôt" },
+  { value: "creation", title: "Créer mon activité", sub: "Entrepreneuriat, freelance, projet perso" },
 ];
 
 const Q3_CHOICES = [
-  { value: "college", title: "Collège", sub: "Je suis au collège (3e ou moins)" },
-  { value: "seconde", title: "Seconde", sub: "Je suis en seconde ou première" },
-  { value: "terminale", title: "Terminale", sub: "Je prépare le bac cette année" },
-  { value: "bac", title: "Bac", sub: "J'ai déjà le bac" },
-  { value: "bac2", title: "Bac+2", sub: "BTS, DUT, niveau licence" },
-  { value: "bac3", title: "Bac+3", sub: "Licence, bachelor" },
-  { value: "bac5", title: "Bac+5", sub: "Master, école d'ingénieurs, MBA" },
-];
-
-const Q4_CHOICES = [
-  { value: "bureau", title: "Bureau", sub: "Cadre structuré, travail en équipe" },
-  { value: "terrain", title: "Terrain", sub: "Plus de concret, de mouvement" },
-  { value: "itinerant", title: "Itinérant", sub: "Déplacement fréquent, sur plusieurs sites" },
-  { value: "distanciel", title: "À distance", sub: "Travail ou formation en ligne" },
-];
-
-const Q5_CHOICES = [
   { value: "bureau", title: "Bureau", sub: "En entreprise, dans un cadre structuré" },
   { value: "laboratoire", title: "Laboratoire", sub: "En recherche ou expérimentation" },
   { value: "terrain", title: "Terrain", sub: "Sur le terrain, au contact direct" },
   { value: "itinerant", title: "Itinérant", sub: "En déplacement, sur plusieurs lieux" },
   { value: "distanciel", title: "À distance", sub: "En télétravail ou en ligne" },
+];
+
+const Q4_CHOICES = [
+  { value: "pratique", title: "Pratique", sub: "J'aime manipuler, tester, construire" },
+  { value: "equilibre", title: "Équilibré", sub: "J'aime autant la pratique que la théorie" },
+  { value: "theorie", title: "Théorique", sub: "J'aime comprendre avant d'appliquer" },
+];
+
+const Q5_CHOICES = [
+  { value: "fort", title: "À l'aise", sub: "J'aime les chiffres et la logique" },
+  { value: "moyen", title: "Correct", sub: "Je me débrouille sans en faire ma priorité" },
+  { value: "faible", title: "Pas mon point fort", sub: "Je préfère d'autres approches" },
 ];
 
 const Q6_CHOICES = [
@@ -74,41 +67,91 @@ const Q7_CHOICES = [
 ];
 
 const Q8_CHOICES = [
-  { value: "fort", title: "À l'aise", sub: "J'aime les chiffres et la logique" },
-  { value: "moyen", title: "Correct", sub: "Je me débrouille sans en faire ma priorité" },
-  { value: "faible", title: "Pas mon point fort", sub: "Je préfère d'autres approches" },
+  { value: "college", title: "Collège", sub: "Je suis au collège (3e ou moins)" },
+  { value: "seconde", title: "Seconde", sub: "Je suis en seconde ou première" },
+  { value: "terminale", title: "Terminale", sub: "Je prépare le bac cette année" },
+  { value: "bac", title: "Bac", sub: "J'ai déjà le bac" },
+  { value: "bac2", title: "Bac+2", sub: "BTS, BUT, DEUST" },
+  { value: "bac3", title: "Bac+3", sub: "Licence, bachelor" },
+  { value: "bac5", title: "Bac+5", sub: "Master, école d'ingénieurs, MBA" },
 ];
 
 const Q9_CHOICES = [
-  { value: "insertion", title: "Trouver un job", sub: "Entrer rapidement dans la vie active" },
-  { value: "expertise", title: "Expertise", sub: "Devenir spécialiste dans un domaine" },
-  { value: "flexibilite", title: "Flexibilité", sub: "Garder plusieurs options ouvertes" },
-  { value: "creation", title: "Créer mon activité", sub: "Entrepreneuriat, freelance" },
-];
-
-const Q10_CHOICES = [
   { value: "local", title: "Près de chez moi", sub: "Je reste dans ma région" },
   { value: "mobile", title: "Mobile", sub: "Je peux bouger en France" },
   { value: "international", title: "International", sub: "Je peux partir à l'étranger" },
   { value: "distanciel", title: "À distance", sub: "Je préfère les formations en ligne" },
 ];
 
-const BASE_QUESTIONS = [
-  { id: "q1", title: "Quel grand domaine d’activité t’attire le plus pour ton futur métier ?", body: "On commence par les familles de métiers (numérique, santé, commerce…) avant de préciser la suite.", choices: Q1_CHOICES },
-  { id: "q2", title: "Tu retiens surtout les choses en faisant, en échangeant ou en lisant / en théorisant ?", body: "Ça indique si tu seras plus à l’aise en atelier, en cours magistraux ou en projet.", choices: Q2_CHOICES },
-  { id: "q3", title: "Quel est ton niveau scolaire actuel (ou le dernier diplôme obtenu) ?", body: "Indispensable pour proposer des filières réalistes par rapport à ta situation.", choices: Q3_CHOICES },
-  { id: "q4", title: "Dans ce domaine, quelle filière ou spécialité te parle le plus ?", body: "On cible le métier et les études qui y mènent.", choices: Q4_CHOICES },
-  { id: "q5", title: "Tu t’imagines plutôt au bureau, sur le terrain, en déplacement constant ou en télétravail ?", body: "Ici on parle du lieu et du rythme de travail, pas de la durée des études.", choices: Q5_CHOICES },
-  { id: "q6", title: "Pour avancer dans un cursus, tu préfères un rythme très cadré, un équilibre, ou une forte autonomie ?", body: "C’est lié à ta façon de progresser dans les études (pas à ton lieu de travail ni à ta mobilité).", choices: Q6_CHOICES },
-  { id: "q7", title: "Face aux enseignants, tuteurs ou équipe pédagogique, tu veux être porté·e étape par étape, un juste milieu, ou piloter tes choix ?", body: "Ici on parle du lien d’accompagnement humain — autre dimension que la question précédente.", choices: Q7_CHOICES },
-  { id: "q8", title: "Les maths, la stat et le raisonnement logique : atout, correct, ou sujet que tu évites ?", body: "Évite de t’orienter vers des filières trop « chiffrées » si ce n’est pas ton truc.", choices: Q8_CHOICES },
-  { id: "q9", title: "À horizon quelques années, tu veux surtout trouver vite un job, devenir expert·e, garder le choix ouvert, ou monter ton activité ?", body: "Insertion, expertise, polyvalence ou entrepreneuriat : ça oriente la trajectoire.", choices: Q9_CHOICES },
-  { id: "q10", title: "Géographiquement : tu restes proche de chez toi, tu bouges dans tout le pays, tu peux aller à l’étranger, ou tu vise 100 % à distance ?", body: "Affine les formations selon ta mobilité et le mode présentiel / distanciel.", choices: Q10_CHOICES },
+const Q10_CHOICES = [
+  { value: "info", title: "Manque d'informations", sub: "Je ne sais pas quels métiers ou formations existent" },
+  { value: "peur", title: "Peur de me tromper", sub: "J'ai peur de faire le mauvais choix" },
+  { value: "pression", title: "Pression familiale ou sociale", sub: "Les attentes des autres pèsent sur moi" },
+  { value: "indecision", title: "Trop d'options", sub: "Je suis partagé·e entre plusieurs pistes" },
 ];
 
-function normalizeAnswer(value) {
-  return value ? value.split("__")[0] : value;
-}
+const BASE_QUESTIONS = [
+  {
+    id: "q1",
+    title: "Qu’est-ce qui t’intéresse le plus ?",
+    body: "Choisis les domaines qui t’attirent naturellement.",
+    choices: Q1_CHOICES,
+  },
+  {
+    id: "q2",
+    title: "Dans ton futur métier, qu’est-ce qui compte le plus pour toi ?",
+    body: "Chaque personne recherche quelque chose de différent dans son avenir.",
+    choices: Q2_CHOICES,
+  },
+  {
+    id: "q3",
+    title: "Tu préfères travailler :",
+    body: "L’environnement de travail joue beaucoup sur l’épanouissement.",
+    choices: Q3_CHOICES,
+  },
+  {
+    id: "q4",
+    title: "Quand tu apprends quelque chose, tu préfères :",
+    body: "Ça permet d’identifier les formations où tu pourrais être le plus à l’aise.",
+    choices: Q4_CHOICES,
+  },
+  {
+    id: "q5",
+    title: "Les matières logiques (maths, code, analyse…) c’est plutôt :",
+    body: "Certaines filières demandent plus de logique ou d’analyse que d’autres.",
+    choices: Q5_CHOICES,
+  },
+  {
+    id: "q6",
+    title: "Tu te considères plutôt comme quelqu’un de :",
+    body: "Il n’y a pas de bon profil, seulement des métiers plus adaptés à chacun.",
+    choices: Q6_CHOICES,
+  },
+  {
+    id: "q7",
+    title: "Tu aimerais avoir un métier :",
+    body: "Le rythme et le mode de vie comptent aussi dans une orientation.",
+    choices: Q7_CHOICES,
+  },
+  {
+    id: "q8",
+    title: "Aujourd’hui, tu es :",
+    body: "Ça nous aide à proposer des formations réalistes et accessibles.",
+    choices: Q8_CHOICES,
+  },
+  {
+    id: "q9",
+    title: "Pour tes études ou ton travail, tu serais prêt·e à :",
+    body: "La mobilité peut ouvrir plus ou moins d’opportunités.",
+    choices: Q9_CHOICES,
+  },
+  {
+    id: "q10",
+    title: "Aujourd’hui, qu’est-ce qui te bloque le plus dans ton orientation ?",
+    body: "Comprendre tes freins nous aide à mieux t’accompagner.",
+    choices: Q10_CHOICES,
+  },
+];
 
 function scrollToEl(element) {
   element?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -197,8 +240,6 @@ export default function QuizPage() {
     },
     [clearAdvanceTimer],
   );
-  const domain = normalizeAnswer(answers.q1);
-
   const currentQuestionId = QUESTION_ORDER[stepIndex];
   const currentQuestion = BASE_QUESTIONS.find((q) => q.id === currentQuestionId);
   const translatedQuestion = getQuizQuestionText(language, currentQuestionId);
@@ -259,16 +300,12 @@ export default function QuizPage() {
     rafId = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafId);
   }, [progressPercent]);
-  const currentChoice = (() => {
-    if (!currentAnswer) return null;
-    if (currentQuestionId === "q4") {
-      const base = specialtyConfig[domain]?.find((item) => item.value === currentAnswer);
-      if (!base) return null;
-      const lbl = getSpecialtyChoiceText(language, domain, currentAnswer, {});
-      return { ...base, title: lbl.title, sub: lbl.sub };
-    }
-    return translatedChoices.find((choice) => choice.value === currentAnswer) || currentQuestion?.choices?.find((choice) => choice.value === currentAnswer) || null;
-  })();
+  const currentChoice =
+    !currentAnswer
+      ? null
+      : translatedChoices.find((choice) => choice.value === currentAnswer) ||
+        currentQuestion?.choices?.find((choice) => choice.value === currentAnswer) ||
+        null;
 
   const ui = {
     back: getText(language, "quiz", "back", "Back"),
@@ -374,18 +411,7 @@ export default function QuizPage() {
     (async () => {
       try {
         const { conversation_id } = await apiPost("/api/conversations", {
-          quiz_answers: {
-            q1: normalizeAnswer(answers.q1),
-            q2: normalizeAnswer(answers.q2),
-            q3: normalizeAnswer(answers.q3),
-            q4: answers.q4,
-            q5: normalizeAnswer(answers.q5),
-            q6: normalizeAnswer(answers.q6),
-            q7: normalizeAnswer(answers.q7),
-            q8: normalizeAnswer(answers.q8),
-            q9: normalizeAnswer(answers.q9),
-            q10: normalizeAnswer(answers.q10),
-          },
+          quiz_answers: mapUiQuizAnswersToBackend(answers),
         });
         if (!cancelled) {
           clearQuizDraft();
@@ -483,27 +509,6 @@ export default function QuizPage() {
     navigate("/auth", { replace: true });
   };
 
-  const renderQ4 = () => {
-    if (!domain || !specialtyConfig[domain]) return null;
-    return (
-      <div className="choices">
-        {specialtyConfig[domain].map((item) => {
-          const lbl = getSpecialtyChoiceText(language, domain, item.value, {});
-          return (
-            <ChoiceButton
-              key={item.value}
-              title={lbl.title}
-              sub={lbl.sub}
-              active={answers.q4 === item.value}
-              disabled={advancing}
-              onClick={() => answerQuestion("q4", item.value)}
-            />
-          );
-        })}
-      </div>
-    );
-  };
-
   return (
     <div className="app quiz-app">
       <div className="top-actions quiz-top">
@@ -565,21 +570,17 @@ export default function QuizPage() {
               </div>
             </div>
             <p>{translatedQuestion?.body || currentQuestion.body}</p>
-            {currentQuestionId === "q4" ? (
-              renderQ4()
-            ) : (
-              <div className="choices">
-                {translatedChoices.map((c) => (
-                  <ChoiceButton
-                    key={`${c.value}-${c.title}`}
-                    {...c}
-                    active={answers[currentQuestionId] === c.value}
-                    disabled={advancing}
-                    onClick={() => answerQuestion(currentQuestionId, c.value)}
-                  />
-                ))}
-              </div>
-            )}
+            <div className="choices">
+              {translatedChoices.map((c) => (
+                <ChoiceButton
+                  key={`${c.value}-${c.title}`}
+                  {...c}
+                  active={answers[currentQuestionId] === c.value}
+                  disabled={advancing}
+                  onClick={() => answerQuestion(currentQuestionId, c.value)}
+                />
+              ))}
+            </div>
             <div className="question-arrows" aria-label={ui.questionNavAria}>
               <button
                 type="button"

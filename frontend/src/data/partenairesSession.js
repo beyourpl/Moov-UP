@@ -75,11 +75,16 @@ export function clearPartenairesOffer() {
   }
 }
 
-/** Après connexion : choix d’offre si pas encore fait, hub B2B ou Premium si offre correspondante, sinon écran questionnaire / coach / CV (Freemium). */
-export function getPostAuthLandingPath() {
+/** Lien « Connexion structure » : intro Moov’Up si pas d’offre, sinon hub selon l’offre. */
+export function getStructureEntryPath() {
   const o = getPartenairesOffer()?.offer;
-  if (!o) return "/partenaires/offres";
   if (o === "licences_b2b") return "/partenaires/tableau-de-bord";
   if (o === "premium_b2c") return "/partenaires/premium";
-  return "/choice";
+  if (o === "freemium") return "/choice";
+  return "/partenaires";
+}
+
+/** Après connexion structure : intro si pas d’offre, hub B2B / Premium, ou parcours jeune (Freemium). */
+export function getPostAuthLandingPath() {
+  return getStructureEntryPath();
 }

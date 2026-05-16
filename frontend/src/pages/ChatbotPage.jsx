@@ -411,7 +411,7 @@ export default function ChatbotPage() {
                           </span>
                         </summary>
                         <ul className="chatbot-rec-formations-list">
-                          {hit.formations.slice(0, 5).map((f, j) => (
+                          {hit.formations.map((f, j) => (
                             <li key={j}>
                               <a href={f.lien} target="_blank" rel="noopener noreferrer">
                                 {f.libelle}

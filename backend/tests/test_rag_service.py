@@ -83,6 +83,53 @@ def test_filter_by_q1_with_no_match_returns_empty(fake_data, monkeypatch):
     assert res == []
 
 
+def test_formations_filtered_by_sous_domain_overlap(fake_data, monkeypatch):
+    meta = [
+        {
+            "libelle": "cascadeur",
+            "domaine_sous_domaine": "arts, culture, artisanat/arts du spectacle",
+            "sous_domaine_key": "arts, culture, artisanat/arts du spectacle",
+            "niveau_min": "bac",
+            "description": "stunt",
+            "centres_interet": [],
+            "lien_onisep": "x",
+        },
+    ]
+    (fake_data / "metiers_meta.json").write_text(json.dumps(meta))
+    pd.DataFrame([
+        {
+            "libellé formation principal": "jeu d'acteur",
+            "niveau de certification": 5,
+            "libellé niveau de certification": "niveau 5",
+            "durée": "2 ans",
+            "URL et ID Onisep": "u1",
+            "domaine/sous-domaine": "arts, culture, artisanat/arts du spectacle",
+        },
+        {
+            "libellé formation principal": "bachelor dev jeu vidéo",
+            "niveau de certification": 6,
+            "libellé niveau de certification": "niveau 6",
+            "durée": "3 ans",
+            "URL et ID Onisep": "u2",
+            "domaine/sous-domaine": "informatique, Internet/développement, programmation, logiciel",
+        },
+    ]).to_csv(fake_data / "fiche_formation.csv", sep=";", index=False)
+
+    class FakeST:
+        def __init__(self, *a, **k):
+            pass
+
+        def encode(self, texts, **k):
+            return np.ones((len(texts), 8), dtype="float32")
+
+    monkeypatch.setattr("src.service.rag_service.SentenceTransformer", FakeST)
+    svc = RagService()
+    res = svc.initial_recommendations("profil spectacle", niveau_max=7, top_k=1)
+    libs = [f["libelle"] for f in res[0]["formations"]]
+    assert "jeu d'acteur" in libs
+    assert "bachelor dev jeu vidéo" not in libs
+
+
 def test_filter_with_unknown_q1_falls_back_to_full_search(fake_data, monkeypatch):
     monkeypatch.setattr(
         "src.service.rag_service.Q1_TO_ONISEP_DOMAINS",

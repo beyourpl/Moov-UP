@@ -23,3 +23,14 @@ def test_build_profile_rejects_unknown_q1():
 def test_build_profile_rejects_missing_required():
     with pytest.raises(InvalidQuizAnswers):
         build_profile({"q1": "tech"})
+
+
+def test_build_profile_orientation_blocker_in_q4():
+    answers = {
+        "q1": "tech", "q2": "pratique", "q3": "terminale", "q4": "peur",
+        "q5": "bureau", "q6": "mixte", "q7": "autonome", "q8": "fort",
+        "q9": "expertise", "q10": "mobile",
+    }
+    text, _, _ = build_profile(answers)
+    assert "frein" in text.lower()
+    assert "tromper" in text.lower()

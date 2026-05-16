@@ -2,6 +2,13 @@ from __future__ import annotations
 
 from src.metier.mappings import Q1_TO_ONISEP_DOMAINS, Q3_TO_NIVEAU_MAX, HUMAN_LABELS
 
+ORIENTATION_BLOCKER_LABELS = {
+    "info": "je manque d'informations sur les métiers et les formations",
+    "peur": "j'ai peur de me tromper dans mon choix d'orientation",
+    "pression": "je ressens une pression familiale ou sociale",
+    "indecision": "je suis partagé·e entre trop d'options",
+}
+
 
 class InvalidQuizAnswers(ValueError):
     pass
@@ -31,7 +38,10 @@ def build_profile(answers: dict) -> tuple[str, int, list[str]]:
         f"Je suis {_label('q3', q3) or q3} et je m'intéresse au domaine {q1} ({', '.join(domains)}).",
     ]
     if q4:
-        parts.append(f"Spécialité visée : {q4}.")
+        if q4 in ORIENTATION_BLOCKER_LABELS:
+            parts.append(f"Principal frein à l'orientation : {ORIENTATION_BLOCKER_LABELS[q4]}.")
+        else:
+            parts.append(f"Spécialité visée : {q4}.")
     if (l := _label("q2", answers.get("q2"))):
         parts.append(f"J'apprends {l}.")
     if (l := _label("q5", answers.get("q5"))):

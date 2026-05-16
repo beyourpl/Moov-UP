@@ -1,11 +1,11 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PartenairesAudienceSwitch from "../components/PartenairesAudienceSwitch.jsx";
 import PartenairesPricingCards from "../components/partenaires/PartenairesPricingCards.jsx";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import { completeLogin2FA, getSession, loginUser, logoutUser } from "../data/authStorage.js";
 import { buildPartenairesAuthOffersSectionUi, buildPartenairesOfferUi } from "../data/partenairesOfferUi.js";
-import { getPostAuthLandingPath } from "../data/partenairesSession.js";
+import { getPartenairesOffer, getPostAuthLandingPath, setPartenairesOffer } from "../data/partenairesSession.js";
 import { useTranslation } from "../hooks/useTranslation.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
 
@@ -57,6 +57,14 @@ export default function PartenairesAuthPage() {
       twoFaCode: t("auth", "twoFaCode", "Code à 6 chiffres"),
       twoFaSubmit: t("auth", "twoFaSubmit", "Valider et continuer"),
       twoFaBack: t("auth", "twoFaBack", "Modifier email ou mot de passe"),
+      connectedLead: t(
+        "partenaires",
+        "authConnectedLead",
+        "Vous êtes connecté·e. Accédez à l’espace Moov’Up partenaires ou ouvrez directement votre tableau de bord."
+      ),
+      connectedIntro: t("partenaires", "authConnectedIntro", "Espace missions locales & partenaires"),
+      connectedOffers: t("partenaires", "authConnectedOffers", "Voir les offres"),
+      connectedDashboard: t("partenaires", "goDashboard", "Ouvrir le tableau de bord"),
     }),
     [t]
   );
@@ -114,10 +122,8 @@ export default function PartenairesAuthPage() {
   };
 
   const emailError = submitted && !emailValid ? ui.emailInvalid : "";
-
-  useEffect(() => {
-    if (getSession()) navigate(getPostAuthLandingPath(), { replace: true });
-  }, [navigate]);
+  const currentOffer = getPartenairesOffer()?.offer;
+  const showConnectedPanel = Boolean(session) && !twoFaTempToken;
 
   return (
     <div className="lp fade-in partenaires-page">
@@ -188,6 +194,34 @@ export default function PartenairesAuthPage() {
                   </button>
                 </div>
               </form>
+            ) : showConnectedPanel ? (
+              <div className="partenaires-auth-connected">
+                <p className="lp-lead partenaires-auth-connected-lead">{ui.connectedLead}</p>
+                <div className="partenaires-form-actions partenaires-auth-connected-actions">
+                  <Link to="/partenaires" className="lp-btn lp-btn-primary lp-btn-lg">
+                    {ui.connectedIntro}
+                  </Link>
+                  {currentOffer === "licences_b2b" ? (
+                    <Link to="/partenaires/tableau-de-bord" className="lp-btn lp-btn-secondary lp-btn-lg">
+                      {ui.connectedDashboard}
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      className="lp-btn lp-btn-secondary lp-btn-lg"
+                      onClick={() => {
+                        setPartenairesOffer("licences_b2b");
+                        navigate("/partenaires/tableau-de-bord", { replace: true });
+                      }}
+                    >
+                      {ui.connectedDashboard}
+                    </button>
+                  )}
+                  <Link to="/partenaires/offres" className="lp-btn lp-btn-ghost lp-btn-lg">
+                    {ui.connectedOffers}
+                  </Link>
+                </div>
+              </div>
             ) : (
               <form className="partenaires-auth-form" onSubmit={submit}>
                 <label className="auth-field-label">

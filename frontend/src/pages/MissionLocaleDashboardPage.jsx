@@ -94,6 +94,9 @@ export default function MissionLocaleDashboardPage() {
         "cohortBlurb",
         "Les cohortes regroupent des jeunes par période d’entrée et niveau déclaratif — utile pour suivre l’évolution sur plusieurs mois (données illustratives)."
       ),
+      cohortDemo1Period: t("partenaires", "cohortDemo1Period", "janv.–mars 2026"),
+      cohortDemo2Period: t("partenaires", "cohortDemo2Period", "oct.–déc. 2025"),
+      cohortDemo3Period: t("partenaires", "cohortDemo3Period", "juil.–sept. 2025"),
       wrongOffer: t(
         "partenaires",
         "wrongOffer",
@@ -415,17 +418,17 @@ export default function MissionLocaleDashboardPage() {
                     </thead>
                     <tbody>
                       <tr>
-                        <td>Jan–Mar 2026</td>
+                        <td>{ui.cohortDemo1Period}</td>
                         <td>214</td>
                         <td>58%</td>
                       </tr>
                       <tr>
-                        <td>Oct–Déc 2025</td>
+                        <td>{ui.cohortDemo2Period}</td>
                         <td>189</td>
                         <td>44%</td>
                       </tr>
                       <tr>
-                        <td>Juil–Sep 2025</td>
+                        <td>{ui.cohortDemo3Period}</td>
                         <td>156</td>
                         <td>39%</td>
                       </tr>

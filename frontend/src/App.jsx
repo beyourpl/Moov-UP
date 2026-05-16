@@ -14,7 +14,7 @@ import MissionLocaleDashboardPage from "./pages/MissionLocaleDashboardPage.jsx";
 import PremiumB2cHubPage from "./pages/PremiumB2cHubPage.jsx";
 import { isAuthenticated } from "./data/authStorage.js";
 import { getPostAuthLandingPath } from "./data/partenairesSession.js";
-import { getThemePreference, subscribeUiPreferences } from "./data/uiPreferences.js";
+import { getLanguagePreference, getThemePreference, subscribeUiPreferences } from "./data/uiPreferences.js";
 
 function ProtectedRoute({ children }) {
   return isAuthenticated() ? children : <Navigate to="/auth" replace />;
@@ -26,15 +26,18 @@ function AuthRoute() {
 
 export default function App() {
   useEffect(() => {
-    const applyTheme = () => {
+    const applyUi = () => {
       document.documentElement.dataset.theme = getThemePreference();
+      const lang = getLanguagePreference();
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     };
-    applyTheme();
-    window.addEventListener("moovup-ui-change", applyTheme);
-    window.addEventListener("storage", applyTheme);
+    applyUi();
+    window.addEventListener("moovup-ui-change", applyUi);
+    window.addEventListener("storage", applyUi);
     return () => {
-      window.removeEventListener("moovup-ui-change", applyTheme);
-      window.removeEventListener("storage", applyTheme);
+      window.removeEventListener("moovup-ui-change", applyUi);
+      window.removeEventListener("storage", applyUi);
     };
   }, []);
 

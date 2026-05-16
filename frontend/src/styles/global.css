@@ -9232,6 +9232,25 @@ body {
   margin-top: 0.25rem;
 }
 
+.partenaires-auth-connected {
+  margin-top: 1.75rem;
+  text-align: left;
+}
+
+.partenaires-auth-connected-lead {
+  margin: 0 0 1.25rem;
+}
+
+.partenaires-auth-connected-actions {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.partenaires-auth-connected-actions .lp-btn {
+  width: 100%;
+  justify-content: center;
+}
+
 .partenaires-form-actions {
   display: flex;
   flex-wrap: wrap;

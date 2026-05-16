@@ -44,7 +44,8 @@ export default function PartenairesOfferChoicePage() {
   };
 
   const pickB2b = () => {
-    navigate("/partenaires/souscription/licences-b2b");
+    setPartenairesOffer("licences_b2b");
+    navigate("/partenaires/tableau-de-bord", { replace: true });
   };
 
   if (!session) {

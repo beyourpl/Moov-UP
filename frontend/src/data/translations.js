@@ -1,3 +1,5 @@
+import { patchPartenairesLocales } from "./partenairesLocales.js";
+
 export const SUPPORTED_LANGUAGES = [
   "fr",
   "en",
@@ -93,31 +95,27 @@ export const TEXTS = {
           service: { title: "Services", sub: "Tourisme, sport, événementiel" },
         },
         q2: {
-          pratique: { title: "Pratique", sub: "J'aime manipuler, tester, construire" },
-          equilibre: { title: "Équilibré", sub: "J'aime autant la pratique que la théorie" },
-          theorie: { title: "Théorique", sub: "J'aime comprendre avant d'appliquer" },
+          insertion: { title: "Trouver un emploi rapidement", sub: "Entrer vite dans la vie active" },
+          expertise: { title: "Devenir expert·e", sub: "Viser la spécialisation dans un domaine" },
+          flexibilite: { title: "Garder des options ouvertes", sub: "Ne pas se fermer trop tôt" },
+          creation: { title: "Créer mon activité", sub: "Entrepreneuriat, freelance, projet perso" },
         },
         q3: {
-          college: { title: "Collège", sub: "Je suis au collège (3e ou moins)" },
-          seconde: { title: "Seconde", sub: "Je suis en seconde ou première" },
-          terminale: { title: "Terminale", sub: "Je prépare le bac cette année" },
-          bac: { title: "Bac", sub: "J'ai déjà le bac" },
-          bac2: { title: "Bac+2", sub: "BTS, DUT, niveau licence" },
-          bac3: { title: "Bac+3", sub: "Licence, bachelor" },
-          bac5: { title: "Bac+5", sub: "Master, école d'ingénieurs, MBA" },
-        },
-        q4: {
-          bureau: { title: "Bureau", sub: "Cadre structuré, travail en équipe" },
-          terrain: { title: "Terrain", sub: "Plus de concret, de mouvement" },
-          itinerant: { title: "Itinérant", sub: "Déplacement fréquent, sur plusieurs sites" },
-          distanciel: { title: "À distance", sub: "Travail ou formation en ligne" },
-        },
-        q5: {
           bureau: { title: "Bureau", sub: "En entreprise, dans un cadre structuré" },
           laboratoire: { title: "Laboratoire", sub: "En recherche ou expérimentation" },
           terrain: { title: "Terrain", sub: "Sur le terrain, au contact direct" },
           itinerant: { title: "Itinérant", sub: "En déplacement, sur plusieurs lieux" },
           distanciel: { title: "À distance", sub: "En télétravail ou en ligne" },
+        },
+        q4: {
+          pratique: { title: "Pratique", sub: "J'aime manipuler, tester, construire" },
+          equilibre: { title: "Équilibré", sub: "J'aime autant la pratique que la théorie" },
+          theorie: { title: "Théorique", sub: "J'aime comprendre avant d'appliquer" },
+        },
+        q5: {
+          fort: { title: "À l'aise", sub: "J'aime les chiffres et la logique" },
+          moyen: { title: "Correct", sub: "Je me débrouille sans en faire ma priorité" },
+          faible: { title: "Pas mon point fort", sub: "Je préfère d'autres approches" },
         },
         q6: {
           encadre: { title: "Encadré", sub: "J'ai besoin d'un cadre clair et régulier" },
@@ -130,21 +128,25 @@ export const TEXTS = {
           autonome: { title: "Autonome", sub: "J'aime apprendre seul et décider" },
         },
         q8: {
-          fort: { title: "À l'aise", sub: "J'aime les chiffres et la logique" },
-          moyen: { title: "Correct", sub: "Je me débrouille sans en faire ma priorité" },
-          faible: { title: "Pas mon point fort", sub: "Je préfère d'autres approches" },
+          college: { title: "Collège", sub: "Je suis au collège (3e ou moins)" },
+          seconde: { title: "Seconde", sub: "Je suis en seconde ou première" },
+          terminale: { title: "Terminale", sub: "Je prépare le bac cette année" },
+          bac: { title: "Bac", sub: "J'ai déjà le bac" },
+          bac2: { title: "Bac+2", sub: "BTS, BUT, DEUST" },
+          bac3: { title: "Bac+3", sub: "Licence, bachelor" },
+          bac5: { title: "Bac+5", sub: "Master, école d'ingénieurs, MBA" },
         },
         q9: {
-          insertion: { title: "Trouver un job", sub: "Entrer rapidement dans la vie active" },
-          expertise: { title: "Expertise", sub: "Devenir spécialiste dans un domaine" },
-          flexibilite: { title: "Flexibilité", sub: "Garder plusieurs options ouvertes" },
-          creation: { title: "Créer mon activité", sub: "Entrepreneuriat, freelance" },
-        },
-        q10: {
           local: { title: "Près de chez moi", sub: "Je reste dans ma région" },
           mobile: { title: "Mobile", sub: "Je peux bouger en France" },
           international: { title: "International", sub: "Je peux partir à l'étranger" },
           distanciel: { title: "À distance", sub: "Je préfère les formations en ligne" },
+        },
+        q10: {
+          info: { title: "Manque d'informations", sub: "Je ne sais pas quels métiers ou formations existent" },
+          peur: { title: "Peur de me tromper", sub: "J'ai peur de faire le mauvais choix" },
+          pression: { title: "Pression familiale ou sociale", sub: "Les attentes des autres pèsent sur moi" },
+          indecision: { title: "Trop d'options", sub: "Je suis partagé·e entre plusieurs pistes" },
         },
       },
     },
@@ -308,6 +310,7 @@ export const TEXTS = {
       founder4Role: "Cofondateur · Data Analyst",
       navTop: "Haut",
       heroImgAlt: "Avec Moov'Up, ton avenir commence ici",
+      heroLogoAlt: "Moov'Up — logo",
     },
   },
   fr: {
@@ -608,16 +611,16 @@ export const TEXTS = {
       logout: "Se déconnecter",
       back: "Retour",
       questions: {
-        q1: { title: "Quel grand domaine d’activité t’attire le plus pour ton futur métier ?", body: "On commence par les familles de métiers (numérique, santé, commerce…) avant de préciser la suite." },
-        q2: { title: "Tu retiens surtout les choses en faisant, en échangeant ou en lisant / en théorisant ?", body: "Ça indique si tu seras plus à l’aise en atelier, en cours magistraux ou en projet." },
-        q3: { title: "Quel est ton niveau scolaire actuel (ou le dernier diplôme obtenu) ?", body: "Indispensable pour proposer des filières réalistes par rapport à ta situation." },
-        q4: { title: "Dans ce domaine, quelle filière ou spécialité te parle le plus ?", body: "On cible le métier et les études qui y mènent." },
-        q5: { title: "Tu t’imagines plutôt au bureau, sur le terrain, en déplacement constant ou en télétravail ?", body: "Ici on parle du lieu et du rythme de travail, pas de la durée des études." },
-        q6: { title: "Pour avancer dans un cursus, tu préfères un rythme très cadré, un équilibre, ou une forte autonomie ?", body: "C’est lié à ta façon de progresser dans les études (pas à ton lieu de travail ni à ta mobilité)." },
-        q7: { title: "Face aux enseignants, tuteurs ou équipe pédagogique, tu veux être porté·e étape par étape, un juste milieu, ou piloter tes choix ?", body: "Ici on parle du lien d’accompagnement humain, autre dimension que la question précédente." },
-        q8: { title: "Les maths, la stat et le raisonnement logique : atout, correct, ou sujet que tu évites ?", body: "Évite de t’orienter vers des filières trop « chiffrées » si ce n’est pas ton truc." },
-        q9: { title: "À horizon quelques années, tu veux surtout trouver vite un job, devenir expert·e, garder le choix ouvert, ou monter ton activité ?", body: "Insertion, expertise, polyvalence ou entrepreneuriat : ça oriente la trajectoire." },
-        q10: { title: "Géographiquement : tu restes proche de chez toi, tu bouges dans tout le pays, tu peux aller à l’étranger, ou tu vise 100 % à distance ?", body: "Affine les formations selon ta mobilité et le mode présentiel / distanciel." },
+        q1: { title: "Qu’est-ce qui t’intéresse le plus ?", body: "Choisis les domaines qui t’attirent naturellement." },
+        q2: { title: "Dans ton futur métier, qu’est-ce qui compte le plus pour toi ?", body: "Chaque personne recherche quelque chose de différent dans son avenir." },
+        q3: { title: "Tu préfères travailler :", body: "L’environnement de travail joue beaucoup sur l’épanouissement." },
+        q4: { title: "Quand tu apprends quelque chose, tu préfères :", body: "Ça permet d’identifier les formations où tu pourrais être le plus à l’aise." },
+        q5: { title: "Les matières logiques (maths, code, analyse…) c’est plutôt :", body: "Certaines filières demandent plus de logique ou d’analyse que d’autres." },
+        q6: { title: "Tu te considères plutôt comme quelqu’un de :", body: "Il n’y a pas de bon profil, seulement des métiers plus adaptés à chacun." },
+        q7: { title: "Tu aimerais avoir un métier :", body: "Le rythme et le mode de vie comptent aussi dans une orientation." },
+        q8: { title: "Aujourd’hui, tu es :", body: "Ça nous aide à proposer des formations réalistes et accessibles." },
+        q9: { title: "Pour tes études ou ton travail, tu serais prêt·e à :", body: "La mobilité peut ouvrir plus ou moins d’opportunités." },
+        q10: { title: "Aujourd’hui, qu’est-ce qui te bloque le plus dans ton orientation ?", body: "Comprendre tes freins nous aide à mieux t’accompagner." },
       },
       choices: {
         q1: {
@@ -633,31 +636,27 @@ export const TEXTS = {
           service: { title: "Services", sub: "Tourisme, sport, événementiel" },
         },
         q2: {
-          pratique: { title: "Pratique", sub: "J'aime manipuler, tester, construire" },
-          equilibre: { title: "Équilibré", sub: "J'aime autant la pratique que la théorie" },
-          theorie: { title: "Théorique", sub: "J'aime comprendre avant d'appliquer" },
+          insertion: { title: "Trouver un emploi rapidement", sub: "Entrer vite dans la vie active" },
+          expertise: { title: "Devenir expert·e", sub: "Viser la spécialisation dans un domaine" },
+          flexibilite: { title: "Garder des options ouvertes", sub: "Ne pas se fermer trop tôt" },
+          creation: { title: "Créer mon activité", sub: "Entrepreneuriat, freelance, projet perso" },
         },
         q3: {
-          college: { title: "Collège", sub: "Je suis au collège (3e ou moins)" },
-          seconde: { title: "Seconde", sub: "Je suis en seconde ou première" },
-          terminale: { title: "Terminale", sub: "Je prépare le bac cette année" },
-          bac: { title: "Bac", sub: "J'ai déjà le bac" },
-          bac2: { title: "Bac+2", sub: "BTS, DUT, niveau licence" },
-          bac3: { title: "Bac+3", sub: "Licence, bachelor" },
-          bac5: { title: "Bac+5", sub: "Master, école d'ingénieurs, MBA" },
-        },
-        q4: {
-          bureau: { title: "Bureau", sub: "Cadre structuré, travail en équipe" },
-          terrain: { title: "Terrain", sub: "Plus de concret, de mouvement" },
-          itinerant: { title: "Itinérant", sub: "Déplacement fréquent, sur plusieurs sites" },
-          distanciel: { title: "À distance", sub: "Travail ou formation en ligne" },
-        },
-        q5: {
           bureau: { title: "Bureau", sub: "En entreprise, dans un cadre structuré" },
           laboratoire: { title: "Laboratoire", sub: "En recherche ou expérimentation" },
           terrain: { title: "Terrain", sub: "Sur le terrain, au contact direct" },
           itinerant: { title: "Itinérant", sub: "En déplacement, sur plusieurs lieux" },
           distanciel: { title: "À distance", sub: "En télétravail ou en ligne" },
+        },
+        q4: {
+          pratique: { title: "Pratique", sub: "J'aime manipuler, tester, construire" },
+          equilibre: { title: "Équilibré", sub: "J'aime autant la pratique que la théorie" },
+          theorie: { title: "Théorique", sub: "J'aime comprendre avant d'appliquer" },
+        },
+        q5: {
+          fort: { title: "À l'aise", sub: "J'aime les chiffres et la logique" },
+          moyen: { title: "Correct", sub: "Je me débrouille sans en faire ma priorité" },
+          faible: { title: "Pas mon point fort", sub: "Je préfère d'autres approches" },
         },
         q6: {
           encadre: { title: "Encadré", sub: "J'ai besoin d'un cadre clair et régulier" },
@@ -670,21 +669,25 @@ export const TEXTS = {
           autonome: { title: "Autonome", sub: "J'aime apprendre seul et décider" },
         },
         q8: {
-          fort: { title: "À l'aise", sub: "J'aime les chiffres et la logique" },
-          moyen: { title: "Correct", sub: "Je me débrouille sans en faire ma priorité" },
-          faible: { title: "Pas mon point fort", sub: "Je préfère d'autres approches" },
+          college: { title: "Collège", sub: "Je suis au collège (3e ou moins)" },
+          seconde: { title: "Seconde", sub: "Je suis en seconde ou première" },
+          terminale: { title: "Terminale", sub: "Je prépare le bac cette année" },
+          bac: { title: "Bac", sub: "J'ai déjà le bac" },
+          bac2: { title: "Bac+2", sub: "BTS, BUT, DEUST" },
+          bac3: { title: "Bac+3", sub: "Licence, bachelor" },
+          bac5: { title: "Bac+5", sub: "Master, école d'ingénieurs, MBA" },
         },
         q9: {
-          insertion: { title: "Trouver un job", sub: "Entrer rapidement dans la vie active" },
-          expertise: { title: "Expertise", sub: "Devenir spécialiste dans un domaine" },
-          flexibilite: { title: "Flexibilité", sub: "Garder plusieurs options ouvertes" },
-          creation: { title: "Créer mon activité", sub: "Entrepreneuriat, freelance" },
-        },
-        q10: {
           local: { title: "Près de chez moi", sub: "Je reste dans ma région" },
           mobile: { title: "Mobile", sub: "Je peux bouger en France" },
           international: { title: "International", sub: "Je peux partir à l'étranger" },
           distanciel: { title: "À distance", sub: "Je préfère les formations en ligne" },
+        },
+        q10: {
+          info: { title: "Manque d'informations", sub: "Je ne sais pas quels métiers ou formations existent" },
+          peur: { title: "Peur de me tromper", sub: "J'ai peur de faire le mauvais choix" },
+          pression: { title: "Pression familiale ou sociale", sub: "Les attentes des autres pèsent sur moi" },
+          indecision: { title: "Trop d'options", sub: "Je suis partagé·e entre plusieurs pistes" },
         },
       },
     },
@@ -915,6 +918,9 @@ export const TEXTS = {
         "Seules les statistiques agrégées et anonymisées apparaissent ici. Les dossiers individuels ne sont pas listés dans ce prototype.",
       cohortBlurb:
         "Les cohortes regroupent des jeunes par période d’entrée et niveau déclaratif — utile pour suivre l’évolution sur plusieurs mois (données illustratives).",
+      cohortDemo1Period: "janv.–mars 2026",
+      cohortDemo2Period: "oct.–déc. 2025",
+      cohortDemo3Period: "juil.–sept. 2025",
       wrongOffer:
         "Le tableau de bord collectif est inclus dans l’offre Licences B2B. Choisis cette offre pour y accéder.",
       goOffers: "Retour aux offres",
@@ -977,6 +983,11 @@ export const TEXTS = {
       premiumCtaCoach: "Ouvrir Moov’Coach",
       premiumDemoNote:
         "Paiement réel et plafonds serveur : à brancher sur ton offre commerciale ; ici l’accès « illimité » est une démonstration côté interface.",
+      authOffersEyebrow: "Offres",
+      authOffersTitle: "Tarifs et fonctionnalités",
+      authOffersLead: "Après connexion, choisis la formule adaptée à ta structure ou ton réseau.",
+      authOffersFoot: "Espace partenaires : présentation et offres",
+      authOffersFootLink: "Voir l’accueil partenaires",
     },
   },
   en: {
@@ -1158,6 +1169,7 @@ export const TEXTS = {
       pillar3Text: "Each step links to verified reference resources.",
       eyebrow: "Guidance · AI · Guided pathway",
       heroImgAlt: "With Moov'Up, your future starts here",
+      heroLogoAlt: "Moov'Up — logo",
     },
     auth: {
       title: "Sign in before Moov'Coach",
@@ -1736,6 +1748,9 @@ export const TEXTS = {
         "Only aggregated, anonymised statistics are shown here. Individual records are not listed in this prototype.",
       cohortBlurb:
         "Cohorts group entrants by period and declared level—useful for multi-month follow-up (illustrative data).",
+      cohortDemo1Period: "Jan–Mar 2026",
+      cohortDemo2Period: "Oct–Dec 2025",
+      cohortDemo3Period: "Jul–Sep 2025",
       wrongOffer:
         "The collective dashboard is included in the B2B licences plan. Pick that plan to access it.",
       goOffers: "Back to plans",
@@ -1798,6 +1813,15 @@ export const TEXTS = {
       premiumCtaCoach: "Open Moov’Coach",
       premiumDemoNote:
         "Real billing and server limits will follow your commercial offer; “unlimited” here is a UI demo.",
+      authConnectedLead:
+        "You’re signed in. Open the Moov’Up partner area or go straight to your dashboard.",
+      authConnectedIntro: "Local missions & partner space",
+      authConnectedOffers: "View plans",
+      authOffersEyebrow: "Plans",
+      authOffersTitle: "Pricing and features",
+      authOffersLead: "After sign-in, choose the plan that fits your organisation or network.",
+      authOffersFoot: "Partner area: overview and plans",
+      authOffersFootLink: "View partner home",
     },
   },
   ar: {
@@ -1856,6 +1880,7 @@ export const TEXTS = {
       navAbout: "حول",
       navFounders: "المؤسسون",
       navProduct: "المنتج",
+      navPartenaires: "مهام التوجيه المحلية",
       navPathway: "المسار",
       navFaq: "الأسئلة الشائعة",
       footer: "منصة توجيه مساعدة · 2026",
@@ -1873,7 +1898,6 @@ export const TEXTS = {
       faq2Question: "هل يتم تسجيل إجاباتي؟",
       faq2Answer: "مع حساب، تُستخدم إجاباتك لبناء ملفك وفتح Moov'Coach. بدون تسجيل دخول، لا يحفظ التطبيق بياناتك.",
       navCoFounders: "المؤسسون المشاركون",
-      navPartenaires: "مهام التوجيه المحلية",
       navMoovCoach: "Moov'Coach",
       navCvLm: "السيرة · خطاب التقديم",
       navSteps: "كيف يعمل",
@@ -2177,21 +2201,78 @@ export const TEXTS = {
       dashTitle: "لوحة تحكم الشركاء",
       dashLead:
         "مؤشرات مجمعة من الشباب الذين وافقوا على المشاركة في نطاقك (بيانات تجريبية).",
+      tabOverview: "نظرة عامة",
+      tabConsent: "البيانات المشتركة",
+      tabCohorts: "المجموعات",
+      tabReports: "التقارير",
+      metricOptIn: "شباب بمشاركة نشطة",
+      metric30d: "موافقات جديدة (30 يومًا)",
+      chartAge: "التوزيع حسب العمر",
+      chartTrack: "عائلات المسارات (مجمّع)",
+      engagementTitle: "التفاعل مع المنصة",
+      engQuiz: "استبيان مكتمل",
+      engCoach: "جلسات MoovCoach",
+      engCv: "فتح أداة السيرة / خطاب التقديم",
+      consentBlurb:
+        "تُعرض هنا إحصاءات مجمّعة ومجهولة الهوية فقط. لا تُدرج ملفات فردية في هذا النموذج الأولي.",
+      cohortBlurb:
+        "تجمع المجموعات المشاركين حسب فترة الدخول والمستوى المعلَن — مفيد لمتابعة التطور على عدة أشهر (بيانات توضيحية).",
+      cohortDemo1Period: "يناير–مارس 2026",
+      cohortDemo2Period: "أكتوبر–ديسمبر 2025",
+      cohortDemo3Period: "يوليو–سبتمبر 2025",
       wrongOffer:
         "لوحة التحكم الجماعية مشمولة في عرض تراخيص B2B. اختر هذا العرض للوصول إليها.",
+      goOffers: "العودة إلى العروض",
+      connectedAs: "متصل:",
+      cohortPeriod: "الفترة",
+      cohortSize: "العدد",
+      cohortActive: "نشطون (30 يومًا)",
+      dashIncludedTitle: "مشمول في تراخيص B2B",
+      pillarCollectiveBody:
+        "مؤشرات مجمّعة عن الشباب الذين وافقوا على المشاركة في نطاقك: الأحجام، التوزيع، الاتجاهات — دون كشف ملفات بأسماء.",
+      pillarCohortsBody:
+        "متابعة حسب فترة الدخول: العدد، النشاط خلال 30 يومًا، والتطور بمرور الوقت لتوجيه إجراءاتك المحلية.",
+      pillarReportsBody:
+        "تقارير وإحصاءات دورية لتوجيهك الداخلي ولجان الحوكمة (عيّنات تصدير توضيحية أدناه).",
+      pillarSupportBody:
+        "مسؤول Moov'Up مخصص: الإطلاق، تدريب الفرق، أفضل الممارسات، والتصعيد التشغيلي.",
+      reportsIntro:
+        "أحدث التقارير المتاحة — بيانات تجريبية؛ ستُربط التصديرات الحقيقية بعقدك المؤسسي.",
+      reportCard1Title: "تقرير التوجيه — الربع الأول 2026",
+      reportCard1Period: "الفترة المحللة: يناير–مارس 2026",
+      reportCard1Stat1: "استبيان مكتمل: 78٪ من المشاركين",
+      reportCard1Stat2: "فتح أداة السيرة / الخطاب: +9٪ مقارنة بالربع الرابع 2025",
+      reportCard2Title: "نظرة عامة — الربع الرابع 2025",
+      reportCard2Period: "أكتوبر–ديسمبر 2025",
+      reportCard2Stat1: "جلسات MoovCoach: 41٪ من المجموعات النشطة",
+      reportCard2Stat2: "عائلات مسارات «تقنية»: 31٪",
+      reportCard3Title: "ملخص الموافقات — سنة 2025",
+      reportCard3Period: "موحّد في 31 ديسمبر 2025",
+      reportCard3Stat1: "موافقات جديدة: 842 تراكميًا",
+      reportCard3Stat2: "متوسط معدل النشاط لـ 30 يومًا: 52٪",
+      reportViewSummary: "عرض الملخص",
+      reportDemoNote: "تصدير PDF: متاح مع تكامل مؤسسي.",
+      supportTitle: "مرافقة مخصصة",
+      supportLead:
+        "فريق التراخيص: إدماج المؤسسة، الوساطة، ورفع كفاءة مرشدي التوجيه.",
+      supportCta: "مراسلة فريق التراخيص",
+      supportEmailSubject: "طلب تراخيص B2B — Moov'Up",
+      pillarCtaOverview: "فتح النظرة العامة",
+      pillarCtaCohorts: "فتح متابعة المجموعات",
+      pillarCtaReports: "فتح التقارير",
+      pillarCtaSupport: "التواصل مع فريق التراخيص",
     },
     coach: {
       visitor: "مستخدم",
       title: "Moov'Coach",
-      description:
-        "يفتح روبوت الإرشاد مباشرة بعد تسجيل الدخول. يمكنك طرح الأسئلة أو إعادة الاستبيان أو استكشاف المسارات المقترحة.",
+      description: "يفتح روبوت الإرشاد مباشرة بعد تسجيل الدخول. يمكنك طرح الأسئلة أو إعادة الاستبيان أو استكشاف المسارات المقترحة.",
       eyebrow: "مساعد التوجيه",
       share: "مشاركة الرابط",
       home: "الرئيسية",
       recommendedJobs: "المهن الموصى بها لملفك",
       userPathway: "مسار المستخدم المرئي",
       pathwayType: "مسار نموذجي",
-      noPathway: "لم يُرسل مسار مفصّل. إعادة الاستبيان تعطيك تصورًا كاملًا.",
+      noPathway: "لم يتم إرسال مسار مفصل. إعادة الاستبيان توفر تصورًا كاملًا.",
       chatbotQuestions: "أسئلة إضافية",
       otherJobs: "مهن أخرى مقترحة",
       exchangeChatbot: "التحدث مع الروبوت",
@@ -2200,9 +2281,9 @@ export const TEXTS = {
       askDetails:
         "يمكنك طلب تفاصيل حول المهن والدراسة والفرص أو المستويات المتوقعة وفق ملفك الحالي",
       loading: "جاري التحميل…",
-      brandHomeAria: "Moov'Up — الرئيسية",
+      brandHomeAria: "Moov'Up، الرئيسية",
       retakeQuiz: "إعادة الاستبيان",
-      heroLead: "اطرح أسئلتك عن المهن والتكوينات الموصى بها لملفك.",
+      heroLead: "اطرح أسئلتك حول المهن والتكوينات الموصى بها لملفك.",
       viewMyPath: "عرض مساري",
       cvLmLink: "السيرة الذاتية وخطاب التقديم",
       sharePath: "مشاركة مساري",
@@ -2210,12 +2291,12 @@ export const TEXTS = {
       recJobsAsideAria: "المهن الموصى بها",
       asideJobsTitle: "المهن الموصى بها",
       onisepSheet: "ورقة ONISEP",
-      formationsAccessible: "{count} مسار تكويني",
+      formationsAccessible: "{count} مسارات تكوينية",
       formationsAccessibleOne: "مسار تكويني واحد",
       chatHead: "محادثة مع Moov'Coach",
       chatHeadHint: "اطرح سؤالك أدناه. افتح «عرض مساري» للملخص الكامل.",
       chatSectionAria: "المحادثة",
-      detailedPath: "مسار مفصّل",
+      detailedPath: "مسار مفصل",
       greetingFirst: "اطرح سؤالك الأول (مثال: «ما الراتب؟»، «وماذا عن التناوب؟»).",
       convNotFound: "المحادثة غير موجودة",
       shareNativeTitle: "مساري على Moov'Up",
@@ -2229,23 +2310,33 @@ export const TEXTS = {
       typingAria: "المساعد يكتب…",
       coachAvatarTitle: "Moov'Coach",
       legacyCoachBanner:
-        "واجهة تطوير قديمة: أوقف كل عمليات Node على المنفذ **8787**، اسحب آخر الكود، ثم `npm run dev` من مستودع tempo.",
+        "واجهة API قديمة (ردود عامة). أوقف كل عمليات Node على المنفذ **8787**، ثم أعد `npm run dev` من مستودع **tempo** المحدّث.",
       devApiNoOpenRouterBanner:
-        "واجهة dev-api المحلية بلا **OPENROUTER_API_KEY** صالحة في `backend/.env`: لا يمكن استدعاء النموذج حتى تُضبط المفتاح وتُعاد التشغيل.",
-      quotaBanner:
-        "العرض المجاني: تبقى **{remaining}** من **{limit}** رسالة Moov'Coach.",
-      quotaBannerPremium:
-        "أنت على **Premium B2C**: رسائل Moov'Coach غير محدودة (في هذا العرض التجريبي).",
+        "واجهة التطوير Node بلا **OPENROUTER_API_KEY** صالحة في `backend/.env`: لا يمكن للمدرب استدعاء النموذج حتى تُضبط المفتاح ويُعاد تشغيل الطرفية.",
+      quotaBanner: "العرض المجاني: تبقى **{remaining}** رسالة Moov'Coach من **{limit}**.",
+      quotaBannerPremium: "أنت على **Premium B2C**: رسائل Moov'Coach غير محدودة (في هذا العرض التجريبي).",
       quotaExceeded:
         "استنفدت رسائل Moov'Coach المجانية. انتقل إلى **Premium** للمتابعة، أو اختر عرضًا آخر.",
       quotaUpgradeCta: "عرض العروض والترقية إلى Premium",
+    },
+    a11y: {
+      mainNav: "التنقل الرئيسي",
+      authMode: "وضع تسجيل الدخول",
+      landingLaunch: "بدء المسار الموجّه",
+      landingPresentation: "عرض Moov'Up",
+      questionNav: "تصفّح الاستبيان",
+      quizPrev: "السؤال السابق",
+      quizNext: "السؤال التالي",
+      quizSidePanel: "ملخص المسار",
+      languageSelector: "تغيير اللغة",
+      languageLabel: "اللغة",
     },
     pathwaySummary: {
       chipDomain: "المجال",
       chipLearning: "أسلوب التعلم",
       chipCurrentLevel: "المستوى الحالي",
       chipSpecialty: "التخصص",
-      chipTargetFrame: "الإطار المستهدف",
+      chipTargetFrame: "الإطار المهني",
       chipStudyPace: "إيقاع الدراسة",
       chipSupport: "المرافقة",
       chipNumbers: "الأرقام والمنطق",
@@ -2254,27 +2345,27 @@ export const TEXTS = {
       closeScrim: "إغلاق نافذة المسار",
       eyebrow: "مسار موجّه",
       title: "مسار شهاداتك",
-      lead: "مبني من إجابات الاستبيان ومستويات التكوين المقترحة لملفك.",
+      lead: "مبني على إجابات الاستبيان ومستويات التكوين المقترحة لملفك.",
       closeBtn: "إغلاق",
       sectionChipsAria: "إجاباتك في الاستبيان",
       chipsTitle: "ما أشرت إليه",
-      chipsSub: "كل إجابة تؤثر على تصفية المستوى ومسارات الدراسة.",
+      chipsSub: "كل إجابة تؤثر على فلتر المستوى ومسارات الدراسة.",
       sectionTimelineAria: "خط زمني للدراسة",
-      timelineSub: "منطق دراسي متوافق مع مستواك الدراسي وأولوياتك.",
+      timelineSub: "منطق دراسي متسق مع مستواك المدرسي وأولوياتك.",
       sectionLevelsAria: "المستويات في التوصيات",
-      levelsTitle: "الشهادات الموجودة في تكويناتك المقترحة",
-      levelsSub: "تسميات المستوى من بطاقات التكوين (ONISEP / قاعدة Moov'Up).",
+      levelsTitle: "الشهادات في تكويناتك المقترحة",
+      levelsSub: "مستويات مستخرجة من أوراق التكوين (ONISEP / بيانات Moov'Up).",
       sectionProfileAria: "ملخص نصي",
       profileTitle: "ملخص للذكاء الاصطناعي",
-      profileSub: "نص مبني من الاستبيان (نفس أساس Moov'Coach).",
+      profileSub: "نص مبني على الاستبيان (نفس أساس Moov'Coach).",
       sectionMetiersAria: "المهن الموصى بها",
       metiersTitle: "المهن والوصول",
       metiersSub: "لكل مهنة: مستوى الوصول، وصف قصير، تكوينات مرتبطة.",
       metierFallback: "مهنة {n}",
       accessTag: "الوصول",
-      salaryPrefix: "مؤشر راتب:",
+      salaryPrefix: "مؤشر الراتب:",
       salaryDisclaimer: "(يُؤكَّد على المصادر الرسمية)",
-      onisepLink: "ورقة ONISEP — رواتب وآفاق →",
+      onisepLink: "ورقة ONISEP، رواتب وآفاق →",
       formationFallback: "تكوين",
       emptyState: "لا توصيات مهنية بعد، تابع المحادثة أو أعد الاستبيان.",
       footnote:
@@ -2452,6 +2543,7 @@ export const TEXTS = {
       brandValuesTitle: "القيم",
       brandValuesText: "القرب، الشفافية، الفعالية، والتمكين.",
       back: "رجوع",
+      navBackAria: "العودة إلى الصفحة السابقة",
       theme: "المظهر",
       language: "اللغة",
       tip: "نصيحة",
@@ -2575,6 +2667,7 @@ export const TEXTS = {
       navAbout: "Acerca de",
       navFounders: "Fundadores",
       navProduct: "Producto",
+      navPartenaires: "Misiones locales y socios",
       navPathway: "Recorrido",
       navFaq: "FAQ",
       footer: "Plataforma de orientación asistida · 2026",
@@ -2696,6 +2789,7 @@ export const TEXTS = {
       pillar3Text: "Cada paso enlaza con recursos de referencia verificados.",
       eyebrow: "Orientación · IA · Recorrido guiado",
       heroImgAlt: "Con Moov'Up, tu futuro empieza aquí",
+      heroLogoAlt: "Moov'Up — logotipo",
 
     },
     auth: {
@@ -2904,6 +2998,209 @@ export const TEXTS = {
       sugAtsLmLength:
         "Una página A4: las cartas largas a menudo se omiten o cortan tras la vista previa del CV en el software de selección.",
     },
+    partenaires: {
+      navAria: "Espacio de socios",
+      navJeunes: "Acceso jóvenes",
+      navSegmentStructures: "Organizaciones",
+      navSegmentJeunes: "Jóvenes",
+      navAudienceSwitchAria: "Cambiar entre el espacio de socios y el acceso para jóvenes",
+      ctaLogin: "Acceso para organizaciones",
+      eyebrow: "Centros · Orientación local · Instituciones",
+      title: "Orientación local y espacio de socios",
+      lead:
+        "Panel colectivo para seguir a los jóvenes que aceptaron compartir indicadores de orientación: volumen, desglose y tendencias, sin exponer datos personales fuera del marco acordado.",
+      bullet1: "Acceso reservado a las cuentas de tu organización",
+      bullet2: "Tras el acceso: elige Freemium, Premium o licencias B2B",
+      bullet3: "Panel con agregados consentidos",
+      ctaOffers: "Ver planes",
+      authEyebrow: "Acceso para organizaciones",
+      authTitle: "Acceso socios",
+      authLead:
+        "Usa la cuenta de tu orientación local, centro o red. Tras el acceso eliges el plan adecuado (Freemium, Premium o licencias B2B).",
+      authSubmit: "Iniciar sesión",
+      authJeunesLink: "¿Cuenta de joven? Acceso estándar",
+      backStructures: "Inicio socios",
+      offersEyebrow: "Elegir un plan",
+      offersTitle: "¿Qué plan encaja con tu organización?",
+      offersSubtitle:
+        "Los jóvenes pueden usar Freemium o Premium B2C; tu organización activa licencias B2B para el panel colectivo (orientación local, centros, redes).",
+      authConnectedLead:
+        "Has iniciado sesión. Entra al espacio Moov'Up para socios o abre tu panel directamente.",
+      authConnectedIntro: "Orientación local y espacio de socios",
+      authConnectedOffers: "Ver planes",
+      offerFreemiumTitle: "FREEMIUM",
+      offerFreemiumPrice: "Gratis",
+      offerFreemiumDesc: "Acceso a un diagnóstico básico con intercambios limitados de MoovCoach.",
+      offerFreemiumF1: "Diagnóstico básico",
+      offerFreemiumF2: "Recomendaciones limitadas",
+      offerFreemiumF3: "MoovCoach limitado",
+      offerPremiumTitle: "PREMIUM B2C",
+      offerPremiumBadge: "★ Más popular",
+      offerPremiumPrice: "1,99 € / mes",
+      offerPremiumDesc: "Acceso ilimitado, generación de CV, herramientas avanzadas.",
+      offerPremiumF1: "Acceso ilimitado",
+      offerPremiumF2: "Generación de CV y carta",
+      offerPremiumF3: "Preparación de entrevistas",
+      offerPremiumF4: "MoovCoach ilimitado",
+      offerB2bTitle: "LICENCIAS B2B",
+      offerB2bPrice: "Desde 2.000 € / año",
+      offerB2bDesc:
+        "Para institutos, orientación local, estructuras de inserción y grandes organizaciones.",
+      offerB2bF1: "Panel colectivo",
+      offerB2bF2: "Seguimiento de cohortes",
+      offerB2bF3: "Informes y estadísticas",
+      offerB2bF4: "Acompañamiento dedicado",
+      offerFreemiumTagline: "MOTOR DE CAPTACIÓN",
+      offerPremiumTagline: "MOTOR DE MONETIZACIÓN",
+      offerB2bTagline: "MOTOR DE ESTABILIDAD",
+      offerFreemiumDescPrefix: "Acceso a un ",
+      offerFreemiumDescEm: "diagnóstico básico",
+      offerFreemiumDescMid: " con intercambios limitados de ",
+      offerMoovcoachName: "MoovCoach",
+      offerFreemiumDescSuffix: ".",
+      offerPremiumDescPrefix: "Acceso ",
+      offerPremiumDescEm: "ilimitado",
+      offerPremiumDescSuffix: ", generación de CV, herramientas avanzadas.",
+      offerB2bDescPrefix: "Para ",
+      offerB2bDescEm1: "institutos",
+      offerB2bDescMid: ", orientación local, estructuras de inserción, ",
+      offerB2bDescEm2: "grandes organizaciones",
+      offerB2bDescEnd: ".",
+      subscribeBackOffers: "Volver a los planes",
+      subscribePremiumTitle: "Premium B2C — ¿cómo funciona?",
+      subscribePremiumLead:
+        "Así será el flujo cuando el pago en línea esté conectado. Por ahora activas el plan en **modo demo** (sin cargo).",
+      subscribePremiumPriceLine:
+        "Precio mostrado: **1,99 € IVA incl. / mes** — suscripción con renovación mensual, cancelable.",
+      subscribePremiumH1: "Modalidad de pago",
+      subscribePremiumP1:
+        "Pagas con **tarjeta** (proveedor seguro como Stripe): primera autorización, luego cargo mensual el mismo día.",
+      subscribePremiumP2:
+        "Recibes **recibo o factura** por correo tras cada pago; puedes actualizar tarjeta o dirección de facturación.",
+      subscribePremiumP3:
+        "Si falla un pago, el acceso Premium puede **pausarse** hasta resolverlo — aviso por correo.",
+      subscribePremiumP4:
+        "Las funciones «ilimitadas» en la interfaz son **demo**; los límites reales dependen del contrato en producción.",
+      subscribePremiumLegal:
+        "Las condiciones finales (CGV, duración, cancelación) las debe proporcionar tu equipo legal / comercial.",
+      subscribePremiumActivate: "Activar Premium (demo)",
+      subscribeAlreadyPremium:
+        "Ya tienes Premium B2C. Abre tu espacio o vuelve a los planes.",
+      subscribeGoPremiumHub: "Abrir espacio Premium",
+      subscribeB2bTitle: "Licencias B2B — ¿cómo funciona?",
+      subscribeB2bLead:
+        "Las **licencias anuales** se acuerdan con ventas: presupuesto, pedido o convenio marco, luego facturación.",
+      subscribeB2bPriceLine:
+        "Desde **2.000 € sin IVA / año** según alcance (sedes, volumen de usuarios, opciones).",
+      subscribeB2bH1: "Modalidad de facturación",
+      subscribeB2bP1:
+        "Tras la firma recibes **factura** y se activan las cuentas de la organización (referentes, SSO o listas de correo según configuración).",
+      subscribeB2bP2:
+        "El **panel colectivo** y exportaciones avanzadas están incluidos; se programa el onboarding con tu contacto Moov'Up.",
+      subscribeB2bP3:
+        "Aquí activas la licencia en **modo demo** para explorar sin contrato real.",
+      subscribeB2bLegal:
+        "Para un presupuesto real: escribe al equipo de licencias desde el panel (enlace de soporte).",
+      subscribeB2bActivate: "Activar licencia B2B (demo)",
+      subscribeAlreadyB2b:
+        "Ya tienes licencias B2B. Abre el panel o vuelve a los planes.",
+      subscribeGoB2bDashboard: "Abrir panel",
+      currentOfferPremiumBanner:
+        "Plan activo: Premium B2C — 1,99 € IVA incl. / mes. Sin cargo real en modo demo; el pago con tarjeta se conectará después.",
+      currentOfferB2bBanner:
+        "Plan activo: licencias B2B — desde 2.000 € sin IVA / año. Activación demo: sin contrato ni facturación real hasta que ventas cierre tu expediente.",
+      premiumHubTitle: "Espacio Premium B2C",
+      premiumHubLead:
+        "Todo lo incluido en tu suscripción: recordatorio de ventajas y enlaces directos a las herramientas.",
+      premiumWrongOffer:
+        "Este espacio es para el plan Premium B2C. Elige ese plan para acceder.",
+      premiumIncludedTitle: "Incluido en Premium",
+      premiumPillarAccessBody:
+        "Cuestionario guiado, resultados y recorridos: todo abierto en esta interfaz (demo).",
+      premiumPillarCvBody:
+        "Plantillas, análisis con IA y sugerencias para alinear CV y carta con reclutadores y ATS.",
+      premiumPillarInterviewBody:
+        "Entrena con MoovCoach: preguntas habituales, reformulación, tono y mensajes clave antes de una entrevista.",
+      premiumPillarCoachBody:
+        "Pregunta lo que quieras sobre empleos, formación y recorridos: el coach usa fuentes fiables.",
+      premiumCtaQuiz: "Abrir recorrido guiado",
+      premiumCtaCv: "Abrir CV y carta",
+      premiumCtaInterview: "Preparar una entrevista",
+      premiumCtaCoach: "Abrir MoovCoach",
+      premiumDemoNote:
+        "La facturación real y los límites del servidor seguirán tu oferta comercial; «ilimitado» aquí es demo de interfaz.",
+      offerChoose: "Elegir",
+      goDashboard: "Abrir panel",
+      goOffers: "Volver a los planes",
+      needLogin: "Se requiere iniciar sesión.",
+      authOffersEyebrow: "Planes",
+      authOffersTitle: "Precios y funciones",
+      authOffersLead: "Tras el acceso eliges la fórmula adecuada para tu organización o red.",
+      authOffersFoot: "Espacio socios: presentación y ofertas",
+      authOffersFootLink: "Ver inicio socios",
+      dashTitle: "Panel de socios",
+      dashLead:
+        "Indicadores agregados de jóvenes que aceptaron compartir en tu ámbito (datos demo).",
+      tabOverview: "Resumen",
+      tabConsent: "Datos compartidos",
+      tabCohorts: "Cohortes",
+      tabReports: "Informes",
+      metricOptIn: "Jóvenes con uso compartido activo",
+      metric30d: "Nuevos consentimientos (30 días)",
+      chartAge: "Distribución por edad",
+      chartTrack: "Familias de recorrido (agregado)",
+      engagementTitle: "Compromiso en la plataforma",
+      engQuiz: "Cuestionario completado",
+      engCoach: "Sesiones MoovCoach",
+      engCv: "Herramienta CV / carta abierta",
+      consentBlurb:
+        "Aquí solo se muestran estadísticas agregadas y anónimas. En este prototipo no se listan registros individuales.",
+      cohortBlurb:
+        "Las cohortes agrupan entradas por periodo y nivel declarado, útil para seguimiento plurimensual (datos ilustrativos).",
+      cohortDemo1Period: "ene.–mar. 2026",
+      cohortDemo2Period: "oct.–dic. 2025",
+      cohortDemo3Period: "jul.–sep. 2025",
+      wrongOffer:
+        "El panel colectivo está incluido en licencias B2B. Elige ese plan para acceder.",
+      connectedAs: "Conectado:",
+      cohortPeriod: "Periodo",
+      cohortSize: "Efectivo",
+      cohortActive: "Activos (30 d.)",
+      dashIncludedTitle: "Incluido en licencias B2B",
+      pillarCollectiveBody:
+        "Indicadores agregados de jóvenes que aceptaron compartir en tu ámbito: volúmenes, desglose, tendencias, sin registros nominativos.",
+      pillarCohortsBody:
+        "Seguimiento por periodo de entrada: efectivo, actividad a 30 días y evolución para orientar acciones locales.",
+      pillarReportsBody:
+        "Informes y estadísticas periódicos para dirección interna y órganos de gobernanza (exportaciones ilustrativas abajo).",
+      pillarSupportBody:
+        "Contacto Moov'Up dedicado: despliegue, formación de equipos, buenas prácticas y escalado operativo.",
+      reportsIntro:
+        "Últimos informes disponibles — datos demo; las exportaciones reales se vincularán a tu acuerdo empresarial.",
+      reportCard1Title: "Informe de orientación — T1 2026",
+      reportCard1Period: "Periodo: ene–mar 2026",
+      reportCard1Stat1: "Cuestionario completado: 78 % de los opt-in",
+      reportCard1Stat2: "Aperturas herramienta CV / carta: +9 % vs T4 2025",
+      reportCard2Title: "Resumen — T4 2025",
+      reportCard2Period: "oct–dic 2025",
+      reportCard2Stat1: "Sesiones MoovCoach: 41 % de cohortes activas",
+      reportCard2Stat2: "Familias de recorrido «tech»: 31 %",
+      reportCard3Title: "Resumen de consentimientos — 2025",
+      reportCard3Period: "Consolidado 31 dic 2025",
+      reportCard3Stat1: "Nuevos consentimientos: 842 acumulados",
+      reportCard3Stat2: "Tasa media de actividad a 30 d.: 52 %",
+      reportViewSummary: "Ver resumen",
+      reportDemoNote: "Exportación PDF: disponible con integración empresarial.",
+      supportTitle: "Acompañamiento dedicado",
+      supportLead:
+        "Equipo de licencias: incorporación de la organización, mediación y formación de orientadores.",
+      supportCta: "Escribir al equipo de licencias",
+      supportEmailSubject: "Solicitud licencias B2B — Moov'Up",
+      pillarCtaOverview: "Abrir resumen",
+      pillarCtaCohorts: "Abrir seguimiento de cohortes",
+      pillarCtaReports: "Abrir informes",
+      pillarCtaSupport: "Contactar equipo de licencias",
+    },
   },
   zh: {
     landing: {
@@ -2958,6 +3255,7 @@ export const TEXTS = {
       navAbout: "关于",
       navFounders: "创始人",
       navProduct: "产品",
+      navPartenaires: "地方升学指导与合作伙伴",
       navPathway: "路径",
       navFaq: "常见问题",
       footer: "辅助定向平台 · 2026",
@@ -3080,7 +3378,7 @@ export const TEXTS = {
       pillar3Text: "每一步都链接到经过核实的参考资料。",
       eyebrow: "升学指导 · AI · 引导式路径",
       heroImgAlt: "有了 Moov'Up，未来从这里开始",
-
+      heroLogoAlt: "Moov'Up 标志",
     },
     auth: {
       title: "登录后再使用Moov'Coach",
@@ -3138,6 +3436,23 @@ export const TEXTS = {
       brandPositioningTitle: "定位",
       brandPositioningText: "Moov'Up 将升学指导、就业与支持融入简洁体验。",
     },
+    partenaires: {
+      navAria: "合作伙伴空间",
+      navSegmentStructures: "机构",
+      navSegmentJeunes: "青年",
+      navAudienceSwitchAria: "在机构空间与青年登录之间切换",
+      ctaLogin: "机构登录",
+      eyebrow: "机构 · 地方升学指导 · 学校",
+      title: "地方升学指导与合作伙伴空间",
+      lead:
+        "集体看板，用于跟进同意分享升学指标的年轻人：规模、分布与趋势——不会在约定范围外暴露个人数据。",
+      offersTitle: "哪种方案适合您的机构？",
+      offersSubtitle:
+        "青年可使用 Freemium 或 Premium B2C；机构通过 B2B 许可激活集体看板（地方升学指导、学校、网络）。",
+      goOffers: "返回方案选择",
+      goDashboard: "打开看板",
+      offerChoose: "选择",
+    },
     coach: {
       visitor: "用户",
       title: "Moov'Coach",
@@ -3152,9 +3467,54 @@ export const TEXTS = {
       chatbotQuestions: "附加问题",
       otherJobs: "其他推荐职业",
       exchangeChatbot: "与聊天机器人交流",
-      perfect: "完美，提出你的具体问题",
+      perfect: "很好，请提出你的具体问题",
       chatbotEnabled: "Moov'Coach 已准备好回答。",
-      askDetails: "你可以根据当前档案询问关于职业、学习、出路或预期水平的详细信息",
+      askDetails: "你可以根据当前档案询问职业、学习、出路或预期水平的详细信息",
+      loading: "加载中…",
+      brandHomeAria: "Moov'Up，首页",
+      retakeQuiz: "重新做问卷",
+      heroLead: "就为你档案推荐的职业与培训提问。",
+      viewMyPath: "查看我的路径",
+      cvLmLink: "简历与求职信",
+      sharePath: "分享我的路径",
+      linkCopied: "链接已复制",
+      recJobsAsideAria: "推荐职业",
+      asideJobsTitle: "推荐职业",
+      onisepSheet: "ONISEP 资料",
+      formationsAccessible: "{count} 个培训选项",
+      formationsAccessibleOne: "1 个培训选项",
+      chatHead: "与 Moov'Coach 的对话",
+      chatHeadHint: "在下方提问。打开「查看我的路径」可查看完整摘要。",
+      chatSectionAria: "对话",
+      detailedPath: "详细路径",
+      greetingFirst: "提出你的第一个问题（例如：「薪资多少？」「有交替制吗？」）。",
+      convNotFound: "未找到对话",
+      shareNativeTitle: "我的 Moov'Up 路径",
+      shareNativeText: "这是我在 Moov'Up 问卷后的路径。",
+      placeholder: "向 Moov'Coach 提问…",
+      yourMessageAria: "你的消息",
+      sendAria: "发送消息",
+      sendTitle: "发送（Enter）",
+      composerHint: "Enter 发送 · Shift+Enter 换行",
+      youTitle: "你",
+      typingAria: "助手正在输入…",
+      coachAvatarTitle: "Moov'Coach",
+      quotaBanner: "免费方案：Moov'Coach 消息剩余 **{remaining}** / **{limit}**。",
+      quotaBannerPremium: "你正在使用 **Premium B2C**：Moov'Coach 消息不限（本演示）。",
+      quotaExceeded: "免费 Moov'Coach 消息已用完。升级 **Premium** 继续，或选择其他方案。",
+      quotaUpgradeCta: "查看方案并升级 Premium",
+    },
+    a11y: {
+      mainNav: "主导航",
+      authMode: "登录模式",
+      landingLaunch: "开始引导路径",
+      landingPresentation: "Moov'Up 介绍",
+      questionNav: "问卷导航",
+      quizPrev: "上一题",
+      quizNext: "下一题",
+      quizSidePanel: "路径摘要",
+      languageSelector: "更改语言",
+      languageLabel: "语言",
     },
     quizMeta: {
       title: "Moov'Up",
@@ -3456,6 +3816,7 @@ export const TEXTS = {
       navAbout: "के बारे में",
       navFounders: "संस्थापक",
       navProduct: "उत्पाद",
+      navPartenaires: "स्थानीय करियर मार्गदर्शन और भागीदार",
       navPathway: "पथ",
       navFaq: "FAQ",
       footer: "सहायता आधारित ओरिएंटेशन प्लेटफॉर्म · 2026",
@@ -3578,6 +3939,7 @@ export const TEXTS = {
       pillar3Text: "प्रत्येक चरण सत्यापित संदर्भ संसाधनों से जुड़ता है।",
       eyebrow: "मार्गदर्शन · AI · मार्गदर्शित पथ",
       heroImgAlt: "Moov'Up के साथ, आपका भविष्य यहीं से शुरू होता है",
+      heroLogoAlt: "Moov'Up — लोगो",
 
     },
     auth: {
@@ -3957,6 +4319,7 @@ export const TEXTS = {
       navAbout: "Sobre",
       navFounders: "Fundadores",
       navProduct: "Produto",
+      navPartenaires: "Missões locais e parceiros",
       navPathway: "Caminho",
       navFaq: "FAQ",
       footer: "Plataforma de orientação assistida · 2026",
@@ -4078,6 +4441,7 @@ export const TEXTS = {
       pillar3Text: "Cada passo liga a recursos de referência verificados.",
       eyebrow: "Orientação · IA · Percurso guiado",
       heroImgAlt: "Com o Moov'Up, o teu futuro começa aqui",
+      heroLogoAlt: "Moov'Up — logótipo",
       ctaMyResults: "Ver os meus resultados",
 
     },
@@ -4451,6 +4815,7 @@ export const TEXTS = {
       navAbout: "О нас",
       navFounders: "Основатели",
       navProduct: "Продукт",
+      navPartenaires: "Местная профориентация и партнёры",
       navPathway: "Путь",
       navFaq: "FAQ",
       footer: "Платформа辅助 ориентации · 2026",
@@ -4572,6 +4937,7 @@ export const TEXTS = {
       pillar3Text: "Каждый шаг ведёт к проверенным справочным материалам.",
       eyebrow: "Профориентация · ИИ · Направляемый маршрут",
       heroImgAlt: "С Moov'Up ваше будущее начинается здесь",
+      heroLogoAlt: "Moov'Up — логотип",
       ctaMyResults: "Посмотреть мои результаты",
 
     },
@@ -4945,6 +5311,7 @@ export const TEXTS = {
       navAbout: "Über uns",
       navFounders: "Gründer",
       navProduct: "Produkt",
+      navPartenaires: "Lokale Berufsorientierung & Partner",
       navPathway: "Weg",
       navFaq: "FAQ",
       footer: "Assistierte Orientierungsplattform · 2026",
@@ -5066,6 +5433,7 @@ export const TEXTS = {
       pillar3Text: "Jeder Schritt verlinkt geprüfte Referenzressourcen.",
       eyebrow: "Orientierung · KI · Geführter Weg",
       heroImgAlt: "Mit Moov'Up beginnt deine Zukunft hier",
+      heroLogoAlt: "Moov'Up — Logo",
       ctaMyResults: "Meine Ergebnisse anzeigen",
 
     },
@@ -5442,6 +5810,7 @@ export const TEXTS = {
       navAbout: "概要",
       navFounders: "創業者",
       navProduct: "製品",
+      navPartenaires: "地域の進路支援とパートナー",
       navPathway: "パス",
       navFaq: "FAQ",
       footer: "支援キャリア形成プラットフォーム · 2026",
@@ -5563,6 +5932,7 @@ export const TEXTS = {
       pillar3Text: "各ステップは検証済みの参考情報へつながります。",
       eyebrow: "進路支援 · AI · ガイド付きパス",
       heroImgAlt: "Moov'Up とともに、未来はここから",
+      heroLogoAlt: "Moov'Up — ロゴ",
       ctaMyResults: "マイ結果を見る",
 
     },
@@ -5918,6 +6288,21 @@ export const TEXTS = {
   },
 };
 
+patchPartenairesLocales(TEXTS);
+
+/** Incrémenté au hot-reload de ce fichier pour forcer le re-render des composants i18n. */
+let textsRevision = 0;
+export function getTextsRevision() {
+  return textsRevision;
+}
+
+if (import.meta.hot) {
+  import.meta.hot.accept(() => {
+    textsRevision += 1;
+    window.dispatchEvent(new Event("moovup-ui-change"));
+  });
+}
+
 /** Maps storage / Intl oddities (`PT`, `pt-BR`, `português`) to `TEXTS` keys. */
 const LOCALE_SYNONYMS = Object.freeze({
   arabic: "ar",
@@ -5958,18 +6343,37 @@ function pickScopeText(bundle, key) {
   return undefined;
 }
 
+function pickQuizText(lang, key) {
+  if (key === undefined) return undefined;
+  const fromQuiz = pickScopeText(TEXTS[lang]?.quiz, key);
+  if (fromQuiz !== undefined) return fromQuiz;
+  return pickScopeText(TEXTS[lang]?.quizMeta, key);
+}
+
 export function getText(language, scope, key, fallback) {
   const lang = canonicalLanguageForTexts(language);
-  const localized = pickScopeText(TEXTS[lang]?.[scope], key);
+  let localized = pickScopeText(TEXTS[lang]?.[scope], key);
+  if (localized === undefined && scope === "quiz") {
+    localized = pickScopeText(TEXTS[lang]?.quizMeta, key);
+  }
   if (localized !== undefined) return localized;
   if (lang === "fr") {
     const frVal = pickScopeText(TEXTS.fr?.[scope], key);
     if (frVal !== undefined) return frVal;
+    if (scope === "quiz") {
+      const frQuiz = pickQuizText("fr", key);
+      if (frQuiz !== undefined) return frQuiz;
+      const uniQuiz = pickQuizText("universal", key);
+      if (uniQuiz !== undefined) return uniQuiz;
+    }
     const uniVal = pickScopeText(TEXTS.universal?.[scope], key);
     if (uniVal !== undefined) return uniVal;
     return fallback;
   }
-  const enVal = pickScopeText(TEXTS.en?.[scope], key);
+  let enVal = pickScopeText(TEXTS.en?.[scope], key);
+  if (enVal === undefined && scope === "quiz") {
+    enVal = pickScopeText(TEXTS.en?.quizMeta, key);
+  }
   if (enVal !== undefined) return enVal;
   // `universal.quiz` / `quizMeta` are French; using them for ja/zh/… caused mixed EN choice cards + FR chrome.
   if (lang !== "fr" && (scope === "quiz" || scope === "quizMeta")) {

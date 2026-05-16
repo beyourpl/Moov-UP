@@ -24,6 +24,18 @@ def _split_top_domain(cell: str) -> str:
     return str(cell).split("|", 1)[0].strip().split("/", 1)[0].strip()
 
 
+def _domain_paths(cell: str) -> list[str]:
+    return [p.strip() for p in str(cell).split("|") if p.strip()]
+
+
+def _sous_domain_labels(paths: list[str]) -> set[str]:
+    labels: set[str] = set()
+    for path in paths:
+        if "/" in path:
+            labels.add(path.split("/", 1)[1].strip().casefold())
+    return labels
+
+
 class RagService:
     def __init__(self) -> None:
         self.embedder = SentenceTransformer(MODEL_NAME)
@@ -51,8 +63,50 @@ class RagService:
                     "niveau_label": str(row.get("libellé niveau de certification", "")),
                     "duree": str(row.get("durée", "")),
                     "lien": str(row.get("URL et ID Onisep", "")),
+                    "domain_paths": _domain_paths(ds),
                 })
         return dict(out)
+
+    def _formations_for_metier(self, metier: dict, niveau_max: int, limit: int = 8) -> list[dict]:
+        paths = _domain_paths(metier.get("domaine_sous_domaine") or metier.get("sous_domaine_key") or "")
+        if not paths:
+            paths = [_split_top_domain(metier.get("sous_domaine_key", "") or "")]
+        tops = {_split_top_domain(p) for p in paths}
+        metier_sous = _sous_domain_labels(paths)
+
+        candidates: list[dict] = []
+        seen_lib: set[str] = set()
+        for top in tops:
+            for f in self.formations_by_top_domain.get(top, []):
+                if f["libelle"] in seen_lib:
+                    continue
+                seen_lib.add(f["libelle"])
+                candidates.append(f)
+
+        def niveau_ok(f: dict) -> bool:
+            return f["niveau_certif"] <= niveau_max
+
+        def sous_ok(f: dict) -> bool:
+            if not metier_sous:
+                return True
+            f_sous = _sous_domain_labels(f.get("domain_paths", []))
+            return bool(metier_sous & f_sous) if f_sous else True
+
+        filtered = [f for f in candidates if sous_ok(f) and niveau_ok(f)]
+        if not filtered:
+            filtered = [f for f in candidates if niveau_ok(f)]
+
+        filtered.sort(key=lambda f: f["niveau_certif"])
+        uniq: list[dict] = []
+        seen: set[str] = set()
+        for f in filtered:
+            if f["libelle"] in seen:
+                continue
+            seen.add(f["libelle"])
+            uniq.append(f)
+            if len(uniq) >= limit:
+                break
+        return uniq
 
     def initial_recommendations(self, profile_text: str, niveau_max: int, top_k: int = 5, q1: str | None = None) -> list[dict]:
         vec = self.embedder.encode(["query: " + profile_text], normalize_embeddings=True)
@@ -106,19 +160,8 @@ class RagService:
                 continue
             seen_libelle.add(libelle)
 
-            top = _split_top_domain(m.get("sous_domaine_key", "") or m.get("domaine_sous_domaine", ""))
-            formations = self.formations_by_top_domain.get(top, [])
-            formations = [f for f in formations if f["niveau_certif"] <= niveau_max]
-            formations = sorted(formations, key=lambda f: f["niveau_certif"])
-            uniq, seen_lib = [], set()
-            for f in formations:
-                if f["libelle"] in seen_lib:
-                    continue
-                seen_lib.add(f["libelle"])
-                uniq.append(f)
-                if len(uniq) >= 8:
-                    break
-            results.append({"metier": m, "formations": uniq, "score": round(float(score), 4)})
+            formations = self._formations_for_metier(m, niveau_max)
+            results.append({"metier": m, "formations": formations, "score": round(float(score), 4)})
             if len(results) >= top_k:
                 break
 

@@ -1,4 +1,4 @@
-import { SUPPORTED_LANGUAGES } from "./translations.js";
+import { SUPPORTED_LANGUAGES, getTextsRevision } from "./translations.js";
 
 /** Choix utilisateur explicite uniquement ; absent = thème clair (ne pas relire l’ancienne clé `moovup_theme`). */
 const THEME_CHOICE_KEY = "moovup_theme_choice_v1";
@@ -115,12 +115,21 @@ export function subscribeUiPreferences(callback) {
 let cachedSnapshot = null;
 
 export function getUiSnapshot() {
-  if (!cachedSnapshot) {
-    cachedSnapshot = {
-      theme: getThemePreference(),
-      language: getLanguagePreference(),
-      quizTickSound: getQuizTickSoundEnabled(),
-    };
+  const next = {
+    theme: getThemePreference(),
+    language: getLanguagePreference(),
+    quizTickSound: getQuizTickSoundEnabled(),
+    textsRev: getTextsRevision(),
+  };
+  if (
+    cachedSnapshot &&
+    cachedSnapshot.theme === next.theme &&
+    cachedSnapshot.language === next.language &&
+    cachedSnapshot.quizTickSound === next.quizTickSound &&
+    cachedSnapshot.textsRev === next.textsRev
+  ) {
+    return cachedSnapshot;
   }
+  cachedSnapshot = next;
   return cachedSnapshot;
 }

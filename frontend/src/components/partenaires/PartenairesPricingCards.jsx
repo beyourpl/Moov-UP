@@ -19,9 +19,9 @@ function PremiumDesc() {
   const { t } = useTranslation();
   return (
     <p className="pricing-desc pricing-desc--rich pricing-desc--tone-premium">
-      {t("partenaires", "offerPremiumDescPrefix", "Accès ")}
-      <strong className="pricing-desc-em">{t("partenaires", "offerPremiumDescEm", "illimité")}</strong>
-      {t("partenaires", "offerPremiumDescSuffix", ", génération CV, outils avancés.")}
+      {t("partenaires", "offerPremiumDescPrefix", "")}
+      <strong className="pricing-desc-em">{t("partenaires", "offerPremiumDescEm", "Unlimited")}</strong>
+      {t("partenaires", "offerPremiumDescSuffix", " access, CV generation, advanced tools.")}
     </p>
   );
 }
