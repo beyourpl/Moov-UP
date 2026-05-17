@@ -6,8 +6,12 @@ function clean(s) {
   return t;
 }
 
-/** Ligne synthèse : type, niveau, durée (API ou repli côté client). */
-export function getFormationResume(f) {
+/**
+ * @param {object} [opts]
+ * @param {string} [opts.durationPrefix] — ex. « Durée : » / « Duration: »
+ */
+export function getFormationResume(f, opts = {}) {
+  const durationPrefix = opts.durationPrefix ?? "Durée : ";
   const resume = clean(f?.resume);
   if (resume) return resume;
   const parts = [];
@@ -17,7 +21,13 @@ export function getFormationResume(f) {
   if (sortie) parts.push(sortie);
   else if (clean(f?.niveau_label)) parts.push(clean(f.niveau_label));
   const duree = clean(f?.duree);
-  if (duree) parts.push(duree.toLowerCase().includes("an") ? duree : `Durée : ${duree}`);
+  if (duree) {
+    parts.push(
+      duree.toLowerCase().includes("an") || duree.toLowerCase().includes("year")
+        ? duree
+        : `${durationPrefix}${duree}`
+    );
+  }
   return parts.join(" · ");
 }
 

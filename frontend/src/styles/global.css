@@ -5494,7 +5494,7 @@ section.lp-section + .quiz-container,
   display: block;
   width: 100%;
   box-sizing: border-box;
-  text-align: left;
+  text-align: start;
   padding: 8px 10px;
   margin: 0;
   border: none;
@@ -5915,13 +5915,13 @@ section.lp-section + .quiz-container,
 }
 
 .chatbot-nav-actions .chatbot-topbar-tools {
-  padding-right: 12px;
-  margin-right: 2px;
-  border-right: 1px solid rgba(64, 224, 208, 0.28);
+  padding-inline-end: 12px;
+  margin-inline-end: 2px;
+  border-inline-end: 1px solid rgba(64, 224, 208, 0.28);
 }
 
 :root[data-theme="light"] .chatbot-nav-actions .chatbot-topbar-tools {
-  border-right-color: rgba(31, 53, 86, 0.14);
+  border-inline-end-color: rgba(31, 53, 86, 0.14);
 }
 
 .chatbot-topbar-tools {

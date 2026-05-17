@@ -535,6 +535,7 @@ export const TEXTS = {
       askFormationCoachShort: "Demander le détail →",
       formationsShowMore: "Voir {count} autres",
       formationsShowLess: "Réduire la liste",
+      formationDurationPrefix: "Durée : ",
       askFormationPrompt: "Quelles formations me conseilles pour devenir {metier} ?",
       askFormationPromptSingle:
         "Parle-moi de la formation « {formation} » pour le métier {metier} : contenu, débouchés, conditions d'accès et si elle me convient.",
@@ -1365,6 +1366,7 @@ export const TEXTS = {
       askFormationCoachShort: "Ask for details →",
       formationsShowMore: "Show {count} more",
       formationsShowLess: "Show less",
+      formationDurationPrefix: "Duration: ",
       askFormationPrompt: "What training paths do you recommend to become a {metier}?",
       askFormationPromptSingle:
         "Tell me about the « {formation} » program for the job {metier}: content, career paths, entry requirements, and whether it fits me.",
@@ -1435,6 +1437,7 @@ export const TEXTS = {
     },
     pathwaySummary: {
       chipDomain: "Field",
+      chipActivity: "Natural activity",
       chipLearning: "Learning style",
       chipCurrentLevel: "Current level",
       chipSpecialty: "Specialty",
@@ -6486,12 +6489,10 @@ export function getText(language, scope, key, fallback) {
     enVal = pickScopeText(TEXTS.en?.quizMeta, key);
   }
   if (enVal !== undefined) return enVal;
-  // `universal.quiz` / `quizMeta` are French; using them for ja/zh/… caused mixed EN choice cards + FR chrome.
+  // `universal` is French-only fallback; never use it for en/ja/zh/… (mixed FR+EN UI).
   if (lang !== "fr" && (scope === "quiz" || scope === "quizMeta")) {
     return fallback;
   }
-  const uniVal = pickScopeText(TEXTS.universal?.[scope], key);
-  if (uniVal !== undefined) return uniVal;
   return fallback;
 }
 

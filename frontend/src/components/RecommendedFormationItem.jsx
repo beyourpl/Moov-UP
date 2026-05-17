@@ -22,7 +22,9 @@ export default function RecommendedFormationItem({
   showOnisepLink = false,
 }) {
   const libelle = String(f?.libelle || "").trim() || t("formationUntitled", "Formation");
-  const meta = getFormationResume(f);
+  const meta = getFormationResume(f, {
+    durationPrefix: t("formationDurationPrefix", "Durée : "),
+  });
   const lien = showOnisepLink ? cleanLink(f?.lien) : "";
 
   return (

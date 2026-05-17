@@ -12,7 +12,7 @@ import { useNavigateBack } from "../hooks/useNavigateBack.js";
 export default function PartenairesOfferChoicePage() {
   const navigate = useNavigate();
   const goBackPage = useNavigateBack("/partenaires/connexion");
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const session = getSession();
 
   const ui = useMemo(
@@ -26,7 +26,7 @@ export default function PartenairesOfferChoicePage() {
       ),
       ...buildPartenairesOfferUi(t),
     }),
-    [t]
+    [t, language]
   );
 
   const handleLogout = () => {

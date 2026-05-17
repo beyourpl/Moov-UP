@@ -16,7 +16,7 @@ function validateEmail(value) {
 export default function PartenairesAuthPage() {
   const navigate = useNavigate();
   const goBackPage = useNavigateBack("/partenaires");
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [session, setSession] = useState(() => getSession());
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,11 +66,11 @@ export default function PartenairesAuthPage() {
       connectedOffers: t("partenaires", "authConnectedOffers", "Voir les offres"),
       connectedDashboard: t("partenaires", "goDashboard", "Ouvrir le tableau de bord"),
     }),
-    [t]
+    [t, language]
   );
 
-  const offerUi = useMemo(() => buildPartenairesOfferUi(t), [t]);
-  const authOffersIntro = useMemo(() => buildPartenairesAuthOffersSectionUi(t), [t]);
+  const offerUi = useMemo(() => buildPartenairesOfferUi(t), [t, language]);
+  const authOffersIntro = useMemo(() => buildPartenairesAuthOffersSectionUi(t), [t, language]);
 
   const handleLogout = () => {
     logoutUser();
