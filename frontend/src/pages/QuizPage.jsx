@@ -282,6 +282,7 @@ export default function QuizPage() {
   const quizAnchor = useRef(null);
   const loaderAnchor = useRef(null);
   const conversationPrefetchRef = useRef(null);
+  const ragWarmupStartedRef = useRef(false);
 
   const clearAdvanceTimer = useCallback(() => {
     if (advanceTimerRef.current) {
@@ -298,9 +299,10 @@ export default function QuizPage() {
     [clearAdvanceTimer],
   );
 
-  /** Précharge l’index métiers pendant le questionnaire (1ère requête quiz beaucoup plus rapide). */
+  /** Précharge l’index métiers une fois par visite (évite le spam 429 sur /api/rag/warmup). */
   useEffect(() => {
-    if (!session) return;
+    if (!session || ragWarmupStartedRef.current) return;
+    ragWarmupStartedRef.current = true;
     apiPost("/api/rag/warmup", {}).catch(() => {});
   }, [session]);
   const questionOrder = useMemo(() => getQuestionOrder(answers), [answers]);

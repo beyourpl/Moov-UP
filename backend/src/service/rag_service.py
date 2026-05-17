@@ -257,11 +257,10 @@ class RagService:
         q1: str | None = None,
         specialty: str | None = None,
         quiz_answers: dict | None = None,
+        formations_per_metier: int = FORMATIONS_PER_METIER,
     ) -> list[dict]:
-        # On oversample (top_k * 3) car on dedup ensuite par libellé : la CSV ONISEP
-        # contient parfois plusieurs entrées avec le même libellé (variantes de domaine).
-        # Sans oversampling, le filtre dédup pourrait laisser moins de top_k résultats.
-        oversample_factor = 6 if specialty == "journalisme" else 4
+        # On oversample car on dedup ensuite par libellé (variantes ONISEP).
+        oversample_factor = 5 if specialty == "journalisme" else 3
         oversample_k = min(top_k * oversample_factor, len(self.metiers_meta))
         candidate_ids: list[int] | None = None
         if q1 and q1 in Q1_TO_ONISEP_DOMAINS:

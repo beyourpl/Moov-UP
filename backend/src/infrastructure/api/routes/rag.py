@@ -10,7 +10,7 @@ router = APIRouter(prefix="/api/rag", tags=["rag"])
 
 
 @router.post("/warmup")
-@limiter.limit("30/minute")
+@limiter.limit("120/minute")
 def warmup_rag(
     request: Request,
     current: User = Depends(get_current_user),
