@@ -18,6 +18,7 @@ RUN pip install --upgrade pip \
  && pip install -e .
 
 COPY src/ ./src/
+RUN python -c "from src.main import app; print('import check OK')"
 COPY data/ ./data/
 COPY scripts/ ./scripts/
 COPY tests/ ./tests/
