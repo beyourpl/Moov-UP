@@ -6,13 +6,15 @@ import { SUPPORTED_LANGUAGES } from "../data/translations.js";
 const LANG_PANEL_MIN = 128;
 const LANG_PANEL_MAX = 180;
 
-function measurePanelPosition(triggerEl, rtl = false) {
+function measurePanelPosition(triggerEl) {
   if (!triggerEl) return null;
   const r = triggerEl.getBoundingClientRect();
   const vw = window.innerWidth;
   const pad = 12;
   const panelW = Math.min(Math.max(LANG_PANEL_MIN, r.width), LANG_PANEL_MAX);
-  let left = rtl ? r.left : r.right - panelW;
+  // Coords viewport : aligner le bord droit du panneau sur le bouton (LTR et RTL).
+  // Ancrer sur r.left en RTL + clamp poussait la liste au bord écran, détachée du trigger.
+  let left = r.right - panelW;
   left = Math.max(pad, Math.min(left, vw - panelW - pad));
   return {
     top: r.bottom + 8,
@@ -36,20 +38,18 @@ export default function LanguageDropdown({
   const [panelPos, setPanelPos] = useState(null);
   const triggerRef = useRef(null);
   const panelRef = useRef(null);
-  const rtl = language === "ar";
-
   useLayoutEffect(() => {
     if (!open || !triggerRef.current) {
       setPanelPos(null);
       return;
     }
-    setPanelPos(measurePanelPosition(triggerRef.current, rtl));
-  }, [open, rtl]);
+    setPanelPos(measurePanelPosition(triggerRef.current));
+  }, [open, language]);
 
   useEffect(() => {
     if (!open) return;
     const reposition = () => {
-      if (triggerRef.current) setPanelPos(measurePanelPosition(triggerRef.current, rtl));
+      if (triggerRef.current) setPanelPos(measurePanelPosition(triggerRef.current));
     };
     window.addEventListener("scroll", reposition, true);
     window.addEventListener("resize", reposition);
@@ -57,7 +57,7 @@ export default function LanguageDropdown({
       window.removeEventListener("scroll", reposition, true);
       window.removeEventListener("resize", reposition);
     };
-  }, [open, rtl]);
+  }, [open, language]);
 
   useEffect(() => {
     if (!open) return;
