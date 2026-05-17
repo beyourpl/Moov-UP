@@ -15,8 +15,7 @@ COPY src/ ./src/
 # PyTorch CPU uniquement (évite les wheels NVIDIA ~2 Go).
 RUN pip install --upgrade pip \
  && pip install --index-url https://download.pytorch.org/whl/cpu torch \
- && pip install -e . \
- && python -c "from src.main import app; print('import check OK')"
+ && pip install -e .
 
 COPY data/ ./data/
 COPY scripts/ ./scripts/

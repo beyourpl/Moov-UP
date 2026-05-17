@@ -19,8 +19,16 @@ jobs:
         run: |
           set -euo pipefail
           cp backend/.env.example backend/.env
-          docker compose -f docker-compose.ci.yml build backend
-          docker compose -f docker-compose.ci.yml run --rm --no-deps backend python -c "from src.main import app; print('import OK')"
+          docker compose -f docker-compose.ci.yml build --progress=plain --no-cache backend 2>&1 | tail -n 200
+          docker compose -f docker-compose.ci.yml run --rm --no-deps backend python -c "
+          import traceback
+          try:
+              from src.main import app
+              print('import OK', app.title)
+          except Exception:
+              traceback.print_exc()
+              raise
+          "
           docker compose -f docker-compose.ci.yml up -d backend
           sleep 5
           docker compose -f docker-compose.ci.yml ps -a
