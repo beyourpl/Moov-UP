@@ -89,6 +89,8 @@ export default function LanguageDropdown({
           position: "fixed",
           top: panelPos.top,
           left: panelPos.left,
+          right: "auto",
+          bottom: "auto",
           width: panelPos.width,
           minWidth: panelPos.width,
           maxWidth: panelPos.width,
