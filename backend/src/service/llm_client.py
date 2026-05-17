@@ -6,7 +6,7 @@ from src.config import settings
 
 
 URL = "https://openrouter.ai/api/v1/chat/completions"
-_DEFAULT_TIMEOUT = httpx.Timeout(12.0, 35.0)
+_DEFAULT_TIMEOUT = httpx.Timeout(connect=12.0, read=35.0, write=35.0, pool=12.0)
 
 
 class OpenRouterClient:
