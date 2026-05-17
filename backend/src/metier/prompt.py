@@ -6,7 +6,7 @@ _SYSTEM_PROMPT_TEXT = """Tu es Moov'Coach, expert francophone en orientation sco
 Ton public : des lyceens et etudiants. Ton ton : clair, direct, chaleureux, jamais condescendant.
 
 # Regles de continuite (IMPORTANT)
-Tu recois une section "Historique recent" qui contient les 10 derniers messages de la conversation.
+Tu recois une section "Historique recent" (quelques derniers echanges de la conversation).
 AVANT de repondre, identifie deux choses :
 1. Le SUJET en cours. Si la question actuelle est une reference implicite ("le salaire",
    "et la duree ?", "il faut quelle ecole ?", "et en alternance ?"), remonte l'historique
@@ -33,12 +33,15 @@ Si l'historique ne permet pas de lever l'ambiguite, demande UNE clarification co
   "(estimation hors fiche ONISEP)" pour toute donnee chiffree (salaire, durees, statistiques).
 - Ne jamais inventer un lien ONISEP. N'utiliser que ceux fournis dans le contexte (sans les afficher).
 
-# Regles de longueur
-- Reponses COURTES par defaut : 3-6 phrases pour une question simple.
-- Format long (sections "Metiers recommandes" + "Parcours") UNIQUEMENT si l'eleve demande
-  explicitement des recommandations ou un parcours complet.
-- Pas de "Bonjour !" repete a chaque tour. Pas de "Souhaites-tu..." si la question etait precise.
-- Pas de listes a puces excessives. Pas de gras tous les 2 mots.
+# Regles de longueur et style (PRIORITAIRE)
+- Reponse COURTE, NETTE, PRECISE : vise 60 a 120 mots (2 a 4 phrases courtes) sauf si l'eleve
+  demande explicitement un parcours complet ou une liste de metiers.
+- Commence par la reponse directe (chiffre, oui/non, intitule) dans la premiere phrase.
+- Maximum 3 puces si une liste est indispensable ; sinon phrases simples, pas de paragraphes longs.
+- INTERDIT : intro generique, recap du profil ou de l'historique, repetitions, formules vides
+  ("En resume", "Il est important de noter", "N'hesite pas a", "Je reste disponible", "Bonjour !").
+- Pas de "Souhaites-tu..." en fin de message si la question etait deja precise.
+- Pas de gras excessif. Une seule question de clarification si besoin, pas plusieurs.
 
 # Cas particuliers
 - Alternance / apprentissage : la plupart des BTS, BUT, Licences pro et Masters existent en alternance.
@@ -121,30 +124,31 @@ def sanitize_chat_reply(text: str) -> str:
     return t
 
 
-def _serialize_rag(rag_context: list[dict]) -> str:
+def _serialize_rag(
+    rag_context: list[dict],
+    *,
+    max_formations_per_metier: int = 2,
+    description_max_chars: int = 180,
+) -> str:
     out = []
     for hit in rag_context:
         m = hit["metier"]
         out.append(f"## Métier : {m['libelle']}")
-        out.append(f"- Domaine : {m.get('domaine_sous_domaine','')}")
-        out.append(f"- Niveau minimum : {m.get('niveau_min','')}")
+        if dom := m.get("domaine_sous_domaine"):
+            out.append(f"- Domaine : {str(dom)[:120]}")
+        if nm := m.get("niveau_min"):
+            out.append(f"- Niveau min. : {nm}")
         if desc := m.get("description"):
-            out.append(f"- Description : {desc[:500]}")
-        if ci := m.get("centres_interet"):
-            out.append(f"- Centres d'intérêt : {', '.join(ci)}")
-        out.append(f"- Lien : {m.get('lien_onisep','')}")
-        out.append("- Formations accessibles :")
-        for f in hit["formations"]:
-            meta = f.get("resume") or f.get("niveau_label", "")
-            dom = f.get("domain_label", "")
-            line = f"  - {f['libelle']}"
-            if meta:
-                line += f" — {meta}"
-            if dom:
-                line += f" (domaine : {dom})"
-            if f.get("lien"):
-                line += f" — {f['lien']}"
-            out.append(line)
+            out.append(f"- Description : {str(desc)[:description_max_chars]}")
+        formations = (hit.get("formations") or [])[:max_formations_per_metier]
+        if formations:
+            out.append("- Formations (extrait) :")
+            for f in formations:
+                meta = f.get("resume") or f.get("niveau_label", "")
+                line = f"  - {f.get('libelle', '')}"
+                if meta:
+                    line += f" — {meta}"
+                out.append(line)
         out.append("")
     return "\n".join(out)
 
@@ -163,11 +167,16 @@ def build_prompt(
     *,
     ui_language: str = "fr",
 ) -> list[dict]:
+    profile_short = (profile_text or "").strip()
+    if len(profile_short) > 700:
+        profile_short = profile_short[:697].rstrip() + "…"
+
     user_block = (
-        f"## Profil de l'élève\n{profile_text}\n\n"
-        f"## Historique récent (10 derniers messages)\n{_format_history(history)}\n\n"
-        f"## Contexte ONISEP (sources autorisées pour ce tour)\n{_serialize_rag(rag_context)}\n\n"
-        f"## Question actuelle\n{user_message}\n"
+        f"## Profil de l'élève\n{profile_short}\n\n"
+        f"## Historique récent\n{_format_history(history)}\n\n"
+        f"## Contexte ONISEP (sources pour ce tour)\n{_serialize_rag(rag_context)}\n\n"
+        f"## Question actuelle\n{user_message}\n\n"
+        "Rappel : reponse courte (2-4 phrases), directe, sans blabla."
     )
     return [
         {"role": "system", "content": system_prompt(ui_language)},

@@ -407,7 +407,7 @@ INTERDIT de te limiter a inviter l'eleve a ouvrir la colonne de gauche ou les fi
 Pour un salaire : donne une fourchette brute annuelle indicative en France métropolitaine (jeune diplomé / expérience moyenne / senior selon pertinence) et precise que ca varie secteur region entreprise convention ; utilise la mention "(estimation hors ou completee hors fiche ONISEP si necessaire)" si tu t'appuies sur tes connaissances generales.
 
 # Regles de continuite (IMPORTANT)
-Tu recois une section "Historique recent" qui contient les 10 derniers messages de la conversation.
+Tu recois une section "Historique recent" (quelques derniers echanges).
 AVANT de repondre, identifie deux choses :
 1. Le SUJET en cours. Si la question actuelle est une reference implicite ("le salaire",
    "et la duree ?", "il faut quelle ecole ?", "et en alternance ?"), remonte l'historique
@@ -424,10 +424,11 @@ Si l'historique ne permet pas de lever l'ambiguite, demande UNE clarification co
 - Si un metier cite par l'eleve n'est pas dans le contexte, reponds avec connaissances generales avec la mention adaptee pour les donnees chiffrees (salaires, stats).
 - Ne jamais inventer un lien ONISEP dans le corps du message.
 
-# Regles de longueur
-- Reponses courtes par defaut : 3 a 8 phrases pour une question simple avec donnees.
-- Pas de "Bonjour !" repeté a chaque tour. Pas de "Souhaites-tu..." si la question etait precise.
-- Pas de listes a puces excessives sauf si l'eleve demande un comparatif explicite.
+# Regles de longueur et style (PRIORITAIRE)
+- Reponse COURTE, NETTE, PRECISE : 60 a 120 mots (2 a 4 phrases) sauf parcours complet demande.
+- Premiere phrase = reponse directe (chiffre, oui/non, intitule).
+- Max 3 puces si indispensable. Pas d'intro, recap, "En resume", "N'hesite pas", "Je reste disponible".
+- Pas de "Bonjour !" ni "Souhaites-tu..." si la question etait precise.
 `;
 
 function serializeDevMetiersContext(recs) {
@@ -437,9 +438,9 @@ function serializeDevMetiersContext(recs) {
     const m = hit.metier || {};
     lines.push(`## Métier : ${m.libelle || "?"}`);
     lines.push(`- Niveau minimum : ${m.niveau_min || ""}`);
-    if (m.description) lines.push(`- Description : ${String(m.description).slice(0, 560)}`);
+    if (m.description) lines.push(`- Description : ${String(m.description).slice(0, 180)}`);
     lines.push("- Formations associees dans ce parcours :");
-    const forms = hit.formations || [];
+    const forms = (hit.formations || []).slice(0, 2);
     if (!forms.length) lines.push("  - (voir fiche officielle)");
     else
       for (const f of forms) {
@@ -521,8 +522,9 @@ async function chatWithOpenRouter(orchMessages) {
     body: JSON.stringify({
       model: LLM_MODEL,
       messages: orchMessages,
-      temperature: 0.4,
-      max_tokens: 1750,
+      temperature: 0.25,
+      max_tokens: 520,
+      provider: { sort: "latency" },
     }),
   });
   const rawTxt = await res.text();

@@ -16,7 +16,8 @@ from src.service.llm_client import OpenRouterClient
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 logger = logging.getLogger("moovup.chat")
 
-HISTORY_WINDOW_MESSAGES = 10  # 10 = 5 pairs of user+assistant exchanges
+HISTORY_WINDOW_MESSAGES = 6  # 3 échanges user+assistant — suffisant pour le fil, moins de tokens
+CHAT_RAG_TOP_K = 4  # contexte ONISEP plus léger = réponses plus rapides
 
 
 def _last_messages(db: Session, conversation_id: int, limit: int) -> list[dict]:
@@ -57,6 +58,7 @@ async def chat(
     rag_ctx = rag.search_for_message(
         body.message,
         niveau_max=conv.niveau_max,
+        top_k=CHAT_RAG_TOP_K,
         q1=conv.q1,
         specialty=qa.get("specialty"),
         quiz_answers=qa,

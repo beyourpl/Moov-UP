@@ -6,6 +6,7 @@ from src.config import settings
 
 
 URL = "https://openrouter.ai/api/v1/chat/completions"
+_DEFAULT_TIMEOUT = httpx.Timeout(12.0, 35.0)
 
 
 class OpenRouterClient:
@@ -13,16 +14,24 @@ class OpenRouterClient:
         self.api_key = api_key or settings.OPENROUTER_API_KEY
         self.model = model or settings.LLM_MODEL
 
-    async def chat(self, messages: list[dict], temperature: float = 0.4, max_tokens: int = 1750) -> str:
+    async def chat(
+        self,
+        messages: list[dict],
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> str:
+        temp = settings.LLM_TEMPERATURE if temperature is None else temperature
+        tokens = settings.LLM_MAX_TOKENS if max_tokens is None else max_tokens
         body = {
             "model": self.model,
             "messages": messages,
-            "temperature": temperature,
-            "max_tokens": max_tokens,
+            "temperature": temp,
+            "max_tokens": tokens,
+            "provider": {"sort": "latency"},
         }
         headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
         async with httpx.AsyncClient() as c:
-            r = await c.post(URL, json=body, headers=headers, timeout=60)
+            r = await c.post(URL, json=body, headers=headers, timeout=_DEFAULT_TIMEOUT)
             r.raise_for_status()
             data = r.json()
         return data["choices"][0]["message"]["content"]
