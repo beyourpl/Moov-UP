@@ -14,8 +14,10 @@ import { getQuestionOrder, specialtyConfig } from "../data/orientationHelpers.js
 import { orderActivityChoicesForDomain } from "../data/quizQuestionHelpers.js";
 import { getSpecialtyChoiceText } from "../data/specialtyLabels.js";
 
-/** Pause après chaque choix avant la question suivante (ou avant l’analyse finale), en ms. */
+/** Pause après chaque choix avant la question suivante, en ms. */
 const QUIZ_ADVANCE_DELAY_MS = 500;
+/** Dernière question → écran d’analyse : délai court, l’API démarre en parallèle. */
+const QUIZ_FINAL_ADVANCE_DELAY_MS = 120;
 
 const Q1_CHOICES = [
   { value: "tech", title: "Technologie", sub: "Informatique, IA, cybersécurité, code, data" },
@@ -279,6 +281,7 @@ export default function QuizPage() {
   const previousAnsweredCountRef = useRef(Object.keys(initialQuiz.answers || {}).length);
   const quizAnchor = useRef(null);
   const loaderAnchor = useRef(null);
+  const conversationPrefetchRef = useRef(null);
 
   const clearAdvanceTimer = useCallback(() => {
     if (advanceTimerRef.current) {
@@ -294,6 +297,12 @@ export default function QuizPage() {
     },
     [clearAdvanceTimer],
   );
+
+  /** Précharge l’index métiers pendant le questionnaire (1ère requête quiz beaucoup plus rapide). */
+  useEffect(() => {
+    if (!session) return;
+    apiPost("/api/rag/warmup", {}).catch(() => {});
+  }, [session]);
   const questionOrder = useMemo(() => getQuestionOrder(answers), [answers]);
   const questionTotal = questionOrder.length;
   const currentQuestionId = questionOrder[stepIndex];
@@ -450,11 +459,15 @@ export default function QuizPage() {
       const orderAfter = getQuestionOrder(next);
 
       if (questionId === orderAfter[orderAfter.length - 1]) {
+        const payload = mapUiQuizAnswersToBackend(next);
+        conversationPrefetchRef.current = apiPost("/api/conversations", {
+          quiz_answers: payload,
+        });
         advanceTimerRef.current = setTimeout(() => {
           setStepIndex(orderAfter.length);
           setPhase("loading");
           finish();
-        }, QUIZ_ADVANCE_DELAY_MS);
+        }, QUIZ_FINAL_ADVANCE_DELAY_MS);
       } else {
         const qIdx = orderAfter.indexOf(questionId);
         advanceTimerRef.current = setTimeout(() => {
@@ -471,15 +484,21 @@ export default function QuizPage() {
     let cancelled = false;
     (async () => {
       try {
-        const { conversation_id } = await apiPost("/api/conversations", {
-          quiz_answers: mapUiQuizAnswersToBackend(answers),
-        });
+        const pending = conversationPrefetchRef.current;
+        conversationPrefetchRef.current = null;
+        const result = pending
+          ? await pending
+          : await apiPost("/api/conversations", {
+              quiz_answers: mapUiQuizAnswersToBackend(answers),
+            });
+        const { conversation_id } = result;
         if (!cancelled) {
           clearQuizDraft();
           setLastConversationId(conversation_id);
           navigate(`/assistant?cid=${conversation_id}`);
         }
       } catch (e) {
+        conversationPrefetchRef.current = null;
         if (!cancelled) {
           setApiError(e.message || "Erreur");
           setPhase("error");
@@ -546,11 +565,14 @@ export default function QuizPage() {
       setAdvancing(false);
     };
     if (isLastQuestion) {
+      conversationPrefetchRef.current = apiPost("/api/conversations", {
+        quiz_answers: mapUiQuizAnswersToBackend(answers),
+      });
       advanceTimerRef.current = setTimeout(() => {
         setStepIndex(questionTotal);
         setPhase("loading");
         finish();
-      }, QUIZ_ADVANCE_DELAY_MS);
+      }, QUIZ_FINAL_ADVANCE_DELAY_MS);
       return;
     }
     advanceTimerRef.current = setTimeout(() => {

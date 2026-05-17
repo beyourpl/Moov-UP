@@ -25,6 +25,7 @@ logger = logging.getLogger("moovup.rag")
 DEFAULT_TOP_K = 10
 # Plafond par métier : sans limite (0), certaines réponses quiz dépassent plusieurs Mo → timeout 500.
 FORMATIONS_PER_METIER = 25
+QUIZ_FORMATIONS_PER_METIER = 12
 
 
 def _journalisme_libelle_priority(libelle: str) -> int:
@@ -170,6 +171,7 @@ class RagService:
         top_k: int,
         niveau_max: int,
         candidate_ids: list[int] | None,
+        formations_per_metier: int = FORMATIONS_PER_METIER,
     ) -> list[dict]:
         if any(
             "journalisme" in (r["metier"].get("domaine_sous_domaine") or "").casefold()
@@ -199,7 +201,9 @@ class RagService:
         anchor_score = results[0]["score"] if results else 0.55
         entry = {
             "metier": best_m,
-            "formations": self._formations_for_metier(best_m, niveau_max),
+            "formations": self._formations_for_metier(
+                best_m, niveau_max, limit=formations_per_metier
+            ),
             "score": anchor_score,
         }
         deduped = [entry] + [r for r in results if r["metier"].get("libelle") != best_m.get("libelle")]
@@ -213,6 +217,7 @@ class RagService:
         q1: str | None = None,
         specialty: str | None = None,
         quiz_answers: dict | None = None,
+        formations_per_metier: int = QUIZ_FORMATIONS_PER_METIER,
     ) -> list[dict]:
         vec = self.embedder.encode(["query: " + profile_text], normalize_embeddings=True)
         return self._search_and_join(
@@ -222,6 +227,7 @@ class RagService:
             q1=q1,
             specialty=specialty,
             quiz_answers=quiz_answers,
+            formations_per_metier=formations_per_metier,
         )
 
     def search_for_message(
@@ -304,7 +310,9 @@ class RagService:
 
         results = []
         for effective, faiss_score, _idx, m in ranked:
-            formations = self._formations_for_metier(m, niveau_max)
+            formations = self._formations_for_metier(
+                m, niveau_max, limit=formations_per_metier
+            )
             results.append({
                 "metier": m,
                 "formations": formations,
@@ -314,7 +322,9 @@ class RagService:
                 break
 
         if specialty == "journalisme":
-            results = self._ensure_journalisme_in_results(results, top_k, niveau_max, candidate_ids)
+            results = self._ensure_journalisme_in_results(
+                results, top_k, niveau_max, candidate_ids, formations_per_metier
+            )
 
         logger.info("[rag] final top-%d (deduped): %s",
                     len(results),

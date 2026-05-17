@@ -13,6 +13,7 @@ from src.infrastructure.api.rag_state import get_rag
 from src.infrastructure.db.database import get_db
 from src.infrastructure.db.models import Conversation, User, Message
 from src.metier.profile_builder import build_profile, InvalidQuizAnswers
+from src.metier.recommendations_slim import slim_recommendations
 
 
 router = APIRouter(prefix="/api/conversations", tags=["conversations"])
@@ -64,7 +65,7 @@ def create_conversation(
             specialty=qa.get("specialty"),
             quiz_answers=qa,
         )
-        recs = _json_safe(recs)
+        recs = _json_safe(slim_recommendations(recs))
     except Exception:
         logger.exception(
             "[create_conversation] RAG failed user=%s q1=%s",

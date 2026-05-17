@@ -821,6 +821,16 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
+    if (req.method === "POST" && url.pathname === "/api/rag/warmup") {
+      const r = getUser(req);
+      if (r.err) {
+        sendJson(res, r.err, { detail: r.detail });
+        return;
+      }
+      sendJson(res, 200, { ready: true });
+      return;
+    }
+
     if (req.method === "POST" && url.pathname === "/api/conversations") {
       const r = getUser(req);
       if (r.err) {
