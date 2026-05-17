@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from src.infrastructure.api.limiter import limiter
 from src.infrastructure.api.schemas import ChatIn, ChatOut
 from src.infrastructure.api.deps import get_current_user
+from src.infrastructure.api.rag_state import get_rag
 from src.infrastructure.db.database import get_db
 from src.infrastructure.db.models import Conversation, Message, User
 from src.metier.prompt import build_prompt, sanitize_chat_reply
@@ -42,7 +43,7 @@ async def chat(
     if conv is None or conv.user_id != current.id:
         raise HTTPException(status_code=404, detail="Conversation not found")
 
-    rag = request.app.state.rag
+    rag = get_rag(request)
     if rag is None:
         raise HTTPException(status_code=503, detail="RAG index not built yet")
 
