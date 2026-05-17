@@ -533,6 +533,8 @@ export const TEXTS = {
       onisepSheetSecondary: "Fiche métier ONISEP (externe)",
       askFormationCoach: "Demander le détail à Moov'Coach →",
       askFormationCoachShort: "Demander le détail →",
+      formationsShowMore: "Voir {count} autres",
+      formationsShowLess: "Réduire la liste",
       askFormationPrompt: "Quelles formations me conseilles pour devenir {metier} ?",
       askFormationPromptSingle:
         "Parle-moi de la formation « {formation} » pour le métier {metier} : contenu, débouchés, conditions d'accès et si elle me convient.",
@@ -1361,6 +1363,8 @@ export const TEXTS = {
       onisepSheetSecondary: "Job sheet on ONISEP (external)",
       askFormationCoach: "Ask Moov'Coach for details →",
       askFormationCoachShort: "Ask for details →",
+      formationsShowMore: "Show {count} more",
+      formationsShowLess: "Show less",
       askFormationPrompt: "What training paths do you recommend to become a {metier}?",
       askFormationPromptSingle:
         "Tell me about the « {formation} » program for the job {metier}: content, career paths, entry requirements, and whether it fits me.",

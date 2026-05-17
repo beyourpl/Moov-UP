@@ -5,7 +5,7 @@ import {
   collectFormationLevelsFromRecs,
 } from "../data/quizPathwaySummary.js";
 import { useTranslation } from "../hooks/useTranslation.js";
-import RecommendedFormationItem from "./RecommendedFormationItem.jsx";
+import RecommendedFormationsList from "./RecommendedFormationsList.jsx";
 
 function truncate(text, max = 320) {
   if (!text || typeof text !== "string") return "";
@@ -236,31 +236,18 @@ export default function PathwaySummaryModal({
                       </div>
                       {formations.length > 0 ? (
                         <>
-                          <h5 className="pathway-metier-form-heading">
-                            {formations.length === 1
-                              ? pt("formationsAccessibleOne", "1 formation accessible")
-                              : pt("formationsAccessible", "{count} formations accessibles").replace(
-                                  "{count}",
-                                  String(formations.length)
-                                )}
-                          </h5>
                           <p className="pathway-metier-form-intro">
                             {pt(
                               "formationsIntro",
                               "Toutes les formations compatibles avec ton niveau, du plus proche au métier au plus général."
                             )}
                           </p>
-                          <ul className="pathway-metier-form-list chatbot-rec-formations-list">
-                            {formations.map((f, j) => (
-                              <RecommendedFormationItem
-                                key={`${f.libelle}-${j}`}
-                                f={f}
-                                t={(key, fb) => pt(key, fb)}
-                                compact
-                                showOnisepLink
-                              />
-                            ))}
-                          </ul>
+                          <RecommendedFormationsList
+                            formations={formations}
+                            t={(key, fb) => pt(key, fb)}
+                            visibleCount={5}
+                            showOnisepLink
+                          />
                         </>
                       ) : null}
                       {m.description ? <p className="pathway-metier-desc">{truncate(m.description, 360)}</p> : null}

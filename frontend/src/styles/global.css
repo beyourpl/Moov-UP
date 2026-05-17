@@ -6262,6 +6262,28 @@ section.lp-section + .quiz-container,
   scrollbar-width: thin;
 }
 
+.rec-formations-toggle {
+  display: inline-block;
+  margin: 8px 0 2px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(94, 234, 212, 0.95);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.rec-formations-toggle:hover {
+  color: rgba(129, 230, 217, 1);
+}
+
+:root[data-theme="light"] .rec-formations-toggle {
+  color: #0d9488;
+}
+
 .rec-formation-item--compact {
   display: flex;
   flex-wrap: wrap;

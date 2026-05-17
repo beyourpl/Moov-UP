@@ -7,7 +7,7 @@ import { getSession, logoutUser } from "../data/authStorage.js";
 import { getPartenairesOffer } from "../data/partenairesSession.js";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import PathwaySummaryModal from "../components/PathwaySummaryModal.jsx";
-import RecommendedFormationItem from "../components/RecommendedFormationItem.jsx";
+import RecommendedFormationsList from "../components/RecommendedFormationsList.jsx";
 import { useTranslation } from "../hooks/useTranslation.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
 import { stripTrailingOnisepFromAssistantText } from "../data/chatMessageCleanup.js";
@@ -382,41 +382,16 @@ export default function ChatbotPage() {
             {recs.map((hit, i) => (
               <article key={i} className="chatbot-rec chatbot-rec-interactive">
                 <h4 className="chatbot-rec-title">{hit.metier?.libelle}</h4>
-                {hit.formations?.length > 0 ? (
-                  <section
-                    className="chatbot-rec-formations-open"
-                    aria-label={
-                      hit.formations.length === 1
-                        ? tc("formationsAccessibleOne", "1 formation accessible")
-                        : tc("formationsAccessible", "{count} formations accessibles").replace(
-                            "{count}",
-                            String(hit.formations.length)
-                          )
-                    }
-                  >
-                    <p className="chatbot-rec-formations-count">
-                      {hit.formations.length === 1
-                        ? tc("formationsAccessibleOne", "1 formation accessible")
-                        : tc("formationsAccessible", "{count} formations accessibles").replace(
-                            "{count}",
-                            String(hit.formations.length)
-                          )}
-                    </p>
-                    <ul className="chatbot-rec-formations-list">
-                      {hit.formations.map((f, j) => (
-                        <RecommendedFormationItem
-                          key={`${f.libelle}-${j}`}
-                          f={f}
-                          t={tc}
-                          onAskCoach={() => focusComposerForFormation(hit.metier?.libelle, f)}
-                        />
-                      ))}
-                    </ul>
-                  </section>
-                ) : null}
-                {hit.metier?.description && (
+                {hit.metier?.description ? (
                   <p className="chatbot-rec-desc">{hit.metier.description.slice(0, 140)}…</p>
-                )}
+                ) : null}
+                {hit.formations?.length > 0 ? (
+                  <RecommendedFormationsList
+                    formations={hit.formations}
+                    t={tc}
+                    onAskFormation={(f) => focusComposerForFormation(hit.metier?.libelle, f)}
+                  />
+                ) : null}
                 {hit.metier?.lien_onisep ? (
                   <a
                     href={hit.metier.lien_onisep}
