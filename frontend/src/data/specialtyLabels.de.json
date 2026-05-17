@@ -1,0 +1,113 @@
+{
+  "tech": {
+    "cyber": { "title": "Cybersicherheit", "sub": "Schutze Systeme, Netzwerke und Daten" },
+    "dev": { "title": "Entwicklung", "sub": "Entwickle Apps, Websites, Software oder Services" },
+    "reseaux": { "title": "Netzwerke", "sub": "Installiere, betreue und verwalte Infrastrukturen" },
+    "web": { "title": "Web", "sub": "Erstelle Websites, Interfaces und Online-Services" },
+    "data": { "title": "Daten", "sub": "Arbeite mit Daten, analysiere sie und gewinne Mehrwert daraus" },
+    "ia": { "title": "KI", "sub": "Entwickle intelligente, automatisierte Tools" },
+    "cloud": { "title": "Cloud", "sub": "Stelle Services und entfernte Infrastruktur bereit" },
+    "support": { "title": "IT-Support", "sub": "Hilf, diagnostiziere und lose Probleme" },
+    "qa": { "title": "Tests und Qualitat", "sub": "Prufe, sichere und mache Software robuster" },
+    "autre-tech": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Tech-Profil oder wenn du dich noch orientierst" }
+  },
+  "business": {
+    "commerce": { "title": "Handel", "sub": "Verkauf, Kundenbeziehungen und Verhandlungen" },
+    "marketing": { "title": "Marketing", "sub": "Kommunikation, Strategie und Markenaufbau" },
+    "management": { "title": "Management", "sub": "Organisation, Steuerung und Teamkoordination" },
+    "finance": { "title": "Finanzen", "sub": "Budgetplanung, Analyse und Finanzkontrolle" },
+    "rh": { "title": "Personalwesen", "sub": "Recruiting, Betreuung und Personalmanagement" },
+    "entrepreneuriat": { "title": "Unternehmertum", "sub": "Ein Projekt aufbauen, starten und wachsen lassen" },
+    "vente": { "title": "Vertrieb", "sub": "Prasentiere, uberzeuge und baue einen Kundenstamm aus" },
+    "gestion-projet": { "title": "Projektmanagement", "sub": "Koordiniere, priorisiere und bringe Teams voran" },
+    "relation-client": { "title": "Kundenbetreuung", "sub": "Unterstutze, binde und erfulle Kundenbedurfnisse" },
+    "autre-business": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Business-Profil oder wenn du dich noch orientierst" }
+  },
+  "creative": {
+    "journalisme": { "title": "Journalismus und Medien", "sub": "Presse, Reportagen, Schreiben, Nachrichten und Medien" },
+    "graphisme": { "title": "Grafikdesign", "sub": "Visuelle Identitat, Poster und digitale Assets" },
+    "design": { "title": "Digitales Design", "sub": "Visuelle Arbeit fur Bildschirme und echte Nutzungsszenarien" },
+    "audiovisuel": { "title": "Audiovisuelle Medien", "sub": "Bild, Video, Dreh und visuelles Storytelling" },
+    "uxui": { "title": "UX/UI", "sub": "Gestalte Interfaces, die gut aussehen und gut funktionieren" },
+    "animation": { "title": "Animation", "sub": "Bringe Visuals, Videos oder Inhalte zum Leben" },
+    "photo": { "title": "Fotografie", "sub": "Erstelle Bilder, setze Szenen, bearbeite und erzahle Geschichten" },
+    "direction-artistique": { "title": "Art Direction", "sub": "Steuere eine visuelle Identitat und kreative Konzepte" },
+    "montage": { "title": "Schnitt", "sub": "Setze visuelle Erzahlungen zusammen, rhythmisiere und finalisiere sie" },
+    "motion-design": { "title": "Motion Design", "sub": "Animierte Inhalte einsetzen, um zu erklaren oder Aufmerksamkeit zu gewinnen" },
+    "autre-creative": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres kreatives Profil oder wenn du dich noch orientierst" }
+  },
+  "sante": {
+    "medecine": { "title": "Medizin", "sub": "Diagnostiziere, behandle und verordne" },
+    "soins-infirmiers": { "title": "Pflege", "sub": "Pflege, begleite und beobachte" },
+    "kinesitherapie": { "title": "Physiotherapie", "sub": "Reha, Beweglichkeit und Schmerztherapie" },
+    "sage-femme": { "title": "Hebammenwesen", "sub": "Begleitung in Schwangerschaft, Geburt und Wochenbett" },
+    "pharmacie": { "title": "Pharmazie", "sub": "Bereite Medikamente vor und gib sie aus" },
+    "odontologie": { "title": "Zahnmedizin", "sub": "Zahnpflege, Prothetik und Chirurgie" },
+    "psychologie": { "title": "Psychologie", "sub": "Zuhoren, beurteilen und unterstutzen" },
+    "aide-soignante": { "title": "Pflegeassistenz", "sub": "Unterstutze bei der taglichen Versorgung" },
+    "ergotherapie": { "title": "Ergotherapie", "sub": "Stelle Fahigkeiten wieder her, fordere Selbststandigkeit und passe Umfelder an" },
+    "autre-sante": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Gesundheitsprofil oder wenn du dich noch orientierst" }
+  },
+  "education": {
+    "enseignant": { "title": "Lehramt", "sub": "Wissen vermitteln" },
+    "education-specialisee": { "title": "Sonderpadagogik", "sub": "Lernende mit besonderem Unterstutzungsbedarf begleiten" },
+    "direction-ecole": { "title": "Schulleitung", "sub": "Eine Schule fuhren" },
+    "formation-adulte": { "title": "Erwachsenenbildung", "sub": "Erwachsene in beruflicher Neuorientierung qualifizieren" },
+    "soutien-scolaire": { "title": "Nachhilfe", "sub": "Lernenden helfen, sich zu verbessern" },
+    "animation": { "title": "Padagogische Betreuung", "sub": "Lern- und Bildungsangebote anleiten" },
+    "orientation": { "title": "Berufsberatung", "sub": "Bei Bildungs- und Berufswahlen begleiten" },
+    "pedagogie": { "title": "Padagogik", "sub": "Lehrmethoden konzipieren" },
+    "autre-education": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Bildungsprofil oder wenn du dich noch orientierst" }
+  },
+  "droit": {
+    "avocat": { "title": "Anwaltschaft", "sub": "Verteidigen, beraten und vor Gericht auftreten" },
+    "magistrat": { "title": "Richteramt", "sub": "Urteilen und Recht sprechen" },
+    "notaire": { "title": "Notariat", "sub": "Urkunden beurkunden und rechtlich beraten" },
+    "huissier": { "title": "Gerichtsvollzug", "sub": "Entscheidungen durchsetzen und Schriftstucke zustellen" },
+    "juriste": { "title": "Unternehmensjuristik", "sub": "Beratung, Compliance und Vertrage" },
+    "police-judiciaire": { "title": "Ermittlungsarbeit", "sub": "Nachforschungen und Untersuchungen" },
+    "droit-immobilier": { "title": "Immobilienrecht", "sub": "Transaktionen, Miete und Eigentum" },
+    "droit-travail": { "title": "Arbeitsrecht", "sub": "Arbeitsbeziehungen und Konflikte" },
+    "autre-droit": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Rechtsprofil oder wenn du dich noch orientierst" }
+  },
+  "industrie": {
+    "ingenierie": { "title": "Ingenieurwesen", "sub": "Entwirf, berechne und optimiere" },
+    "production": { "title": "Produktion", "sub": "Fertige, montiere und betreibe Linien" },
+    "maintenance": { "title": "Instandhaltung", "sub": "Repariere, warte und beuge Ausfallen vor" },
+    "qualite": { "title": "Qualitatssicherung", "sub": "Prufe, zertifiziere und verbessere" },
+    "logistique": { "title": "Logistik", "sub": "Versorge, lagere und verteile" },
+    "achats": { "title": "Einkauf", "sub": "Wahle aus, verhandle und bestelle" },
+    "bureau-etudes": { "title": "Konstruktionsburo", "sub": "Plane und entwickle Prototypen" },
+    "autre-industrie": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Industrieprofil oder wenn du dich noch orientierst" }
+  },
+  "batiment": {
+    "architecture": { "title": "Architektur", "sub": "Entwirf Gebaude und erstelle Plane" },
+    "btp": { "title": "Bauwesen", "sub": "Baue, arbeite am Rohbau und im Ausbau" },
+    "genie-civil": { "title": "Bauingenieurwesen", "sub": "Infrastruktur, Brucken und Strassen" },
+    "batiment-durable": { "title": "Nachhaltiges Bauen", "sub": "Umweltfreundliches Bauen und Energieeffizienz" },
+    "architecture-interieur": { "title": "Innenarchitektur", "sub": "Raumaufteilung, Moblierung und Dekor" },
+    "topographie": { "title": "Vermessung", "sub": "Messe, kartiere und stecke Baustellen ab" },
+    "bet": { "title": "Technisches Bauburo", "sub": "Berechnungen, Plane und Diagnosen" },
+    "autre-batiment": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Profil im Bau- und Raumumfeld oder wenn du dich noch orientierst" }
+  },
+  "agriculture": {
+    "agriculture-elevage": { "title": "Landwirtschaft / Viehzucht", "sub": "Anbauen, zuchten und erzeugen" },
+    "agronomie": { "title": "Agronomie", "sub": "Landwirtschaftliche Methoden verbessern" },
+    "environnement": { "title": "Umwelt", "sub": "Schutz und Management naturlicher Ressourcen" },
+    "agroalimentaire": { "title": "Agrar- und Lebensmittelwirtschaft", "sub": "Lebensmittel verarbeiten und verpacken" },
+    "paysage": { "title": "Landschaftsbau", "sub": "Grunflachen gestalten und pflegen" },
+    "foret": { "title": "Forstwirtschaft", "sub": "Bewirtschaften, ernten und wiederaufforsten" },
+    "marine": { "title": "Maritime Wirtschaft / Fischerei", "sub": "Mit maritimen Ressourcen arbeiten" },
+    "autre-agriculture": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Agrarprofil oder wenn du dich noch orientierst" }
+  },
+  "service": {
+    "tourisme": { "title": "Tourismus", "sub": "Empfange, begleite und organisiere" },
+    "hotellerie": { "title": "Hotellerie", "sub": "Empfang, Unterkunft und Verpflegung" },
+    "sport": { "title": "Sport", "sub": "Trainiere, unterrichte und unterstutze" },
+    "evenementiel": { "title": "Eventmanagement", "sub": "Plane, koordiniere und betreue Veranstaltungen" },
+    "rh": { "title": "Personalwesen", "sub": "Recruiting, Weiterbildung und Lohnabrechnung" },
+    "comptabilite": { "title": "Buchhaltung", "sub": "Buchfuhrung und Meldungen" },
+    "banque": { "title": "Bankwesen / Versicherungen", "sub": "Berate und verkaufe Finanzprodukte" },
+    "autre-service": { "title": "Sonstiges / noch unsicher", "sub": "Ein breiteres Dienstleistungsprofil oder wenn du dich noch orientierst" }
+  }
+}

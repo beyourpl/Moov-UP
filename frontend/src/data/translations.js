@@ -1,13 +1,14 @@
 import { patchPartenairesLocales } from "./partenairesLocales.js";
 import { applyLocaleGapPatches } from "./localeGapPatches.js";
 
+/** Ordre du menu langues : FR · EN · AR en tête, puis le reste. */
 export const SUPPORTED_LANGUAGES = [
   "fr",
   "en",
+  "ar",
   "es",
   "zh",
   "hi",
-  "ar",
   "pt",
   "ru",
   "de",

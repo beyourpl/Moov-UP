@@ -1,0 +1,113 @@
+{
+  "tech": {
+    "cyber": { "title": "Ciberseguridad", "sub": "Protege sistemas, redes y datos" },
+    "dev": { "title": "Desarrollo", "sub": "Crea apps, sitios web, software o servicios" },
+    "reseaux": { "title": "Redes", "sub": "Instala, mantiene y gestiona infraestructuras" },
+    "web": { "title": "Web", "sub": "Crea sitios, interfaces y servicios en linea" },
+    "data": { "title": "Datos", "sub": "Gestiona, analiza y extrae valor de los datos" },
+    "ia": { "title": "IA", "sub": "Disena herramientas inteligentes y automatizadas" },
+    "cloud": { "title": "Cloud", "sub": "Despliega servicios e infraestructura remota" },
+    "support": { "title": "Soporte IT", "sub": "Ayuda, diagnostica y resuelve incidencias" },
+    "qa": { "title": "Pruebas y calidad", "sub": "Verifica, asegura y refuerza el software" },
+    "autre-tech": { "title": "Otro / no lo tengo claro", "sub": "Un perfil tecnologico mas amplio o si aun estas decidiendolo" }
+  },
+  "business": {
+    "commerce": { "title": "Comercio", "sub": "Ventas, relacion con clientes, negociacion" },
+    "marketing": { "title": "Marketing", "sub": "Comunicacion, estrategia, marca" },
+    "management": { "title": "Gestion", "sub": "Organizacion, direccion y coordinacion de equipos" },
+    "finance": { "title": "Finanzas", "sub": "Presupuestos, analisis y control financiero" },
+    "rh": { "title": "Recursos humanos", "sub": "Seleccion, acompanamiento y gestion de personas" },
+    "entrepreneuriat": { "title": "Emprendimiento", "sub": "Crear, lanzar y hacer crecer un proyecto" },
+    "vente": { "title": "Ventas", "sub": "Presentar, convencer y desarrollar una cartera de clientes" },
+    "gestion-projet": { "title": "Gestion de proyectos", "sub": "Coordina, prioriza y hace avanzar a los equipos" },
+    "relation-client": { "title": "Relacion con clientes", "sub": "Atiende, fideliza y responde a las necesidades del cliente" },
+    "autre-business": { "title": "Otro / no lo tengo claro", "sub": "Un perfil de negocio mas amplio o si aun estas decidiendolo" }
+  },
+  "creative": {
+    "journalisme": { "title": "Periodismo y medios", "sub": "Prensa, reportajes, redaccion, actualidad y medios" },
+    "graphisme": { "title": "Diseno grafico", "sub": "Identidad visual, carteles y recursos digitales" },
+    "design": { "title": "Diseno digital", "sub": "Trabajo visual para pantallas y usos reales" },
+    "audiovisuel": { "title": "Audiovisual", "sub": "Imagen, video, rodaje y narrativa visual" },
+    "uxui": { "title": "UX/UI", "sub": "Disena interfaces atractivas y faciles de usar" },
+    "animation": { "title": "Animacion", "sub": "Da vida a imagenes, video o contenidos" },
+    "photo": { "title": "Fotografia", "sub": "Crea imagenes, encuadra, edita y cuenta historias" },
+    "direction-artistique": { "title": "Direccion artistica", "sub": "Guia una identidad visual y conceptos creativos" },
+    "montage": { "title": "Edicion", "sub": "Monta, marca el ritmo y finaliza relatos visuales" },
+    "motion-design": { "title": "Motion design", "sub": "Anima contenidos para explicar o captar atencion" },
+    "autre-creative": { "title": "Otro / no lo tengo claro", "sub": "Un perfil creativo mas amplio o si aun estas decidiendolo" }
+  },
+  "sante": {
+    "medecine": { "title": "Medicina", "sub": "Diagnostica, trata y prescribe" },
+    "soins-infirmiers": { "title": "Enfermeria", "sub": "Cuida, acompana y hace seguimiento" },
+    "kinesitherapie": { "title": "Fisioterapia", "sub": "Rehabilitacion, movilidad y dolor" },
+    "sage-femme": { "title": "Obstetricia", "sub": "Seguimiento del embarazo, partos y posparto" },
+    "pharmacie": { "title": "Farmacia", "sub": "Prepara y dispensa medicamentos" },
+    "odontologie": { "title": "Odontologia", "sub": "Cuidado dental, protesis y cirugia" },
+    "psychologie": { "title": "Psicologia", "sub": "Escucha, evaluacion y acompanamiento" },
+    "aide-soignante": { "title": "Auxiliar de enfermeria", "sub": "Ayuda con los cuidados diarios" },
+    "ergotherapie": { "title": "Terapia ocupacional", "sub": "Rehabilita, fomenta la autonomia y adapta el entorno" },
+    "autre-sante": { "title": "Otro / no lo tengo claro", "sub": "Un perfil sanitario mas amplio o si aun estas decidiendolo" }
+  },
+  "education": {
+    "enseignant": { "title": "Docencia", "sub": "Transmitir conocimientos" },
+    "education-specialisee": { "title": "Educacion especial", "sub": "Acompanar a estudiantes con dificultades" },
+    "direction-ecole": { "title": "Direccion escolar", "sub": "Gestionar un centro educativo" },
+    "formation-adulte": { "title": "Formacion de adultos", "sub": "Formar a adultos en reconversion" },
+    "soutien-scolaire": { "title": "Apoyo escolar", "sub": "Ayudar a los estudiantes a mejorar" },
+    "animation": { "title": "Dinamizacion", "sub": "Dirigir actividades educativas" },
+    "orientation": { "title": "Orientacion profesional", "sub": "Guiar decisiones de orientacion" },
+    "pedagogie": { "title": "Pedagogia", "sub": "Disenar metodos de ensenanza" },
+    "autre-education": { "title": "Otro / no lo tengo claro", "sub": "Un perfil educativo mas amplio o si aun estas decidiendolo" }
+  },
+  "droit": {
+    "avocat": { "title": "Abogacia", "sub": "Defender, asesorar y litigar" },
+    "magistrat": { "title": "Judicatura", "sub": "Juzgar e impartir justicia" },
+    "notaire": { "title": "Notaria", "sub": "Autenticar escrituras y asesorar juridicamente" },
+    "huissier": { "title": "Agente judicial", "sub": "Ejecutar resoluciones y notificar actos" },
+    "juriste": { "title": "Asesoria juridica interna", "sub": "Asesoramiento, cumplimiento y contratos" },
+    "police-judiciaire": { "title": "Investigacion criminal", "sub": "Diligencias e investigaciones" },
+    "droit-immobilier": { "title": "Derecho inmobiliario", "sub": "Operaciones, alquileres y propiedad" },
+    "droit-travail": { "title": "Derecho laboral", "sub": "Relaciones laborales y conflictos" },
+    "autre-droit": { "title": "Otro / no lo tengo claro", "sub": "Un perfil juridico mas amplio o si aun estas decidiendolo" }
+  },
+  "industrie": {
+    "ingenierie": { "title": "Ingenieria", "sub": "Disena, calcula y optimiza" },
+    "production": { "title": "Produccion", "sub": "Fabricar, ensamblar y operar lineas" },
+    "maintenance": { "title": "Mantenimiento", "sub": "Reparar, conservar y prevenir" },
+    "qualite": { "title": "Calidad", "sub": "Inspeccionar, certificar y mejorar" },
+    "logistique": { "title": "Logistica", "sub": "Abastecer, almacenar y distribuir" },
+    "achats": { "title": "Compras", "sub": "Seleccionar, negociar y pedir" },
+    "bureau-etudes": { "title": "Oficina tecnica", "sub": "Planos y prototipos" },
+    "autre-industrie": { "title": "Otro / no lo tengo claro", "sub": "Un perfil industrial mas amplio o si aun estas decidiendolo" }
+  },
+  "batiment": {
+    "architecture": { "title": "Arquitectura", "sub": "Disenar edificios y elaborar planos" },
+    "btp": { "title": "Construccion", "sub": "Construir, obra estructural y acabados" },
+    "genie-civil": { "title": "Ingenieria civil", "sub": "Infraestructuras, puentes y carreteras" },
+    "batiment-durable": { "title": "Construccion sostenible", "sub": "Edificacion verde y energia" },
+    "architecture-interieur": { "title": "Arquitectura de interiores", "sub": "Distribucion, mobiliario y decoracion" },
+    "topographie": { "title": "Topografia", "sub": "Medir, cartografiar y replantear obras" },
+    "bet": { "title": "Oficina tecnica de construccion", "sub": "Calculos, planos y diagnosticos" },
+    "autre-batiment": { "title": "Otro / no lo tengo claro", "sub": "Un perfil de edificacion mas amplio o si aun estas decidiendolo" }
+  },
+  "agriculture": {
+    "agriculture-elevage": { "title": "Agricultura y ganaderia", "sub": "Cultivar, criar y producir" },
+    "agronomie": { "title": "Agronomia", "sub": "Mejorar practicas agricolas" },
+    "environnement": { "title": "Medio ambiente", "sub": "Proteccion y gestion de recursos naturales" },
+    "agroalimentaire": { "title": "Agroalimentacion", "sub": "Procesar y envasar alimentos" },
+    "paysage": { "title": "Paisajismo", "sub": "Disenar y mantener espacios verdes" },
+    "foret": { "title": "Silvicultura", "sub": "Gestionar, aprovechar y replantar" },
+    "marine": { "title": "Maritimo y pesca", "sub": "Trabajar con recursos marinos" },
+    "autre-agriculture": { "title": "Otro / no lo tengo claro", "sub": "Un perfil agricola mas amplio o si aun estas decidiendolo" }
+  },
+  "service": {
+    "tourisme": { "title": "Turismo", "sub": "Recibir, guiar y organizar" },
+    "hotellerie": { "title": "Hosteleria", "sub": "Recepcion, alojamiento y restauracion" },
+    "sport": { "title": "Deporte", "sub": "Entrenar, ensenar y acompanar" },
+    "evenementiel": { "title": "Eventos", "sub": "Planificar, coordinar y producir" },
+    "rh": { "title": "Recursos humanos", "sub": "Seleccion, formacion y nomina" },
+    "comptabilite": { "title": "Contabilidad", "sub": "Contabilidad y declaraciones" },
+    "banque": { "title": "Banca y seguros", "sub": "Asesorar y vender productos financieros" },
+    "autre-service": { "title": "Otro / no lo tengo claro", "sub": "Un perfil de servicios mas amplio o si aun estas decidiendolo" }
+  }
+}

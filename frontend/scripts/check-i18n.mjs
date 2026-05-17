@@ -17,20 +17,10 @@ import {
 } from "../src/data/translations.js";
 import { BASE_QUESTION_ORDER } from "../src/data/questionOrder.js";
 import { specialtyConfig } from "../src/data/specialtyConfig.js";
+import { getSpecialtyChoiceText } from "../src/data/specialtyLabels.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const srcRoot = join(__dirname, "../src");
-const _specialtyFr = JSON.parse(
-  readFileSync(join(__dirname, "../src/data/specialtyLabels.fr.json"), "utf8"),
-);
-const _specialtyEn = JSON.parse(
-  readFileSync(join(__dirname, "../src/data/specialtyLabels.en.json"), "utf8"),
-);
-
-function pickSpecialty(lang, domain, value) {
-  const pack = lang === "fr" ? _specialtyFr : _specialtyEn;
-  return pack[domain]?.[value];
-}
 
 function discoverScopes() {
   const scopes = new Set();
@@ -91,7 +81,7 @@ for (const lang of SUPPORTED_LANGUAGES) {
 
   for (const [domain, items] of Object.entries(specialtyConfig)) {
     for (const item of items) {
-      const ch = pickSpecialty(lang, domain, item.value);
+      const ch = getSpecialtyChoiceText(lang, domain, item.value);
       if (!ch?.title || !ch?.sub) {
         issues.push({ kind: "specialty", lang, scope: `specialty.${domain}`, key: item.value });
       }
