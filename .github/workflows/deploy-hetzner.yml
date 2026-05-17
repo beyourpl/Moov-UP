@@ -195,7 +195,38 @@ jobs:
             PORT_ARGS=(-p "$PORT")
           fi
           REMOTE_PATH=$(printf '%q' "${VPS_DEPLOY_PATH}")
-          REMOTE_CMD="set -ex && cd ${REMOTE_PATH} && pwd && git pull --ff-only && if docker compose version >/dev/null 2>&1; then docker compose up -d --force-recreate --build; elif command -v docker-compose >/dev/null 2>&1; then docker-compose up -d --force-recreate --build; else echo 'Ni docker compose ni docker-compose sur le VPS' >&2; exit 1; fi"
+          REMOTE_CMD="set -ex
+          cd ${REMOTE_PATH}
+          pwd
+          git pull --ff-only
+          COMPOSE_FILES='-f docker-compose.yml'
+          if [ -f docker-compose.prod.yml ]; then COMPOSE_FILES=\"\${COMPOSE_FILES} -f docker-compose.prod.yml\"; fi
+          if docker compose version >/dev/null 2>&1; then
+            DC='docker compose'
+          elif command -v docker-compose >/dev/null 2>&1; then
+            DC='docker-compose'
+          else
+            echo 'Ni docker compose ni docker-compose sur le VPS' >&2
+            exit 1
+          fi
+          eval \"\${DC} \${COMPOSE_FILES} up -d --force-recreate --build\"
+          eval \"\${DC} \${COMPOSE_FILES} ps\"
+          ok=0
+          for i in \$(seq 1 30); do
+            if curl -sf http://127.0.0.1:8000/api/health >/tmp/moovup-health.json; then
+              echo 'Backend health OK:'
+              cat /tmp/moovup-health.json
+              ok=1
+              break
+            fi
+            echo \"Attente backend (tentative \${i}/30)…\"
+            sleep 10
+          done
+          if [ \"\${ok}\" != 1 ]; then
+            echo '::error::Backend ne répond pas sur :8000/api/health après déploiement'
+            eval \"\${DC} \${COMPOSE_FILES} logs backend --tail 120\" || true
+            exit 1
+          fi"
           ssh "${PORT_ARGS[@]}" \
             -i "$KEY_FILE" \
             -o BatchMode=yes \

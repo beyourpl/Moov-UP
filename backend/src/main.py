@@ -10,7 +10,6 @@ from slowapi.middleware import SlowAPIMiddleware
 
 from src.config import settings
 from src.infrastructure.api.limiter import limiter
-from src.infrastructure.api.rag_state import get_rag
 from src.infrastructure.db.database import init_db
 
 

@@ -2,6 +2,7 @@
 # Indispensable pour que https://moovup.site/api/... atteigne FastAPI (même origine que le front).
 
 moovup.site, www.moovup.site {
+	# OBLIGATOIRE : /api → backend FastAPI (8000), pas le front Vite (5173)
 	handle /api/* {
 		reverse_proxy 127.0.0.1:8000
 	}
