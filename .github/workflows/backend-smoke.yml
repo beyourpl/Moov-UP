@@ -1,0 +1,36 @@
+# Vérifie que l'image backend démarre et répond à /api/health (sans VPS).
+name: Backend smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "backend/**"
+      - "docker-compose.yml"
+      - "docker-compose.prod.yml"
+      - ".github/workflows/backend-smoke.yml"
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build & start backend
+        run: |
+          set -euo pipefail
+          docker compose -f docker-compose.yml -f docker-compose.prod.yml build backend
+          docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d backend
+          for i in $(seq 1 24); do
+            if curl -sf http://127.0.0.1:8000/api/health; then
+              echo ""
+              exit 0
+            fi
+            sleep 5
+          done
+          docker compose logs backend --tail 80
+          exit 1
+
+      - name: Stop
+        if: always()
+        run: docker compose down -v

@@ -20,6 +20,8 @@ COPY src/ ./src/
 COPY data/ ./data/
 COPY scripts/ ./scripts/
 COPY tests/ ./tests/
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 EXPOSE 8000
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["/docker-entrypoint.sh"]

@@ -1,12 +1,10 @@
 import logging
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
-from slowapi.middleware import SlowAPIMiddleware
 
 from src.config import settings
 from src.infrastructure.api.limiter import limiter
@@ -24,28 +22,18 @@ async def lifespan(app: FastAPI):
     try:
         init_db()
     except Exception:
-        logging.getLogger("moovup").exception("init_db failed")
-        raise
+        logging.getLogger("moovup").exception(
+            "init_db failed — API en mode dégradé (vérifie DATABASE_URL et permissions /app/db)"
+        )
     app.state.rag = None
     app.state.rag_load_failed = False
+    logging.getLogger("moovup").info("Moov'Up API prête (RAG chargé à la demande)")
     yield
 
 
 app = FastAPI(title="Moov'Up API", lifespan=lifespan)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-app.add_middleware(SlowAPIMiddleware)
-
-
-@app.exception_handler(Exception)
-async def unhandled_exception_handler(request: Request, exc: Exception):
-    if isinstance(exc, HTTPException):
-        return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail})
-    logging.getLogger("moovup").exception("Unhandled %s %s", request.method, request.url.path)
-    return JSONResponse(
-        status_code=500,
-        content={"detail": "Erreur interne serveur. Réessaie ou contacte le support."},
-    )
 
 _origins = [o.strip() for o in settings.ALLOWED_ORIGIN.split(",") if o.strip()]
 app.add_middleware(

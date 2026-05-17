@@ -10,7 +10,6 @@ services:
       - hf_cache:/root/.cache/huggingface
       - sqlite_data:/app/db
     env_file: ./backend/.env
-    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
     healthcheck:
       test: ["CMD", "curl", "-sf", "http://127.0.0.1:8000/api/health"]
       interval: 30s
