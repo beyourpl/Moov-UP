@@ -102,7 +102,13 @@ async function request(method, path, body) {
     } catch {
       detail = res.statusText;
     }
-    throw new Error(formatApiErrorDetail(detail, res.statusText || "Erreur serveur"));
+    const fallback =
+      res.status === 503
+        ? "Service temporairement indisponible"
+        : res.status >= 500
+          ? `Erreur serveur (${res.status})`
+          : res.statusText || "Erreur";
+    throw new Error(formatApiErrorDetail(detail, fallback));
   }
   if (res.status === 204) return null;
   return res.json();

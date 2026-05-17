@@ -202,6 +202,33 @@ def test_journalisme_specialty_guarantees_journaliste_in_top(fake_data, monkeypa
     assert res[0]["metier"]["libelle"] == "journaliste"
 
 
+def test_formations_capped_per_metier(fake_data, monkeypatch):
+    """Évite des payloads quiz gigantesques (timeout prod)."""
+    rows = []
+    for i in range(40):
+        rows.append({
+            "libellé formation principal": f"Formation info {i}",
+            "niveau de certification": 5,
+            "libellé niveau de certification": "niveau 5",
+            "durée": "2 ans",
+            "URL et ID Onisep": f"u{i}",
+            "domaine/sous-domaine": "informatique, Internet/informatique",
+        })
+    pd.DataFrame(rows).to_csv(fake_data / "fiche_formation.csv", sep=";", index=False)
+
+    class FakeST:
+        def __init__(self, *a, **k):
+            pass
+
+        def encode(self, texts, **k):
+            return np.eye(len(texts), 8, dtype="float32")
+
+    monkeypatch.setattr("src.service.rag_service.SentenceTransformer", FakeST)
+    svc = RagService()
+    res = svc.initial_recommendations("profil dev", niveau_max=5, top_k=1)
+    assert len(res[0]["formations"]) <= 25
+
+
 def test_filter_with_unknown_q1_falls_back_to_full_search(fake_data, monkeypatch):
     monkeypatch.setattr(
         "src.service.rag_service.Q1_TO_ONISEP_DOMAINS",

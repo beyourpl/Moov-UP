@@ -23,8 +23,8 @@ MODEL_NAME = "intfloat/multilingual-e5-base"
 logger = logging.getLogger("moovup.rag")
 
 DEFAULT_TOP_K = 10
-# 0 = toutes les formations accessibles (filtre niveau + domaine), sans plafond
-FORMATIONS_PER_METIER = 0
+# Plafond par métier : sans limite (0), certaines réponses quiz dépassent plusieurs Mo → timeout 500.
+FORMATIONS_PER_METIER = 25
 
 
 def _journalisme_libelle_priority(libelle: str) -> int:
