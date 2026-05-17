@@ -6,7 +6,7 @@
     "dev:all": "cd frontend && npm run dev:all",
     "dev:api": "cd frontend && npm run dev:api",
     "check:llm": "node scripts/check-llm-env.mjs",
-    "check:i18n": "node frontend/scripts/verify-i18n-languages.mjs",
+    "check:i18n": "node frontend/scripts/verify-i18n-languages.mjs && node frontend/scripts/check-i18n.mjs",
     "build": "cd frontend && npm run build",
     "preview": "cd frontend && npm run preview"
   }

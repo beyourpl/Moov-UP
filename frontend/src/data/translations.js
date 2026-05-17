@@ -1,4 +1,5 @@
 import { patchPartenairesLocales } from "./partenairesLocales.js";
+import { applyLocaleGapPatches } from "./localeGapPatches.js";
 
 export const SUPPORTED_LANGUAGES = [
   "fr",
@@ -1133,6 +1134,8 @@ export const TEXTS = {
       faq2Question: "Are my answers recorded?",
       faq2Answer: "With an account, your answers are used to build your profile and open Moov’Coach. Without signing in, nothing is saved by the app.",
       navCoFounders: "Cofounders",
+      navMoovCoach: "Moov'Coach",
+      navCvLm: "CV & cover letter",
       navSteps: "How it works",
       badge1: "✦ 10 questions",
       badge2: "✦ Instant results",
@@ -2837,7 +2840,7 @@ export const TEXTS = {
       stat2Badge: "Inteligente",
       stat3Value: "50+",
       stat3Label: "Recursos oficiales",
-      stat3Badge: "Fiables",
+      stat3Badge: "Confiables",
       missionSection: "Nuestra misión",
       missionTitle: "¿Qué es Moov'Up?",
       missionIntro:
@@ -3076,7 +3079,7 @@ export const TEXTS = {
       noFile: "Sin archivo",
       noAnalysis: "Sin resultado de análisis",
       excellent: "Excelente",
-      good: "Bien",
+      good: "Bueno",
       improve: "A mejorar",
       critAtsKeywords: "Palabras clave y vocabulario del puesto",
       critAtsSections: "Títulos de sección estándar",
@@ -5678,7 +5681,7 @@ export const TEXTS = {
       analyzedProfile: "Profilanalyse",
       currentLevel: "Dein aktuelles Niveau",
       pathwayLabel: "Weg",
-      definitionLabel: "Definition",
+      definitionLabel: "Begriff",
       officialSheet: "Offizielle Infoseite öffnen",
       invalidProfile: "Für dieses Profil konnte kein Weg erstellt werden. Prüfe deine Antworten oder versuche es später noch einmal.",
       copied: "Link in die Zwischenablage kopiert.",
@@ -6438,6 +6441,7 @@ export const TEXTS = {
   },
 };
 
+applyLocaleGapPatches(TEXTS);
 patchPartenairesLocales(TEXTS);
 
 /** Incrémenté au hot-reload de ce fichier pour forcer le re-render des composants i18n. */

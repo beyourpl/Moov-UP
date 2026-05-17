@@ -1,0 +1,1632 @@
+{
+  "(confirm on official sources)": {
+    "es": "(confirmar en fuentes oficiales)",
+    "zh": "（请以官方来源为准）",
+    "hi": "(आधिकारिक स्रोतों से पुष्टि करें)",
+    "ar": "(يُرجى التأكد من المصادر الرسمية)",
+    "pt": "(confirme em fontes oficiais)",
+    "ru": "(подтвердите по официальным источникам)",
+    "de": "(mit offiziellen Quellen bestätigen)",
+    "ja": "（公式情報で確認してください）"
+  },
+  "**Premium B2C**: unlimited CV & letter analyses (demo).": {
+    "es": "**Premium B2C**: análisis ilimitados de CV y cartas de presentación (demo).",
+    "zh": "**Premium B2C**：无限次简历和求职信分析（演示版）。",
+    "hi": "**Premium B2C**: CV और कवर लेटर का असीमित विश्लेषण (डेमो)।",
+    "ar": "**Premium B2C**: تحليلات غير محدودة للسيرة الذاتية ورسائل التغطية (نسخة تجريبية).",
+    "pt": "**Premium B2C**: análises ilimitadas de CV e carta de apresentação (demo).",
+    "ru": "**Premium B2C**: безлимитный анализ резюме и сопроводительных писем (демо).",
+    "de": "**Premium B2C**: unbegrenzte Analysen von Lebenslauf und Anschreiben (Demo).",
+    "ja": "**Premium B2C**: CV と志望動機書の分析が無制限（デモ）。"
+  },
+  "1 training option": {
+    "es": "1 opción de formación",
+    "zh": "1 个培训选项",
+    "hi": "1 प्रशिक्षण विकल्प",
+    "ar": "خيار تكوين واحد",
+    "pt": "1 opção de formação",
+    "ru": "1 вариант обучения",
+    "de": "1 Ausbildungsoption",
+    "ja": "1 件の進学オプション"
+  },
+  "6-digit code": {
+    "es": "Código de 6 dígitos",
+    "zh": "6 位验证码",
+    "hi": "6 अंकों का कोड",
+    "ar": "رمز من 6 أرقام",
+    "pt": "Código de 6 dígitos",
+    "ru": "6-значный код",
+    "de": "6-stelliger Code",
+    "ja": "6桁のコード"
+  },
+  "A study logic aligned with your school level and priorities.": {
+    "es": "Una lógica de estudios alineada con tu nivel escolar y tus prioridades.",
+    "zh": "与您的在校水平和优先事项相匹配的学习逻辑。",
+    "hi": "आपके शैक्षिक स्तर और प्राथमिकताओं के अनुरूप एक अध्ययन तर्क।",
+    "ar": "منطق دراسي يتماشى مع مستواك الدراسي وأولوياتك.",
+    "pt": "Uma lógica de estudos alinhada ao seu nível escolar e às suas prioridades.",
+    "ru": "Логика обучения, согласованная с вашим уровнем образования и приоритетами.",
+    "de": "Eine Studienlogik, die auf dein Schulniveau und deine Prioritäten abgestimmt ist.",
+    "ja": "あなたの学年レベルと優先事項に合った学習の進め方です。"
+  },
+  "Access": {
+    "es": "Acceso",
+    "zh": "准入",
+    "hi": "प्रवेश",
+    "ar": "الوصول",
+    "pt": "Acesso",
+    "ru": "Доступ",
+    "de": "Zugang",
+    "ja": "アクセス"
+  },
+  "Account password": {
+    "es": "Contraseña de la cuenta",
+    "zh": "账户密码",
+    "hi": "खाते का पासवर्ड",
+    "ar": "كلمة مرور الحساب",
+    "pt": "Senha da conta",
+    "ru": "Пароль учётной записи",
+    "de": "Kontopasswort",
+    "ja": "アカウントのパスワード"
+  },
+  "Analyzing profile...": {
+    "es": "Analizando el perfil...",
+    "zh": "正在分析资料...",
+    "hi": "प्रोफ़ाइल का विश्लेषण किया जा रहा है...",
+    "ar": "جارٍ تحليل الملف الشخصي...",
+    "pt": "Analisando perfil...",
+    "ru": "Анализ профиля...",
+    "de": "Profil wird analysiert...",
+    "ja": "プロフィールを分析中..."
+  },
+  "Answer 10 questions to get a clear, personalized and realistic path from middle school to master's level.": {
+    "es": "Responde 10 preguntas para obtener un recorrido claro, personalizado y realista desde secundaria hasta máster.",
+    "zh": "回答 10 个问题，获取从初中到硕士阶段清晰、个性化且现实的路径。",
+    "hi": "मिडिल स्कूल से मास्टर्स स्तर तक का स्पष्ट, व्यक्तिगत और यथार्थवादी मार्ग पाने के लिए 10 प्रश्नों का उत्तर दें।",
+    "ar": "أجب عن 10 أسئلة للحصول على مسار واضح وشخصي وواقعي من المرحلة الإعدادية حتى مستوى الماجستير.",
+    "pt": "Responda a 10 perguntas para obter um percurso claro, personalizado e realista do ensino fundamental ao mestrado.",
+    "ru": "Ответьте на 10 вопросов, чтобы получить понятный, персонализированный и реалистичный путь от средней школы до магистратуры.",
+    "de": "Beantworte 10 Fragen, um einen klaren, personalisierten und realistischen Weg von der Sekundarstufe bis zum Master zu erhalten.",
+    "ja": "10 個の質問に答えると、中学から修士課程までの明確で、あなたに合った現実的な進路がわかります。"
+  },
+  "Ask Moov'Coach for details →": {
+    "es": "Preguntar a Moov'Coach por más detalles →",
+    "zh": "向 Moov'Coach 了解详情 →",
+    "hi": "Moov'Coach से विवरण पूछें →",
+    "ar": "اسأل Moov'Coach عن التفاصيل →",
+    "pt": "Pedir detalhes ao Moov'Coach →",
+    "ru": "Спросить подробности у Moov'Coach →",
+    "de": "Moov'Coach nach Details fragen →",
+    "ja": "Moov'Coach に詳細を聞く →"
+  },
+  "Ask Moov'Coach…": {
+    "es": "Preguntar a Moov'Coach…",
+    "zh": "问问 Moov'Coach…",
+    "hi": "Moov'Coach से पूछें…",
+    "ar": "اسأل Moov'Coach…",
+    "pt": "Perguntar ao Moov'Coach…",
+    "ru": "Спросить Moov'Coach…",
+    "de": "Moov'Coach fragen…",
+    "ja": "Moov'Coach に聞く…"
+  },
+  "Ask for details →": {
+    "es": "Pedir detalles →",
+    "zh": "查看详情 →",
+    "hi": "विवरण पूछें →",
+    "ar": "اطلب التفاصيل →",
+    "pt": "Pedir detalhes →",
+    "ru": "Узнать подробности →",
+    "de": "Details anfragen →",
+    "ja": "詳細を聞く →"
+  },
+  "Ask your first question (e.g. “What’s the salary?”, “What about work study?”).": {
+    "es": "Haz tu primera pregunta (p. ej., “¿Cuál es el salario?”, “¿Y la formación dual?”).",
+    "zh": "提出你的第一个问题（例如“薪资是多少？”，“工学交替怎么样？”）。",
+    "hi": "अपना पहला सवाल पूछें (जैसे “वेतन कितना है?”, “वर्क-स्टडी के बारे में क्या?”)।",
+    "ar": "اطرح سؤالك الأول (مثل: “ما الراتب؟”، “وماذا عن الدراسة والعمل بالتناوب؟”).",
+    "pt": "Faça sua primeira pergunta (por exemplo, “Qual é o salário?”, “E sobre a alternância estudo-trabalho?”).",
+    "ru": "Задайте свой первый вопрос (например: “Какая зарплата?”, “А как насчёт обучения с работой?”).",
+    "de": "Stelle deine erste Frage (z. B. „Wie hoch ist das Gehalt?“, „Wie läuft ein duales Studium?“).",
+    "ja": "最初の質問をしてみましょう（例：“給与はどのくらい？”、“仕事と学業の両立はどう？”）。"
+  },
+  "Ask your question below. Open “View my pathway” for the full summary.": {
+    "es": "Haz tu pregunta abajo. Abre “Ver mi recorrido” para ver el resumen completo.",
+    "zh": "在下方输入您的问题。打开“查看我的路径”可查看完整摘要。",
+    "hi": "अपना प्रश्न नीचे पूछें。 पूरा सारांश देखने के लिए “मेरा पथ देखें” खोलें।",
+    "ar": "اطرح سؤالك أدناه. افتح “عرض مساري” لرؤية الملخص الكامل.",
+    "pt": "Faça sua pergunta abaixo. Abra “Ver meu percurso” para ver o resumo completo.",
+    "ru": "Задайте вопрос ниже. Откройте «Посмотреть мой путь», чтобы увидеть полное резюме.",
+    "de": "Stelle unten deine Frage. Öffne „Meinen Weg ansehen“, um die vollständige Zusammenfassung zu sehen.",
+    "ja": "下に質問を入力してください。完全な要約を見るには「自分の進路を見る」を開いてください。"
+  },
+  "Assistant is typing…": {
+    "es": "El asistente está escribiendo…",
+    "zh": "助手正在输入…",
+    "hi": "सहायक टाइप कर रहा है…",
+    "ar": "المساعد يكتب…",
+    "pt": "O assistente está digitando…",
+    "ru": "Ассистент печатает…",
+    "de": "Assistent schreibt…",
+    "ja": "アシスタントが入力中…"
+  },
+  "Authenticator app (TOTP)": {
+    "es": "Aplicación de autenticación (TOTP)",
+    "zh": "身份验证器应用（TOTP）",
+    "hi": "ऑथेंटिकेटर ऐप (TOTP)",
+    "ar": "تطبيق المصادقة (TOTP)",
+    "pt": "Aplicativo autenticador (TOTP)",
+    "ru": "Приложение-аутентификатор (TOTP)",
+    "de": "Authentifikator-App (TOTP)",
+    "ja": "認証アプリ（TOTP）"
+  },
+  "Built from your questionnaire answers and suggested training levels for your profile.": {
+    "es": "Construido a partir de tus respuestas al cuestionario y de los niveles de formación sugeridos para tu perfil.",
+    "zh": "根据您的问卷回答以及为您的画像建议的培训层级生成。",
+    "hi": "आपके प्रश्नावली उत्तरों और आपकी प्रोफ़ाइल के लिए सुझाए गए प्रशिक्षण स्तरों के आधार पर तैयार किया गया।",
+    "ar": "تم بناؤه انطلاقًا من إجاباتك على الاستبيان ومستويات التكوين المقترحة لملفك الشخصي.",
+    "pt": "Construído a partir das suas respostas ao questionário e dos níveis de formação sugeridos para o seu perfil.",
+    "ru": "Сформировано на основе ваших ответов на анкету и рекомендованных уровней обучения для вашего профиля.",
+    "de": "Erstellt auf Basis deiner Fragebogenantworten und der für dein Profil vorgeschlagenen Ausbildungsniveaus.",
+    "ja": "アンケートの回答と、あなたのプロフィールに合う推奨学習レベルをもとに作成されています。"
+  },
+  "CV": {
+    "es": "CV",
+    "zh": "简历",
+    "hi": "सीवी",
+    "ar": "السيرة الذاتية",
+    "pt": "CV",
+    "ru": "Резюме",
+    "de": "Lebenslauf",
+    "ja": "履歴書"
+  },
+  "CV & cover letter": {
+    "es": "CV y carta de presentación",
+    "zh": "简历和求职信",
+    "hi": "सीवी और कवर लेटर",
+    "ar": "السيرة الذاتية ورسالة التغطية",
+    "pt": "CV e carta de apresentação",
+    "ru": "Резюме и сопроводительное письмо",
+    "de": "Lebenslauf und Anschreiben",
+    "ja": "履歴書と志望動機書"
+  },
+  "Career goal": {
+    "es": "Objetivo profesional",
+    "zh": "职业目标",
+    "hi": "कैरियर लक्ष्य",
+    "ar": "الهدف المهني",
+    "pt": "Objetivo profissional",
+    "ru": "Карьерная цель",
+    "de": "Berufsziel",
+    "ja": "キャリア目標"
+  },
+  "Change email or password": {
+    "es": "Cambiar correo o contraseña",
+    "zh": "更改邮箱或密码",
+    "hi": "ईमेल या पासवर्ड बदलें",
+    "ar": "غيّر البريد الإلكتروني أو كلمة المرور",
+    "pt": "Alterar e-mail ou senha",
+    "ru": "Изменить почту или пароль",
+    "de": "E-Mail oder Passwort ändern",
+    "ja": "メールまたはパスワードを変更"
+  },
+  "Change language": {
+    "es": "Cambiar idioma",
+    "zh": "更改语言",
+    "hi": "भाषा बदलें",
+    "ar": "غيّر اللغة",
+    "pt": "Mudar idioma",
+    "ru": "Сменить язык",
+    "de": "Sprache ändern",
+    "ja": "言語を変更"
+  },
+  "Choose an answer to continue": {
+    "es": "Elige una respuesta para continuar",
+    "zh": "请选择一个答案以继续",
+    "hi": "जारी रखने के लिए एक उत्तर चुनें",
+    "ar": "اختر إجابة للمتابعة",
+    "pt": "Escolha uma resposta para continuar",
+    "ru": "Выберите ответ, чтобы продолжить",
+    "de": "Wähle eine Antwort, um fortzufahren",
+    "ja": "続けるには回答を選んでください"
+  },
+  "Close": {
+    "es": "Cerrar",
+    "zh": "关闭",
+    "hi": "बंद करें",
+    "ar": "إغلاق",
+    "pt": "Fechar",
+    "ru": "Закрыть",
+    "de": "Schließen",
+    "ja": "閉じる"
+  },
+  "Close pathway window": {
+    "es": "Cerrar la ventana del recorrido",
+    "zh": "关闭路径窗口",
+    "hi": "पथ विंडो बंद करें",
+    "ar": "أغلق نافذة المسار",
+    "pt": "Fechar a janela do percurso",
+    "ru": "Закрыть окно маршрута",
+    "de": "Weg-Fenster schließen",
+    "ja": "進路ウィンドウを閉じる"
+  },
+  "Confirmation code": {
+    "es": "Código de confirmación",
+    "zh": "确认代码",
+    "hi": "पुष्टि कोड",
+    "ar": "رمز التأكيد",
+    "pt": "Código de confirmação",
+    "ru": "Код подтверждения",
+    "de": "Bestätigungscode",
+    "ja": "確認コード"
+  },
+  "Conversation": {
+    "es": "Conversación",
+    "zh": "对话",
+    "hi": "बातचीत",
+    "ar": "المحادثة",
+    "pt": "Conversa",
+    "ru": "Разговор",
+    "de": "Unterhaltung",
+    "ja": "会話"
+  },
+  "Conversation not found": {
+    "es": "Conversación no encontrada",
+    "zh": "未找到对话",
+    "hi": "बातचीत नहीं मिली",
+    "ar": "لم يتم العثور على المحادثة",
+    "pt": "Conversa não encontrada",
+    "ru": "Разговор не найден",
+    "de": "Unterhaltung nicht gefunden",
+    "ja": "会話が見つかりません"
+  },
+  "Conversation with Moov'Coach": {
+    "es": "Conversación con Moov'Coach",
+    "zh": "与 Moov'Coach 的对话",
+    "hi": "Moov'Coach के साथ बातचीत",
+    "ar": "محادثة مع Moov'Coach",
+    "pt": "Conversa com Moov'Coach",
+    "ru": "Разговор с Moov'Coach",
+    "de": "Unterhaltung mit Moov'Coach",
+    "ja": "Moov'Coach との会話"
+  },
+  "Current 2FA code": {
+    "es": "Código 2FA actual",
+    "zh": "当前 2FA 代码",
+    "hi": "वर्तमान 2FA कोड",
+    "ar": "رمز التحقق الثنائي الحالي",
+    "pt": "Código 2FA atual",
+    "ru": "Текущий код 2FA",
+    "de": "Aktueller 2FA-Code",
+    "ja": "現在の 2FA コード"
+  },
+  "Current answer": {
+    "es": "Respuesta actual",
+    "zh": "当前答案",
+    "hi": "वर्तमान उत्तर",
+    "ar": "الإجابة الحالية",
+    "pt": "Resposta atual",
+    "ru": "Текущий ответ",
+    "de": "Aktuelle Antwort",
+    "ja": "現在の回答"
+  },
+  "Current level": {
+    "es": "Nivel actual",
+    "zh": "当前水平",
+    "hi": "वर्तमान स्तर",
+    "ar": "المستوى الحالي",
+    "pt": "Nível atual",
+    "ru": "Текущий уровень",
+    "de": "Aktuelles Niveau",
+    "ja": "現在のレベル"
+  },
+  "Definition": {
+    "es": "Definición",
+    "zh": "定义",
+    "hi": "परिभाषा",
+    "ar": "التعريف",
+    "pt": "Definição",
+    "ru": "Определение",
+    "de": "Definition",
+    "ja": "定義"
+  },
+  "Detailed pathway": {
+    "es": "Recorrido detallado",
+    "zh": "详细路径",
+    "hi": "विस्तृत पथ",
+    "ar": "المسار المفصل",
+    "pt": "Percurso detalhado",
+    "ru": "Подробный путь",
+    "de": "Detaillierter Weg",
+    "ja": "詳細な進路"
+  },
+  "Detected profile": {
+    "es": "Perfil detectado",
+    "zh": "识别到的画像",
+    "hi": "पहचानी गई प्रोफ़ाइल",
+    "ar": "الملف الشخصي المكتشف",
+    "pt": "Perfil detectado",
+    "ru": "Определённый профиль",
+    "de": "Erkanntes Profil",
+    "ja": "検出されたプロフィール"
+  },
+  "Diplomas found in your suggested training": {
+    "es": "Diplomas encontrados en las formaciones sugeridas",
+    "zh": "在推荐培训中找到的文凭",
+    "hi": "आपके सुझाए गए प्रशिक्षण में मिले डिप्लोमा",
+    "ar": "الشهادات الموجودة في التكوينات المقترحة لك",
+    "pt": "Diplomas encontrados nas formações sugeridas",
+    "ru": "Дипломы, найденные в рекомендованных вам программах обучения",
+    "de": "Abschlüsse in deinen vorgeschlagenen Ausbildungswegen",
+    "ja": "提案された進学先で見つかった学位・資格"
+  },
+  "Disable 2FA": {
+    "es": "Desactivar 2FA",
+    "zh": "停用 2FA",
+    "hi": "2FA बंद करें",
+    "ar": "تعطيل التحقق الثنائي",
+    "pt": "Desativar 2FA",
+    "ru": "Отключить 2FA",
+    "de": "2FA deaktivieren",
+    "ja": "2FA を無効化"
+  },
+  "Duration: ": {
+    "es": "Duración: ",
+    "zh": "时长：",
+    "hi": "अवधि: ",
+    "ar": "المدة: ",
+    "pt": "Duração: ",
+    "ru": "Длительность: ",
+    "de": "Dauer: ",
+    "ja": "期間: "
+  },
+  "Each answer influences the level filter and study leads.": {
+    "es": "Cada respuesta influye en el filtro de nivel y en las pistas de estudio.",
+    "zh": "每个答案都会影响层级筛选和学习方向。",
+    "hi": "हर उत्तर स्तर फ़िल्टर और अध्ययन सुझावों को प्रभावित करता है।",
+    "ar": "كل إجابة تؤثر في تصفية المستوى ومسارات الدراسة المقترحة.",
+    "pt": "Cada resposta influencia o filtro de nível e as pistas de estudo.",
+    "ru": "Каждый ответ влияет на фильтр уровня и предлагаемые направления обучения.",
+    "de": "Jede Antwort beeinflusst den Niveaufilter und die Studienhinweise.",
+    "ja": "各回答は、レベルの絞り込みと学習候補に影響します。"
+  },
+  "Enabled on your account.": {
+    "es": "Activado en tu cuenta.",
+    "zh": "已在您的账户上启用。",
+    "hi": "आपके खाते पर सक्षम है।",
+    "ar": "مفعّل على حسابك.",
+    "pt": "Ativado na sua conta.",
+    "ru": "Включено в вашей учётной записи.",
+    "de": "In deinem Konto aktiviert.",
+    "ja": "アカウントで有効になっています。"
+  },
+  "Enter to send · Shift+Enter for a new line": {
+    "es": "Enter para enviar · Shift+Enter para una nueva línea",
+    "zh": "按 Enter 发送 · Shift+Enter 换行",
+    "hi": "भेजने के लिए Enter · नई पंक्ति के लिए Shift+Enter",
+    "ar": "Enter للإرسال · Shift+Enter لسطر جديد",
+    "pt": "Enter para enviar · Shift+Enter para nova linha",
+    "ru": "Enter для отправки · Shift+Enter для новой строки",
+    "de": "Enter zum Senden · Shift+Enter für eine neue Zeile",
+    "ja": "Enter で送信 · Shift+Enter で改行"
+  },
+  "Field": {
+    "es": "Área",
+    "zh": "领域",
+    "hi": "क्षेत्र",
+    "ar": "المجال",
+    "pt": "Área",
+    "ru": "Сфера",
+    "de": "Bereich",
+    "ja": "分野"
+  },
+  "Field: {domain}": {
+    "es": "Área: {domain}",
+    "zh": "领域：{domain}",
+    "hi": "क्षेत्र: {domain}",
+    "ar": "المجال: {domain}",
+    "pt": "Área: {domain}",
+    "ru": "Сфера: {domain}",
+    "de": "Bereich: {domain}",
+    "ja": "分野: {domain}"
+  },
+  "For each job: access level, short description, related training.": {
+    "es": "Para cada profesión: nivel de acceso, breve descripción y formación relacionada.",
+    "zh": "每个职业包括：准入层级、简短描述、相关培训。",
+    "hi": "हर पेशे के लिए: प्रवेश स्तर, संक्षिप्त विवरण, संबंधित प्रशिक्षण।",
+    "ar": "لكل مهنة: مستوى الوصول، وصف قصير، والتكوينات المرتبطة.",
+    "pt": "Para cada profissão: nível de acesso, breve descrição e formação relacionada.",
+    "ru": "Для каждой профессии: уровень доступа, краткое описание, связанное обучение.",
+    "de": "Für jeden Beruf: Zugangslevel, Kurzbeschreibung, passende Ausbildung.",
+    "ja": "各職業について、到達レベル、短い説明、関連する学習先を表示します。"
+  },
+  "Free **{kind}** analyses left: **{remaining}** / **{limit}** (then Premium).": {
+    "es": "Análisis gratuitos de **{kind}** restantes: **{remaining}** / **{limit}** (después, Premium).",
+    "zh": "剩余免费 **{kind}** 分析次数：**{remaining}** / **{limit}**（之后需使用 Premium）。",
+    "hi": "मुफ़्त **{kind}** विश्लेषण शेष: **{remaining}** / **{limit}** (इसके बाद Premium)।",
+    "ar": "تحليلات **{kind}** المجانية المتبقية: **{remaining}** / **{limit}** (ثم Premium).",
+    "pt": "Análises gratuitas de **{kind}** restantes: **{remaining}** / **{limit}** (depois, Premium).",
+    "ru": "Осталось бесплатных анализов **{kind}**: **{remaining}** / **{limit}** (затем Premium).",
+    "de": "Verbleibende kostenlose **{kind}**-Analysen: **{remaining}** / **{limit}** (danach Premium).",
+    "ja": "無料の **{kind}** 分析の残り回数: **{remaining}** / **{limit}**（以降は Premium）。"
+  },
+  "Free analysis limit reached for this document. Upgrade to **Premium** to continue.": {
+    "es": "Se alcanzó el límite de análisis gratuitos para este documento. Pásate a **Premium** para continuar.",
+    "zh": "此文档的免费分析次数已达上限。升级到 **Premium** 以继续。",
+    "hi": "इस दस्तावेज़ के लिए मुफ़्त विश्लेषण सीमा पूरी हो गई है। जारी रखने के लिए **Premium** में अपग्रेड करें।",
+    "ar": "تم بلوغ حد التحليلات المجانية لهذا المستند. قم بالترقية إلى **Premium** للمتابعة.",
+    "pt": "O limite de análises gratuitas para este documento foi atingido. Faça upgrade para **Premium** para continuar.",
+    "ru": "Для этого документа достигнут лимит бесплатных анализов. Перейдите на **Premium**, чтобы продолжить.",
+    "de": "Das Limit kostenloser Analysen für dieses Dokument wurde erreicht. Wechsle zu **Premium**, um fortzufahren.",
+    "ja": "このドキュメントの無料分析上限に達しました。続行するには **Premium** にアップグレードしてください。"
+  },
+  "Free plan: **{remaining}** of **{limit}** Moov’Coach messages left.": {
+    "es": "Plan gratuito: te quedan **{remaining}** de **{limit}** mensajes de Moov’Coach.",
+    "zh": "免费套餐：Moov’Coach 消息剩余 **{remaining}** / **{limit}**。",
+    "hi": "मुफ़्त प्लान: Moov’Coach के **{limit}** में से **{remaining}** संदेश शेष हैं।",
+    "ar": "الخطة المجانية: تبقّى **{remaining}** من أصل **{limit}** رسائل Moov’Coach.",
+    "pt": "Plano gratuito: restam **{remaining}** de **{limit}** mensagens do Moov’Coach.",
+    "ru": "Бесплатный план: осталось **{remaining}** из **{limit}** сообщений Moov’Coach.",
+    "de": "Kostenloser Plan: **{remaining}** von **{limit}** Moov’Coach-Nachrichten verbleiben.",
+    "ja": "無料プラン: Moov’Coach メッセージの残りは **{limit}** 件中 **{remaining}** 件です。"
+  },
+  "Go back to the previous page": {
+    "es": "Volver a la página anterior",
+    "zh": "返回上一页",
+    "hi": "पिछले पृष्ठ पर जाएँ",
+    "ar": "العودة إلى الصفحة السابقة",
+    "pt": "Voltar para a página anterior",
+    "ru": "Вернуться на предыдущую страницу",
+    "de": "Zur vorherigen Seite zurückkehren",
+    "ja": "前のページに戻る"
+  },
+  "Go back without losing your answers.": {
+    "es": "Vuelve atrás sin perder tus respuestas.",
+    "zh": "返回且不会丢失您的答案。",
+    "hi": "अपने उत्तर खोए बिना पीछे जाएँ।",
+    "ar": "ارجع دون فقدان إجاباتك.",
+    "pt": "Volte sem perder suas respostas.",
+    "ru": "Вернитесь назад, не теряя свои ответы.",
+    "de": "Gehe zurück, ohne deine Antworten zu verlieren.",
+    "ja": "回答を失わずに前に戻れます。"
+  },
+  "Guided pathway": {
+    "es": "Recorrido guiado",
+    "zh": "引导式路径",
+    "hi": "मार्गदर्शित पथ",
+    "ar": "مسار موجّه",
+    "pt": "Percurso guiado",
+    "ru": "Пошаговый путь",
+    "de": "Geführter Weg",
+    "ja": "ガイド付き進路"
+  },
+  "Here is my pathway after the Moov'Up questionnaire.": {
+    "es": "Este es mi recorrido tras el cuestionario de Moov'Up.",
+    "zh": "这是我完成 Moov'Up 问卷后的路径。",
+    "hi": "यह Moov'Up प्रश्नावली के बाद मेरा पथ है।",
+    "ar": "هذا هو مساري بعد استبيان Moov'Up.",
+    "pt": "Este é o meu percurso após o questionário do Moov'Up.",
+    "ru": "Вот мой путь после прохождения анкеты Moov'Up.",
+    "de": "Hier ist mein Weg nach dem Moov'Up-Fragebogen.",
+    "ja": "これは Moov'Up アンケート後の私の進路です。"
+  },
+  "How you like to be called (short form is fine).": {
+    "es": "Cómo te gusta que te llamen (una forma corta está bien).",
+    "zh": "您希望别人如何称呼您（简称也可以）。",
+    "hi": "आपको किस नाम से पुकारा जाए (छोटा रूप भी ठीक है)।",
+    "ar": "كيف تحب أن نناديك (يمكن استخدام صيغة مختصرة).",
+    "pt": "Como você gosta de ser chamado(a) (uma forma curta está ok).",
+    "ru": "Как вам нравится, чтобы к вам обращались (можно короткую форму).",
+    "de": "Wie du genannt werden möchtest (eine Kurzform ist völlig okay).",
+    "ja": "どのように呼ばれたいですか（短い呼び名でも大丈夫です）。"
+  },
+  "Invalid code.": {
+    "es": "Código no válido.",
+    "zh": "代码无效。",
+    "hi": "अमान्य कोड।",
+    "ar": "الرمز غير صالح.",
+    "pt": "Código inválido.",
+    "ru": "Неверный код.",
+    "de": "Ungültiger Code.",
+    "ja": "無効なコードです。"
+  },
+  "Job sheet on ONISEP (external)": {
+    "es": "Ficha del oficio en ONISEP (externo)",
+    "zh": "ONISEP 上的职业页面（外部）",
+    "hi": "ONISEP पर पेशे की जानकारी (बाहरी)",
+    "ar": "بطاقة المهنة على ONISEP (خارجي)",
+    "pt": "Ficha da profissão no ONISEP (externo)",
+    "ru": "Карточка профессии на ONISEP (внешний сайт)",
+    "de": "Berufsprofil auf ONISEP (extern)",
+    "ja": "ONISEP の職業シート（外部）"
+  },
+  "Job {n}": {
+    "es": "Profesión {n}",
+    "zh": "职业 {n}",
+    "hi": "पेशा {n}",
+    "ar": "المهنة {n}",
+    "pt": "Profissão {n}",
+    "ru": "Профессия {n}",
+    "de": "Beruf {n}",
+    "ja": "職業 {n}"
+  },
+  "Jobs & access": {
+    "es": "Profesiones y acceso",
+    "zh": "职业与准入",
+    "hi": "पेशे और प्रवेश",
+    "ar": "المهن وإمكانية الوصول",
+    "pt": "Profissões e acesso",
+    "ru": "Профессии и доступ",
+    "de": "Berufe & Zugang",
+    "ja": "職業と進路"
+  },
+  "Language": {
+    "es": "Idioma",
+    "zh": "语言",
+    "hi": "भाषा",
+    "ar": "اللغة",
+    "pt": "Idioma",
+    "ru": "Язык",
+    "de": "Sprache",
+    "ja": "言語"
+  },
+  "Learning style": {
+    "es": "Estilo de aprendizaje",
+    "zh": "学习风格",
+    "hi": "सीखने की शैली",
+    "ar": "أسلوب التعلّم",
+    "pt": "Estilo de aprendizagem",
+    "ru": "Стиль обучения",
+    "de": "Lernstil",
+    "ja": "学習スタイル"
+  },
+  "Level labels from training sheets (ONISEP / Moov'Up data).": {
+    "es": "Etiquetas de nivel de las fichas de formación (datos de ONISEP / Moov'Up).",
+    "zh": "来自培训说明页的层级标签（ONISEP / Moov'Up 数据）。",
+    "hi": "प्रशिक्षण फ़ाइलों से स्तर लेबल (ONISEP / Moov'Up डेटा)।",
+    "ar": "تسميات المستويات من بطاقات التكوين (بيانات ONISEP / Moov'Up).",
+    "pt": "Rótulos de nível das fichas de formação (dados ONISEP / Moov'Up).",
+    "ru": "Обозначения уровней из карточек обучения (данные ONISEP / Moov'Up).",
+    "de": "Niveaubezeichnungen aus Ausbildungsblättern (ONISEP- / Moov'Up-Daten).",
+    "ja": "学習シートのレベル表記（ONISEP / Moov'Up のデータ）。"
+  },
+  "Levels in recommendations": {
+    "es": "Niveles en las recomendaciones",
+    "zh": "推荐中的层级",
+    "hi": "सिफ़ारिशों में स्तर",
+    "ar": "المستويات في التوصيات",
+    "pt": "Níveis nas recomendações",
+    "ru": "Уровни в рекомендациях",
+    "de": "Niveaus in den Empfehlungen",
+    "ja": "おすすめ内のレベル"
+  },
+  "Link copied": {
+    "es": "Enlace copiado",
+    "zh": "链接已复制",
+    "hi": "लिंक कॉपी हो गया",
+    "ar": "تم نسخ الرابط",
+    "pt": "Link copiado",
+    "ru": "Ссылка скопирована",
+    "de": "Link kopiert",
+    "ja": "リンクをコピーしました"
+  },
+  "Link copied to clipboard.": {
+    "es": "Enlace copiado al portapapeles.",
+    "zh": "链接已复制到剪贴板。",
+    "hi": "लिंक क्लिपबोर्ड में कॉपी हो गया।",
+    "ar": "تم نسخ الرابط إلى الحافظة.",
+    "pt": "Link copiado para a área de transferência.",
+    "ru": "Ссылка скопирована в буфер обмена.",
+    "de": "Link in die Zwischenablage kopiert.",
+    "ja": "リンクをクリップボードにコピーしました。"
+  },
+  "Loading…": {
+    "es": "Cargando…",
+    "zh": "加载中…",
+    "hi": "लोड हो रहा है…",
+    "ar": "جارٍ التحميل…",
+    "pt": "Carregando…",
+    "ru": "Загрузка…",
+    "de": "Wird geladen…",
+    "ja": "読み込み中…"
+  },
+  "Local Node dev-api has **no valid OPENROUTER_API_KEY** (see `backend/.env`): chat cannot call the model until configured and restarted.": {
+    "es": "La dev-api local de Node **no tiene un OPENROUTER_API_KEY válido** (ver `backend/.env`): el chat no puede llamar al modelo hasta que se configure y reinicie.",
+    "zh": "本地 Node dev-api **没有有效的 OPENROUTER_API_KEY**（见 `backend/.env`）：在完成配置并重启之前，聊天无法调用模型。",
+    "hi": "स्थानीय Node dev-api में **मान्य OPENROUTER_API_KEY नहीं है** (`backend/.env` देखें): कॉन्फ़िगर और रीस्टार्ट किए बिना चैट मॉडल को कॉल नहीं कर सकता।",
+    "ar": "واجهة Node dev-api المحلية **لا تحتوي على OPENROUTER_API_KEY صالح** (راجع `backend/.env`): لا يمكن للدردشة استدعاء النموذج حتى يتم الإعداد وإعادة التشغيل.",
+    "pt": "A dev-api local em Node **não tem um OPENROUTER_API_KEY válido** (veja `backend/.env`): o chat não pode chamar o modelo até ser configurado e reiniciado.",
+    "ru": "В локальном Node dev-api **нет действительного OPENROUTER_API_KEY** (см. `backend/.env`): чат не сможет обратиться к модели, пока всё не будет настроено и перезапущено.",
+    "de": "Die lokale Node-dev-api hat **keinen gültigen OPENROUTER_API_KEY** (siehe `backend/.env`): Der Chat kann das Modell erst aufrufen, wenn dies konfiguriert und neu gestartet wurde.",
+    "ja": "ローカルの Node dev-api には **有効な OPENROUTER_API_KEY がありません**（`backend/.env` を参照）。設定して再起動するまで、チャットはモデルを呼び出せません。"
+  },
+  "Main navigation": {
+    "es": "Navegación principal",
+    "zh": "主导航",
+    "hi": "मुख्य नेविगेशन",
+    "ar": "التنقل الرئيسي",
+    "pt": "Navegação principal",
+    "ru": "Основная навигация",
+    "de": "Hauptnavigation",
+    "ja": "メインナビゲーション"
+  },
+  "Manual copy": {
+    "es": "Copia manual",
+    "zh": "手动复制",
+    "hi": "मैनुअल कॉपी",
+    "ar": "نسخ يدوي",
+    "pt": "Cópia manual",
+    "ru": "Ручное копирование",
+    "de": "Manuell kopieren",
+    "ja": "手動コピー"
+  },
+  "Mobility": {
+    "es": "Movilidad",
+    "zh": "流动性",
+    "hi": "गतिशीलता",
+    "ar": "التنقّل",
+    "pt": "Mobilidade",
+    "ru": "Мобильность",
+    "de": "Mobilität",
+    "ja": "移動性"
+  },
+  "Moov'Coach": {
+    "es": "Moov'Coach",
+    "zh": "Moov'Coach",
+    "hi": "Moov'Coach",
+    "ar": "Moov'Coach",
+    "pt": "Moov'Coach",
+    "ru": "Moov'Coach",
+    "de": "Moov'Coach",
+    "ja": "Moov'Coach"
+  },
+  "Moov'Up": {
+    "es": "Moov'Up",
+    "zh": "Moov'Up",
+    "hi": "Moov'Up",
+    "ar": "Moov'Up",
+    "pt": "Moov'Up",
+    "ru": "Moov'Up",
+    "de": "Moov'Up",
+    "ja": "Moov'Up"
+  },
+  "Moov'Up is in active development. We're building in the open: every question is refined with care, every pathway is validated with real users, and we iterate quickly on feedback.": {
+    "es": "Moov'Up está en desarrollo activo. Construimos de forma abierta: cada pregunta se afina con cuidado, cada recorrido se valida con usuarios reales y iteramos rápido a partir de sus comentarios.",
+    "zh": "Moov'Up 正在积极开发中。我们公开构建：每个问题都经过仔细打磨，每条路径都由真实用户验证，我们也会根据反馈快速迭代。",
+    "hi": "Moov'Up सक्रिय विकास में है। हम खुले तौर पर बना रहे हैं: हर प्रश्न को सावधानी से सुधारा जाता है, हर पथ को वास्तविक उपयोगकर्ताओं के साथ सत्यापित किया जाता है, और हम प्रतिक्रिया पर तेजी से काम करते हैं।",
+    "ar": "Moov'Up قيد التطوير النشط. نحن نبنيه بشفافية: كل سؤال يُصاغ بعناية، وكل مسار يتم التحقق منه مع مستخدمين حقيقيين، ونكرّر بسرعة بناءً على الملاحظات.",
+    "pt": "O Moov'Up está em desenvolvimento ativo. Estamos construindo às claras: cada pergunta é refinada com cuidado, cada percurso é validado com usuários reais e iteramos rapidamente a partir do feedback.",
+    "ru": "Moov'Up активно развивается. Мы строим продукт открыто: каждый вопрос тщательно улучшается, каждый путь проверяется на реальных пользователях, и мы быстро итерируем по обратной связи.",
+    "de": "Moov'Up wird aktiv weiterentwickelt. Wir bauen offen: Jede Frage wird sorgfältig verfeinert, jeder Weg wird mit echten Nutzerinnen und Nutzern validiert, und wir iterieren schnell anhand von Feedback.",
+    "ja": "Moov'Up は現在も積極的に開発中です。オープンに作り続けており、すべての質問を丁寧に磨き、すべての進路を実際のユーザーで検証し、フィードバックをもとに素早く改善しています。"
+  },
+  "Moov'Up overview": {
+    "es": "Resumen de Moov'Up",
+    "zh": "Moov'Up 概览",
+    "hi": "Moov'Up का अवलोकन",
+    "ar": "نظرة عامة على Moov'Up",
+    "pt": "Visão geral do Moov'Up",
+    "ru": "Обзор Moov'Up",
+    "de": "Moov'Up-Überblick",
+    "ja": "Moov'Up の概要"
+  },
+  "Moov'Up, home": {
+    "es": "Moov'Up, inicio",
+    "zh": "Moov'Up，首页",
+    "hi": "Moov'Up, होम",
+    "ar": "Moov'Up، الصفحة الرئيسية",
+    "pt": "Moov'Up, início",
+    "ru": "Moov'Up, главная",
+    "de": "Moov'Up, Startseite",
+    "ja": "Moov'Up、ホーム"
+  },
+  "My Moov'Up pathway": {
+    "es": "Mi recorrido Moov'Up",
+    "zh": "我的 Moov'Up 路径",
+    "hi": "मेरा Moov'Up पथ",
+    "ar": "مسار Moov'Up الخاص بي",
+    "pt": "Meu percurso Moov'Up",
+    "ru": "Мой путь Moov'Up",
+    "de": "Mein Moov'Up-Weg",
+    "ja": "私の Moov'Up 進路"
+  },
+  "Natural activity": {
+    "es": "Actividad natural",
+    "zh": "自然偏好的活动",
+    "hi": "स्वाभाविक गतिविधि",
+    "ar": "النشاط الطبيعي",
+    "pt": "Atividade natural",
+    "ru": "Естественная деятельность",
+    "de": "Natürliche Tätigkeit",
+    "ja": "自然に向く活動"
+  },
+  "Next question": {
+    "es": "Siguiente pregunta",
+    "zh": "下一题",
+    "hi": "अगला प्रश्न",
+    "ar": "السؤال التالي",
+    "pt": "Próxima pergunta",
+    "ru": "Следующий вопрос",
+    "de": "Nächste Frage",
+    "ja": "次の質問"
+  },
+  "No answer": {
+    "es": "Sin respuesta",
+    "zh": "无答案",
+    "hi": "कोई उत्तर नहीं",
+    "ar": "لا إجابة",
+    "pt": "Sem resposta",
+    "ru": "Нет ответа",
+    "de": "Keine Antwort",
+    "ja": "未回答"
+  },
+  "No job recommendations yet, keep chatting or retake the questionnaire.": {
+    "es": "Aún no hay recomendaciones de profesiones; sigue conversando o vuelve a hacer el cuestionario.",
+    "zh": "暂时还没有职业推荐，请继续聊天或重新填写问卷。",
+    "hi": "अभी तक कोई पेशे की सिफ़ारिश नहीं है; बातचीत जारी रखें या प्रश्नावली फिर से करें।",
+    "ar": "لا توجد توصيات مهنية بعد؛ واصل الدردشة أو أعد ملء الاستبيان.",
+    "pt": "Ainda não há recomendações de profissões; continue conversando ou refaça o questionário.",
+    "ru": "Пока нет рекомендаций по профессиям: продолжайте чат или пройдите анкету заново.",
+    "de": "Noch gibt es keine Berufsempfehlungen. Chatte weiter oder fülle den Fragebogen erneut aus.",
+    "ja": "まだ職業のおすすめはありません。チャットを続けるか、アンケートをやり直してください。"
+  },
+  "Numbers & logic": {
+    "es": "Números y lógica",
+    "zh": "数字与逻辑",
+    "hi": "संख्याएँ और तर्क",
+    "ar": "الأرقام والمنطق",
+    "pt": "Números e lógica",
+    "ru": "Числа и логика",
+    "de": "Zahlen & Logik",
+    "ja": "数字と論理"
+  },
+  "OK": {
+    "es": "OK",
+    "zh": "确定",
+    "hi": "ठीक है",
+    "ar": "حسنًا",
+    "pt": "OK",
+    "ru": "ОК",
+    "de": "OK",
+    "ja": "OK"
+  },
+  "ONISEP sheet": {
+    "es": "Ficha ONISEP",
+    "zh": "ONISEP 页面",
+    "hi": "ONISEP शीट",
+    "ar": "بطاقة ONISEP",
+    "pt": "Ficha ONISEP",
+    "ru": "Карточка ONISEP",
+    "de": "ONISEP-Blatt",
+    "ja": "ONISEP シート"
+  },
+  "ONISEP sheet, salaries & outlook →": {
+    "es": "Ficha ONISEP, salarios y perspectivas →",
+    "zh": "ONISEP 页面、薪资与前景 →",
+    "hi": "ONISEP शीट, वेतन और संभावनाएँ →",
+    "ar": "بطاقة ONISEP، الرواتب والآفاق →",
+    "pt": "Ficha ONISEP, salários e perspectivas →",
+    "ru": "Карточка ONISEP, зарплаты и перспективы →",
+    "de": "ONISEP-Blatt, Gehälter & Aussichten →",
+    "ja": "ONISEP シート、給与と見通し →"
+  },
+  "ONISEP source (external site)": {
+    "es": "Fuente ONISEP (sitio externo)",
+    "zh": "ONISEP 来源（外部网站）",
+    "hi": "ONISEP स्रोत (बाहरी साइट)",
+    "ar": "مصدر ONISEP (موقع خارجي)",
+    "pt": "Fonte ONISEP (site externo)",
+    "ru": "Источник ONISEP (внешний сайт)",
+    "de": "ONISEP-Quelle (externe Website)",
+    "ja": "ONISEP ソース（外部サイト）"
+  },
+  "ONISEP training options that match your current level, from closest to the job to more general paths.": {
+    "es": "Opciones de formación de ONISEP que se ajustan a tu nivel actual, desde las más cercanas al oficio hasta recorridos más generales.",
+    "zh": "与您当前水平匹配的 ONISEP 培训选项，从最贴近该职业到更通用的路径。",
+    "hi": "आपके वर्तमान स्तर से मेल खाने वाले ONISEP प्रशिक्षण विकल्प, पेशे के सबसे नज़दीकी से लेकर अधिक सामान्य रास्तों तक।",
+    "ar": "خيارات التكوين من ONISEP المطابقة لمستواك الحالي، من الأقرب إلى المهنة إلى المسارات الأكثر عمومية.",
+    "pt": "Opções de formação do ONISEP que correspondem ao seu nível atual, das mais próximas da profissão aos percursos mais gerais.",
+    "ru": "Варианты обучения ONISEP, соответствующие вашему текущему уровню, от наиболее близких к профессии до более общих путей.",
+    "de": "ONISEP-Ausbildungsoptionen, die zu deinem aktuellen Niveau passen, von den berufsnahen Optionen bis zu allgemeineren Wegen.",
+    "ja": "あなたの現在のレベルに合う ONISEP の進学先です。職業に最も近いものから、より一般的な進路まで並んでいます。"
+  },
+  "ONISEP training that matches your level, from the closest fit for this job to broader options.": {
+    "es": "Formación de ONISEP que se ajusta a tu nivel, desde la más adecuada para este oficio hasta opciones más amplias.",
+    "zh": "与您水平匹配的 ONISEP 培训，从最适合该职业的选项到更宽泛的选择。",
+    "hi": "आपके स्तर से मेल खाने वाला ONISEP प्रशिक्षण, इस पेशे के सबसे उपयुक्त विकल्प से लेकर व्यापक विकल्पों तक।",
+    "ar": "تكوين ONISEP المطابق لمستواك، من الأنسب لهذه المهنة إلى الخيارات الأوسع.",
+    "pt": "Formação do ONISEP que corresponde ao seu nível, da opção mais próxima desta profissão às alternativas mais amplas.",
+    "ru": "Обучение ONISEP, соответствующее вашему уровню, от наиболее подходящего для этой профессии до более широких вариантов.",
+    "de": "ONISEP-Ausbildungen, die zu deinem Niveau passen, von der besten Option für diesen Beruf bis zu breiteren Alternativen.",
+    "ja": "あなたのレベルに合う ONISEP の進学先です。この職業に最も合うものから、より幅広い選択肢まで表示します。"
+  },
+  "Official ONISEP sheet — details, schools, entry requirements": {
+    "es": "Ficha oficial de ONISEP — detalles, centros y requisitos de acceso",
+    "zh": "官方 ONISEP 页面——详情、学校、入学要求",
+    "hi": "आधिकारिक ONISEP शीट — विवरण, संस्थान, प्रवेश आवश्यकताएँ",
+    "ar": "بطاقة ONISEP الرسمية — التفاصيل، المدارس، شروط القبول",
+    "pt": "Ficha oficial do ONISEP — detalhes, escolas e requisitos de entrada",
+    "ru": "Официальная карточка ONISEP — подробности, учебные заведения, требования к поступлению",
+    "de": "Offizielles ONISEP-Blatt — Details, Schulen, Zugangsvoraussetzungen",
+    "ja": "公式 ONISEP シート — 詳細、学校、入学条件"
+  },
+  "Open in app": {
+    "es": "Abrir en la app",
+    "zh": "在应用中打开",
+    "hi": "ऐप में खोलें",
+    "ar": "افتح في التطبيق",
+    "pt": "Abrir no app",
+    "ru": "Открыть в приложении",
+    "de": "In App öffnen",
+    "ja": "アプリで開く"
+  },
+  "Open your authenticator app (Google Authenticator, Microsoft Authenticator, etc.) and enter the 6-digit code.": {
+    "es": "Abre tu aplicación de autenticación (Google Authenticator, Microsoft Authenticator, etc.) e introduce el código de 6 dígitos.",
+    "zh": "打开您的身份验证器应用（Google Authenticator、Microsoft Authenticator 等），并输入 6 位代码。",
+    "hi": "अपना ऑथेंटिकेटर ऐप (Google Authenticator, Microsoft Authenticator आदि) खोलें और 6 अंकों का कोड दर्ज करें।",
+    "ar": "افتح تطبيق المصادقة لديك (Google Authenticator أو Microsoft Authenticator أو غيره) وأدخل الرمز المكوّن من 6 أرقام.",
+    "pt": "Abra o seu aplicativo autenticador (Google Authenticator, Microsoft Authenticator etc.) e digite o código de 6 dígitos.",
+    "ru": "Откройте приложение-аутентификатор (Google Authenticator, Microsoft Authenticator и т. д.) и введите 6-значный код.",
+    "de": "Öffne deine Authenticator-App (Google Authenticator, Microsoft Authenticator usw.) und gib den 6-stelligen Code ein.",
+    "ja": "認証アプリ（Google Authenticator、Microsoft Authenticator など）を開き、6桁のコードを入力してください。"
+  },
+  "Path": {
+    "es": "Recorrido",
+    "zh": "路径",
+    "hi": "पथ",
+    "ar": "المسار",
+    "pt": "Percurso",
+    "ru": "Путь",
+    "de": "Weg",
+    "ja": "進路"
+  },
+  "Path generated": {
+    "es": "Recorrido generado",
+    "zh": "路径已生成",
+    "hi": "पथ तैयार हो गया",
+    "ar": "تم إنشاء المسار",
+    "pt": "Percurso gerado",
+    "ru": "Путь построен",
+    "de": "Weg generiert",
+    "ja": "進路を生成しました"
+  },
+  "Path unavailable": {
+    "es": "Recorrido no disponible",
+    "zh": "路径不可用",
+    "hi": "पथ उपलब्ध नहीं है",
+    "ar": "المسار غير متاح",
+    "pt": "Percurso indisponível",
+    "ru": "Путь недоступен",
+    "de": "Weg nicht verfügbar",
+    "ja": "進路を表示できません"
+  },
+  "Pathway summary": {
+    "es": "Resumen del recorrido",
+    "zh": "路径摘要",
+    "hi": "पथ सारांश",
+    "ar": "ملخص المسار",
+    "pt": "Resumo do percurso",
+    "ru": "Краткое резюме пути",
+    "de": "Weg-Zusammenfassung",
+    "ja": "進路の概要"
+  },
+  "Preparing a simple, readable path aligned with your profile.": {
+    "es": "Preparando un recorrido sencillo y legible, alineado con tu perfil.",
+    "zh": "正在准备一条与您画像相匹配、简单易读的路径。",
+    "hi": "आपकी प्रोफ़ाइल के अनुरूप एक सरल, पढ़ने में आसान पथ तैयार किया जा रहा है।",
+    "ar": "يجري إعداد مسار بسيط وسهل القراءة ومتوافق مع ملفك الشخصي.",
+    "pt": "Preparando um percurso simples, legível e alinhado ao seu perfil.",
+    "ru": "Готовим простой и понятный путь, соответствующий вашему профилю.",
+    "de": "Ein einfacher, gut lesbarer Weg passend zu deinem Profil wird vorbereitet.",
+    "ja": "あなたのプロフィールに合った、シンプルで読みやすい進路を準備しています。"
+  },
+  "Previous question": {
+    "es": "Pregunta anterior",
+    "zh": "上一题",
+    "hi": "पिछला प्रश्न",
+    "ar": "السؤال السابق",
+    "pt": "Pergunta anterior",
+    "ru": "Предыдущий вопрос",
+    "de": "Vorherige Frage",
+    "ja": "前の質問"
+  },
+  "Question": {
+    "es": "Pregunta",
+    "zh": "问题",
+    "hi": "प्रश्न",
+    "ar": "السؤال",
+    "pt": "Pergunta",
+    "ru": "Вопрос",
+    "de": "Frage",
+    "ja": "質問"
+  },
+  "Question recap": {
+    "es": "Resumen de la pregunta",
+    "zh": "问题回顾",
+    "hi": "प्रश्न सारांश",
+    "ar": "ملخص السؤال",
+    "pt": "Resumo da pergunta",
+    "ru": "Сводка вопроса",
+    "de": "Fragenübersicht",
+    "ja": "質問の要約"
+  },
+  "Question {n} of {total}": {
+    "es": "Pregunta {n} de {total}",
+    "zh": "第 {n} 题，共 {total} 题",
+    "hi": "{total} में से प्रश्न {n}",
+    "ar": "السؤال {n} من {total}",
+    "pt": "Pergunta {n} de {total}",
+    "ru": "Вопрос {n} из {total}",
+    "de": "Frage {n} von {total}",
+    "ja": "{total} 問中 {n} 問目"
+  },
+  "Questionnaire navigation": {
+    "es": "Navegación del cuestionario",
+    "zh": "问卷导航",
+    "hi": "प्रश्नावली नेविगेशन",
+    "ar": "التنقل في الاستبيان",
+    "pt": "Navegação do questionário",
+    "ru": "Навигация по анкете",
+    "de": "Fragebogen-Navigation",
+    "ja": "アンケートのナビゲーション"
+  },
+  "Read only: this is the address you use to sign in.": {
+    "es": "Solo lectura: esta es la dirección que usas para iniciar sesión.",
+    "zh": "只读：这是您用来登录的地址。",
+    "hi": "केवल-पढ़ने हेतु: यही वह पता है जिसका उपयोग आप साइन इन करने के लिए करते हैं।",
+    "ar": "للقراءة فقط: هذا هو العنوان الذي تستخدمه لتسجيل الدخول.",
+    "pt": "Somente leitura: este é o endereço que você usa para entrar.",
+    "ru": "Только для чтения: это адрес, который вы используете для входа.",
+    "de": "Nur lesbar: Dies ist die Adresse, mit der du dich anmeldest.",
+    "ja": "読み取り専用: これはサインインに使うアドレスです。"
+  },
+  "Recommended jobs": {
+    "es": "Profesiones recomendadas",
+    "zh": "推荐职业",
+    "hi": "सुझाए गए पेशे",
+    "ar": "المهن المقترحة",
+    "pt": "Profissões recomendadas",
+    "ru": "Рекомендуемые профессии",
+    "de": "Empfohlene Berufe",
+    "ja": "おすすめの職業"
+  },
+  "Restart": {
+    "es": "Reiniciar",
+    "zh": "重新开始",
+    "hi": "फिर से शुरू करें",
+    "ar": "إعادة البدء",
+    "pt": "Reiniciar",
+    "ru": "Начать заново",
+    "de": "Neu starten",
+    "ja": "やり直す"
+  },
+  "Salaries and job outlook vary by sector and experience: always cross check ONISEP sheets and Moov'Coach answers.": {
+    "es": "Los salarios y las perspectivas laborales varían según el sector y la experiencia: contrasta siempre las fichas de ONISEP y las respuestas de Moov'Coach.",
+    "zh": "薪资和职业前景会因行业与经验而异：请始终交叉核对 ONISEP 页面和 Moov'Coach 的回答。",
+    "hi": "वेतन और नौकरी की संभावनाएँ क्षेत्र और अनुभव के अनुसार बदलती हैं: हमेशा ONISEP शीट्स और Moov'Coach के उत्तरों से मिलान करें।",
+    "ar": "تختلف الرواتب وآفاق العمل حسب القطاع والخبرة: تحقّق دائمًا بمقارنة بطاقات ONISEP وإجابات Moov'Coach.",
+    "pt": "Salários e perspectivas de carreira variam conforme o setor e a experiência: sempre confira as fichas do ONISEP e as respostas do Moov'Coach.",
+    "ru": "Зарплаты и карьерные перспективы зависят от отрасли и опыта: всегда сверяйте данные с карточками ONISEP и ответами Moov'Coach.",
+    "de": "Gehälter und Berufsaussichten hängen von Branche und Erfahrung ab: gleiche sie immer mit ONISEP-Blättern und den Antworten von Moov'Coach ab.",
+    "ja": "給与や将来性は分野や経験によって変わります。必ず ONISEP のシートと Moov'Coach の回答を照合してください。"
+  },
+  "Salary indication:": {
+    "es": "Indicador salarial:",
+    "zh": "薪资参考：",
+    "hi": "वेतन संकेत:",
+    "ar": "مؤشر الراتب:",
+    "pt": "Indicação salarial:",
+    "ru": "Ориентир по зарплате:",
+    "de": "Gehaltsangabe:",
+    "ja": "給与の目安:"
+  },
+  "Scan the QR or open the link, then enter a code from the app to confirm.": {
+    "es": "Escanea el QR o abre el enlace y luego introduce un código de la aplicación para confirmar.",
+    "zh": "扫描二维码或打开链接，然后输入应用中的代码以确认。",
+    "hi": "QR स्कैन करें या लिंक खोलें, फिर पुष्टि के लिए ऐप का एक कोड दर्ज करें।",
+    "ar": "امسح رمز QR أو افتح الرابط، ثم أدخل رمزًا من التطبيق للتأكيد.",
+    "pt": "Escaneie o QR ou abra o link e, em seguida, digite um código do aplicativo para confirmar.",
+    "ru": "Отсканируйте QR-код или откройте ссылку, затем введите код из приложения для подтверждения.",
+    "de": "Scanne den QR-Code oder öffne den Link und gib dann einen Code aus der App zur Bestätigung ein.",
+    "ja": "QR を読み取るかリンクを開き、その後アプリのコードを入力して確認してください。"
+  },
+  "Secret key (manual entry)": {
+    "es": "Clave secreta (entrada manual)",
+    "zh": "密钥（手动输入）",
+    "hi": "गुप्त कुंजी (मैनुअल एंट्री)",
+    "ar": "المفتاح السري (إدخال يدوي)",
+    "pt": "Chave secreta (entrada manual)",
+    "ru": "Секретный ключ (ручной ввод)",
+    "de": "Geheimer Schlüssel (manuelle Eingabe)",
+    "ja": "シークレットキー（手動入力）"
+  },
+  "Select an option to see the summary here.": {
+    "es": "Selecciona una opción para ver aquí el resumen.",
+    "zh": "选择一个选项以在此查看摘要。",
+    "hi": "यहाँ सारांश देखने के लिए एक विकल्प चुनें।",
+    "ar": "اختر خيارًا لرؤية الملخص هنا.",
+    "pt": "Selecione uma opção para ver o resumo aqui.",
+    "ru": "Выберите вариант, чтобы увидеть здесь сводку.",
+    "de": "Wähle eine Option, um hier die Zusammenfassung zu sehen.",
+    "ja": "ここに概要を表示するには、選択肢を選んでください。"
+  },
+  "Send (Enter)": {
+    "es": "Enviar (Enter)",
+    "zh": "发送（Enter）",
+    "hi": "भेजें (Enter)",
+    "ar": "إرسال (Enter)",
+    "pt": "Enviar (Enter)",
+    "ru": "Отправить (Enter)",
+    "de": "Senden (Enter)",
+    "ja": "送信（Enter）"
+  },
+  "Send message": {
+    "es": "Enviar mensaje",
+    "zh": "发送消息",
+    "hi": "संदेश भेजें",
+    "ar": "إرسال رسالة",
+    "pt": "Enviar mensagem",
+    "ru": "Отправить сообщение",
+    "de": "Nachricht senden",
+    "ja": "メッセージを送信"
+  },
+  "Share link": {
+    "es": "Compartir enlace",
+    "zh": "分享链接",
+    "hi": "लिंक साझा करें",
+    "ar": "مشاركة الرابط",
+    "pt": "Compartilhar link",
+    "ru": "Поделиться ссылкой",
+    "de": "Link teilen",
+    "ja": "リンクを共有"
+  },
+  "Share my pathway": {
+    "es": "Compartir mi recorrido",
+    "zh": "分享我的路径",
+    "hi": "मेरा पथ साझा करें",
+    "ar": "مشاركة مساري",
+    "pt": "Compartilhar meu percurso",
+    "ru": "Поделиться моим путём",
+    "de": "Meinen Weg teilen",
+    "ja": "自分の進路を共有"
+  },
+  "Show less": {
+    "es": "Mostrar menos",
+    "zh": "显示更少",
+    "hi": "कम दिखाएँ",
+    "ar": "اعرض أقل",
+    "pt": "Mostrar menos",
+    "ru": "Показать меньше",
+    "de": "Weniger anzeigen",
+    "ja": "表示を減らす"
+  },
+  "Show {count} more": {
+    "es": "Mostrar {count} más",
+    "zh": "再显示 {count} 个",
+    "hi": "{count} और दिखाएँ",
+    "ar": "اعرض {count} إضافية",
+    "pt": "Mostrar mais {count}",
+    "ru": "Показать ещё {count}",
+    "de": "Noch {count} anzeigen",
+    "ja": "{count} 件もっと見る"
+  },
+  "Sign in mode": {
+    "es": "Modo de inicio de sesión",
+    "zh": "登录模式",
+    "hi": "साइन-इन मोड",
+    "ar": "وضع تسجيل الدخول",
+    "pt": "Modo de entrada",
+    "ru": "Режим входа",
+    "de": "Anmeldemodus",
+    "ja": "サインインモード"
+  },
+  "Smooth navigation": {
+    "es": "Navegación fluida",
+    "zh": "流畅导航",
+    "hi": "सहज नेविगेशन",
+    "ar": "تنقل سلس",
+    "pt": "Navegação fluida",
+    "ru": "Плавная навигация",
+    "de": "Flüssige Navigation",
+    "ja": "スムーズな操作"
+  },
+  "Something went wrong": {
+    "es": "Algo salió mal",
+    "zh": "出错了",
+    "hi": "कुछ गड़बड़ हो गई",
+    "ar": "حدث خطأ ما",
+    "pt": "Algo deu errado",
+    "ru": "Что-то пошло не так",
+    "de": "Etwas ist schiefgelaufen",
+    "ja": "問題が発生しました"
+  },
+  "Sound: off": {
+    "es": "Sonido: desactivado",
+    "zh": "声音：关",
+    "hi": "ध्वनि: बंद",
+    "ar": "الصوت: متوقف",
+    "pt": "Som: desligado",
+    "ru": "Звук: выкл.",
+    "de": "Ton: aus",
+    "ja": "音: オフ"
+  },
+  "Sound: on": {
+    "es": "Sonido: activado",
+    "zh": "声音：开",
+    "hi": "ध्वनि: चालू",
+    "ar": "الصوت: مفعّل",
+    "pt": "Som: ligado",
+    "ru": "Звук: вкл.",
+    "de": "Ton: an",
+    "ja": "音: オン"
+  },
+  "Specialty": {
+    "es": "Especialidad",
+    "zh": "专业方向",
+    "hi": "विशेषता",
+    "ar": "التخصص",
+    "pt": "Especialidade",
+    "ru": "Специализация",
+    "de": "Schwerpunkt",
+    "ja": "専門分野"
+  },
+  "Start setup (QR / link)": {
+    "es": "Iniciar configuración (QR / enlace)",
+    "zh": "开始设置（二维码 / 链接）",
+    "hi": "सेटअप शुरू करें (QR / लिंक)",
+    "ar": "ابدأ الإعداد (QR / رابط)",
+    "pt": "Iniciar configuração (QR / link)",
+    "ru": "Начать настройку (QR / ссылка)",
+    "de": "Einrichtung starten (QR / Link)",
+    "ja": "設定を開始（QR / リンク）"
+  },
+  "Start the guided flow": {
+    "es": "Iniciar el recorrido guiado",
+    "zh": "开始引导流程",
+    "hi": "मार्गदर्शित प्रवाह शुरू करें",
+    "ar": "ابدأ المسار الموجّه",
+    "pt": "Iniciar o fluxo guiado",
+    "ru": "Начать пошаговый сценарий",
+    "de": "Geführten Ablauf starten",
+    "ja": "ガイド付きフローを始める"
+  },
+  "Study pace": {
+    "es": "Ritmo de estudio",
+    "zh": "学习节奏",
+    "hi": "अध्ययन की गति",
+    "ar": "وتيرة الدراسة",
+    "pt": "Ritmo de estudo",
+    "ru": "Темп обучения",
+    "de": "Lerntempo",
+    "ja": "学習ペース"
+  },
+  "Study timeline": {
+    "es": "Cronología de estudios",
+    "zh": "学习时间线",
+    "hi": "अध्ययन समयरेखा",
+    "ar": "الجدول الزمني للدراسة",
+    "pt": "Linha do tempo de estudos",
+    "ru": "Траектория обучения",
+    "de": "Lern-Zeitverlauf",
+    "ja": "学習タイムライン"
+  },
+  "Summary for the AI": {
+    "es": "Resumen para la IA",
+    "zh": "给 AI 的摘要",
+    "hi": "AI के लिए सारांश",
+    "ar": "ملخص للذكاء الاصطناعي",
+    "pt": "Resumo para a IA",
+    "ru": "Сводка для ИИ",
+    "de": "Zusammenfassung für die KI",
+    "ja": "AI 向け要約"
+  },
+  "Support level": {
+    "es": "Nivel de apoyo",
+    "zh": "支持程度",
+    "hi": "सहायता स्तर",
+    "ar": "مستوى الدعم",
+    "pt": "Nível de apoio",
+    "ru": "Уровень поддержки",
+    "de": "Unterstützungsniveau",
+    "ja": "サポートの度合い"
+  },
+  "Tell me about the « {formation} » program for the job {metier}: content, career paths, entry requirements, and whether it fits me.": {
+    "es": "Háblame del programa « {formation} » para la profesión {metier}: contenido, salidas, requisitos de acceso y si encaja conmigo.",
+    "zh": "请介绍一下适用于职业 {metier} 的「{formation}」项目：内容、职业出路、入学要求，以及它是否适合我。",
+    "hi": "मुझे {metier} पेशे के लिए « {formation} » कार्यक्रम के बारे में बताइए: इसकी सामग्री, करियर मार्ग, प्रवेश आवश्यकताएँ, और क्या यह मेरे लिए उपयुक्त है।",
+    "ar": "أخبرني عن برنامج « {formation} » الخاص بالمهنة {metier}: المحتوى، المسارات المهنية، شروط القبول، وهل يناسبني.",
+    "pt": "Fale-me sobre o programa « {formation} » para a profissão {metier}: conteúdo, caminhos de carreira, requisitos de entrada e se ele combina comigo.",
+    "ru": "Расскажите о программе « {formation} » для профессии {metier}: содержание, карьерные пути, требования для поступления и подходит ли она мне.",
+    "de": "Erzähl mir vom Programm « {formation} » für den Beruf {metier}: Inhalte, Karrierewege, Zugangsvoraussetzungen und ob es zu mir passt.",
+    "ja": "職業 {metier} に向けた「{formation}」プログラムについて教えてください。内容、進路、入学条件、そして私に合っているかを知りたいです。"
+  },
+  "Text built from the questionnaire (same basis as Moov'Coach).": {
+    "es": "Texto generado a partir del cuestionario (la misma base que Moov'Coach).",
+    "zh": "基于问卷生成的文本（与 Moov'Coach 使用相同基础）。",
+    "hi": "प्रश्नावली से तैयार किया गया पाठ (Moov'Coach के समान आधार)।",
+    "ar": "نص مُنشأ من الاستبيان (على نفس الأساس الذي يستخدمه Moov'Coach).",
+    "pt": "Texto criado a partir do questionário (mesma base do Moov'Coach).",
+    "ru": "Текст, составленный по анкете (та же основа, что и у Moov'Coach).",
+    "de": "Text aus dem Fragebogen (gleiche Grundlage wie bei Moov'Coach).",
+    "ja": "アンケートから作成されたテキストです（Moov'Coach と同じ基盤）。"
+  },
+  "Text summary": {
+    "es": "Resumen textual",
+    "zh": "文本摘要",
+    "hi": "पाठ सारांश",
+    "ar": "ملخص نصي",
+    "pt": "Resumo em texto",
+    "ru": "Текстовое резюме",
+    "de": "Textzusammenfassung",
+    "ja": "テキスト要約"
+  },
+  "Training": {
+    "es": "Formación",
+    "zh": "培训",
+    "hi": "प्रशिक्षण",
+    "ar": "التكوين",
+    "pt": "Formação",
+    "ru": "Обучение",
+    "de": "Ausbildung",
+    "ja": "進学先"
+  },
+  "Training characteristics": {
+    "es": "Características de la formación",
+    "zh": "培训特点",
+    "hi": "प्रशिक्षण की विशेषताएँ",
+    "ar": "خصائص التكوين",
+    "pt": "Características da formação",
+    "ru": "Характеристики обучения",
+    "de": "Merkmale der Ausbildung",
+    "ja": "進学先の特徴"
+  },
+  "Try again": {
+    "es": "Intentar de nuevo",
+    "zh": "再试一次",
+    "hi": "फिर से कोशिश करें",
+    "ar": "حاول مرة أخرى",
+    "pt": "Tentar novamente",
+    "ru": "Попробовать снова",
+    "de": "Erneut versuchen",
+    "ja": "もう一度試す"
+  },
+  "Turn the short confirmation sound on or off when you answer": {
+    "es": "Activa o desactiva el sonido corto de confirmación cuando respondes",
+    "zh": "在回答时开启或关闭简短确认音",
+    "hi": "उत्तर देते समय छोटा पुष्टि ध्वनि चालू या बंद करें",
+    "ar": "شغّل أو أوقف صوت التأكيد القصير عند الإجابة",
+    "pt": "Ative ou desative o som curto de confirmação ao responder",
+    "ru": "Включите или выключите короткий звук подтверждения при ответе",
+    "de": "Schalte den kurzen Bestätigungston beim Antworten ein oder aus",
+    "ja": "回答時の短い確認音をオンまたはオフにする"
+  },
+  "Two-factor authentication (2FA)": {
+    "es": "Autenticación de dos factores (2FA)",
+    "zh": "双重身份验证（2FA）",
+    "hi": "दो-चरणीय प्रमाणीकरण (2FA)",
+    "ar": "المصادقة الثنائية (2FA)",
+    "pt": "Autenticação de dois fatores (2FA)",
+    "ru": "Двухфакторная аутентификация (2FA)",
+    "de": "Zwei-Faktor-Authentifizierung (2FA)",
+    "ja": "二要素認証（2FA）"
+  },
+  "Two-factor code": {
+    "es": "Código de dos factores",
+    "zh": "双重验证代码",
+    "hi": "दो-चरणीय कोड",
+    "ar": "رمز التحقق الثنائي",
+    "pt": "Código de dois fatores",
+    "ru": "Код двухфакторной аутентификации",
+    "de": "Zwei-Faktor-Code",
+    "ja": "二要素コード"
+  },
+  "Use the arrows to correct or confirm your path at any time during the questionnaire.": {
+    "es": "Usa las flechas para corregir o confirmar tu recorrido en cualquier momento del cuestionario.",
+    "zh": "在问卷过程中，您可随时使用箭头修正或确认您的路径。",
+    "hi": "प्रश्नावली के दौरान किसी भी समय अपने पथ को सुधारने या पुष्टि करने के लिए तीरों का उपयोग करें।",
+    "ar": "استخدم الأسهم لتصحيح مسارك أو تأكيده في أي وقت أثناء الاستبيان.",
+    "pt": "Use as setas para corrigir ou confirmar o seu percurso a qualquer momento durante o questionário.",
+    "ru": "Используйте стрелки, чтобы в любой момент во время анкеты скорректировать или подтвердить свой путь.",
+    "de": "Nutze die Pfeile, um deinen Weg jederzeit während des Fragebogens zu korrigieren oder zu bestätigen.",
+    "ja": "アンケート中はいつでも矢印を使って進路を修正したり確定したりできます。"
+  },
+  "Verify and continue": {
+    "es": "Verificar y continuar",
+    "zh": "验证并继续",
+    "hi": "सत्यापित करें और जारी रखें",
+    "ar": "تحقق وتابع",
+    "pt": "Verificar e continuar",
+    "ru": "Подтвердить и продолжить",
+    "de": "Bestätigen und fortfahren",
+    "ja": "確認して続行"
+  },
+  "View Premium plans": {
+    "es": "Ver planes Premium",
+    "zh": "查看 Premium 方案",
+    "hi": "Premium योजनाएँ देखें",
+    "ar": "عرض خطط Premium",
+    "pt": "Ver planos Premium",
+    "ru": "Посмотреть планы Premium",
+    "de": "Premium-Pläne ansehen",
+    "ja": "Premium プランを見る"
+  },
+  "View my pathway": {
+    "es": "Ver mi recorrido",
+    "zh": "查看我的路径",
+    "hi": "मेरा पथ देखें",
+    "ar": "عرض مساري",
+    "pt": "Ver meu percurso",
+    "ru": "Посмотреть мой путь",
+    "de": "Meinen Weg ansehen",
+    "ja": "自分の進路を見る"
+  },
+  "View official sheet": {
+    "es": "Ver ficha oficial",
+    "zh": "查看官方页面",
+    "hi": "आधिकारिक शीट देखें",
+    "ar": "عرض البطاقة الرسمية",
+    "pt": "Ver ficha oficial",
+    "ru": "Открыть официальную карточку",
+    "de": "Offizielles Blatt ansehen",
+    "ja": "公式シートを見る"
+  },
+  "View plans & upgrade to Premium": {
+    "es": "Ver planes y pasarte a Premium",
+    "zh": "查看方案并升级到 Premium",
+    "hi": "योजनाएँ देखें और Premium में अपग्रेड करें",
+    "ar": "اعرض الخطط وقم بالترقية إلى Premium",
+    "pt": "Ver planos e fazer upgrade para Premium",
+    "ru": "Посмотреть планы и перейти на Premium",
+    "de": "Pläne ansehen und auf Premium upgraden",
+    "ja": "プランを見て Premium にアップグレード"
+  },
+  "We could not suggest a path for this profile. Check your answers or try again later.": {
+    "es": "No pudimos sugerir un recorrido para este perfil. Revisa tus respuestas o vuelve a intentarlo más tarde.",
+    "zh": "我们无法为此画像推荐路径。请检查您的答案或稍后再试。",
+    "hi": "हम इस प्रोफ़ाइल के लिए कोई पथ सुझा नहीं सके। अपने उत्तर जाँचें या बाद में फिर कोशिश करें।",
+    "ar": "تعذّر علينا اقتراح مسار لهذا الملف الشخصي. راجع إجاباتك أو حاول مرة أخرى لاحقًا.",
+    "pt": "Não conseguimos sugerir um percurso para este perfil. Verifique as suas respostas ou tente novamente mais tarde.",
+    "ru": "Мы не смогли предложить путь для этого профиля. Проверьте свои ответы или попробуйте позже.",
+    "de": "Für dieses Profil konnten wir keinen Weg vorschlagen. Prüfe deine Antworten oder versuche es später erneut.",
+    "ja": "このプロフィールに合う進路を提案できませんでした。回答を確認するか、後でもう一度お試しください。"
+  },
+  "What training paths do you recommend to become a {metier}?": {
+    "es": "¿Qué recorridos de formación recomiendas para llegar a ser {metier}?",
+    "zh": "要成为 {metier}，你推荐哪些培训路径？",
+    "hi": "{metier} बनने के लिए आप कौन-से प्रशिक्षण मार्ग सुझाते हैं?",
+    "ar": "ما مسارات التكوين التي توصي بها لأصبح {metier}؟",
+    "pt": "Que percursos de formação você recomenda para me tornar {metier}?",
+    "ru": "Какие пути обучения вы рекомендуете, чтобы стать {metier}?",
+    "de": "Welche Ausbildungswege empfiehlst du, um {metier} zu werden?",
+    "ja": "{metier} になるには、どんな進学ルートがおすすめですか？"
+  },
+  "What you can add (all optional unless you want a richer profile):": {
+    "es": "Lo que puedes añadir (todo es opcional, salvo que quieras un perfil más completo):",
+    "zh": "你可以补充的内容（除非你想让画像更丰富，否则都为可选）：",
+    "hi": "आप क्या जोड़ सकते हैं (जब तक आप अधिक समृद्ध प्रोफ़ाइल नहीं चाहते, सब वैकल्पिक है):",
+    "ar": "ما يمكنك إضافته (كل شيء اختياري ما لم ترغب في ملف شخصي أكثر ثراءً):",
+    "pt": "O que você pode adicionar (tudo é opcional, a menos que queira um perfil mais completo):",
+    "ru": "Что можно добавить (всё необязательно, если только вы не хотите более подробный профиль):",
+    "de": "Was du ergänzen kannst (alles optional, außer du möchtest ein ausführlicheres Profil):",
+    "ja": "追加できる項目（より充実したプロフィールにしたい場合を除き、すべて任意です）:"
+  },
+  "What you can expect: a useful, clear guidance assistant built to last, no inflated metrics, no empty promises, just solid work.": {
+    "es": "Lo que puedes esperar: un asistente de orientación útil y claro, pensado para durar; sin métricas infladas, sin promesas vacías, solo trabajo sólido.",
+    "zh": "你可以期待的是：一个有用、清晰、经得起时间考验的指导助手，没有夸大的指标，没有空洞的承诺，只有扎实的工作。",
+    "hi": "आप क्या उम्मीद कर सकते हैं: एक उपयोगी, स्पष्ट और टिकाऊ मार्गदर्शन सहायक; न बढ़ा-चढ़ा कर बताए गए आँकड़े, न खोखले वादे, बस ठोस काम।",
+    "ar": "ما يمكنك توقعه: مساعد توجيه واضح ومفيد ومصمم ليستمر، من دون أرقام مبالغ فيها ولا وعود فارغة، فقط عمل متين.",
+    "pt": "O que você pode esperar: um assistente de orientação útil, claro e feito para durar, sem métricas infladas, sem promessas vazias, apenas trabalho sólido.",
+    "ru": "Чего можно ожидать: полезный и понятный помощник по ориентации, рассчитанный на долгую работу, без раздутых метрик, без пустых обещаний, только серьёзная работа.",
+    "de": "Was du erwarten kannst: einen nützlichen, klaren Beratungsassistenten, der auf Dauer angelegt ist. Keine aufgeblähten Zahlen, keine leeren Versprechen, sondern solide Arbeit.",
+    "ja": "期待できるのは、役に立ち、わかりやすく、長く使える進路ガイドです。誇張した数字も空虚な約束もなく、あるのは堅実な仕事だけです。"
+  },
+  "What you indicated": {
+    "es": "Lo que indicaste",
+    "zh": "你填写的内容",
+    "hi": "आपने क्या बताया",
+    "ar": "ما أشرت إليه",
+    "pt": "O que você indicou",
+    "ru": "Что вы указали",
+    "de": "Was du angegeben hast",
+    "ja": "あなたが入力した内容"
+  },
+  "Where you study or look for training/work, to ground recommendations.": {
+    "es": "Dónde estudias o buscas formación/trabajo, para contextualizar las recomendaciones.",
+    "zh": "你学习或寻找培训/工作的地点，用于让推荐更贴合实际。",
+    "hi": "आप कहाँ पढ़ते हैं या प्रशिक्षण/काम खोजते हैं, ताकि सिफ़ारिशें अधिक प्रासंगिक हों।",
+    "ar": "المكان الذي تدرس فيه أو تبحث فيه عن تكوين/عمل، لجعل التوصيات أكثر واقعية.",
+    "pt": "Onde você estuda ou procura formação/trabalho, para contextualizar as recomendações.",
+    "ru": "Где вы учитесь или ищете обучение/работу, чтобы рекомендации были более привязаны к реальности.",
+    "de": "Wo du lernst oder nach Ausbildung/Arbeit suchst, damit die Empfehlungen besser passen.",
+    "ja": "どこで学んでいるか、または進学先や仕事を探しているか。おすすめを現実に即したものにするためです。"
+  },
+  "Work setting": {
+    "es": "Entorno de trabajo",
+    "zh": "工作环境",
+    "hi": "कार्य परिवेश",
+    "ar": "بيئة العمل",
+    "pt": "Ambiente de trabalho",
+    "ru": "Условия работы",
+    "de": "Arbeitsumfeld",
+    "ja": "働く環境"
+  },
+  "You": {
+    "es": "Tú",
+    "zh": "你",
+    "hi": "आप",
+    "ar": "أنت",
+    "pt": "Você",
+    "ru": "Вы",
+    "de": "Du",
+    "ja": "あなた"
+  },
+  "You can enable it with an app like Google Authenticator.": {
+    "es": "Puedes activarlo con una aplicación como Google Authenticator.",
+    "zh": "你可以使用 Google Authenticator 之类的应用来启用它。",
+    "hi": "आप इसे Google Authenticator जैसे ऐप से सक्षम कर सकते हैं।",
+    "ar": "يمكنك تفعيله باستخدام تطبيق مثل Google Authenticator.",
+    "pt": "Você pode ativar isso com um aplicativo como o Google Authenticator.",
+    "ru": "Вы можете включить это с помощью приложения вроде Google Authenticator.",
+    "de": "Du kannst es mit einer App wie Google Authenticator aktivieren.",
+    "ja": "Google Authenticator のようなアプリで有効にできます。"
+  },
+  "You chose {domain}: which activity feels most like you day to day? (This refines your profile beyond the sector alone.)": {
+    "es": "Elegiste {domain}: ¿qué actividad se parece más a ti en el día a día? (Esto afina tu perfil más allá del sector en sí).",
+    "zh": "你选择了 {domain}：日常中哪种活动最像你？（这会在行业之外进一步细化你的画像。）",
+    "hi": "आपने {domain} चुना: रोज़मर्रा में कौन-सी गतिविधि आपको सबसे ज़्यादा अपनी लगती है? (यह केवल क्षेत्र से आगे बढ़कर आपकी प्रोफ़ाइल को और निखारता है।)",
+    "ar": "لقد اخترت {domain}: أي نشاط يشبهك أكثر في حياتك اليومية؟ (هذا يصقل ملفك الشخصي إلى ما هو أبعد من القطاع وحده).",
+    "pt": "Você escolheu {domain}: qual atividade mais combina com você no dia a dia? (Isso refina o seu perfil para além do setor em si.)",
+    "ru": "Вы выбрали {domain}: какое занятие больше всего похоже на вас в повседневной жизни? (Это уточняет ваш профиль не только по сфере.)",
+    "de": "Du hast {domain} gewählt: Welche Tätigkeit passt im Alltag am ehesten zu dir? (Das verfeinert dein Profil über den bloßen Bereich hinaus.)",
+    "ja": "{domain} を選びました。日々の中で、どんな活動が一番自分らしいと感じますか？（これは分野だけでなく、あなたのプロフィールをさらに詳しくするためです。）"
+  },
+  "Your age in years (digits) to tune examples and wording.": {
+    "es": "Tu edad en años (en cifras) para ajustar los ejemplos y la redacción.",
+    "zh": "你的年龄（请用数字填写），用于调整示例和措辞。",
+    "hi": "आपकी आयु वर्षों में (अंकों में), ताकि उदाहरण और शब्दावली समायोजित की जा सके।",
+    "ar": "عمرك بالسنوات (أرقام) لضبط الأمثلة وصياغة العبارات.",
+    "pt": "Sua idade em anos (em números) para ajustar os exemplos e a redação.",
+    "ru": "Ваш возраст в годах (цифрами), чтобы точнее подобрать примеры и формулировки.",
+    "de": "Dein Alter in Jahren (als Zahl), um Beispiele und Formulierungen anzupassen.",
+    "ja": "年齢（数字）を入力してください。例や表現の調整に使います。"
+  },
+  "Your current level": {
+    "es": "Tu nivel actual",
+    "zh": "你当前的水平",
+    "hi": "आपका वर्तमान स्तर",
+    "ar": "مستواك الحالي",
+    "pt": "Seu nível atual",
+    "ru": "Ваш текущий уровень",
+    "de": "Dein aktuelles Niveau",
+    "ja": "現在のレベル"
+  },
+  "Your diploma pathway": {
+    "es": "Tu recorrido de estudios",
+    "zh": "你的学历路径",
+    "hi": "आपकी शैक्षिक राह",
+    "ar": "مسارك الدراسي للشهادات",
+    "pt": "Seu percurso de formação",
+    "ru": "Ваш образовательный путь",
+    "de": "Dein Abschlussweg",
+    "ja": "あなたの学位への進路"
+  },
+  "Your family name (useful for a more formal tone or documents).": {
+    "es": "Tu apellido (útil para un tono más formal o documentos).",
+    "zh": "你的姓氏（有助于更正式的语气或文档）。",
+    "hi": "आपका उपनाम (अधिक औपचारिक शैली या दस्तावेज़ों के लिए उपयोगी)।",
+    "ar": "اسم العائلة الخاص بك (مفيد لأسلوب أكثر رسمية أو للمستندات).",
+    "pt": "Seu sobrenome (útil para um tom mais formal ou para documentos).",
+    "ru": "Ваша фамилия (полезно для более формального тона или документов).",
+    "de": "Dein Nachname (nützlich für einen formelleren Ton oder Dokumente).",
+    "ja": "名字（姓）（よりフォーマルな文体や書類に役立ちます）。"
+  },
+  "Your message": {
+    "es": "Tu mensaje",
+    "zh": "你的消息",
+    "hi": "आपका संदेश",
+    "ar": "رسالتك",
+    "pt": "Sua mensagem",
+    "ru": "Ваше сообщение",
+    "de": "Deine Nachricht",
+    "ja": "あなたのメッセージ"
+  },
+  "Your questionnaire answers": {
+    "es": "Tus respuestas al cuestionario",
+    "zh": "你的问卷回答",
+    "hi": "आपके प्रश्नावली उत्तर",
+    "ar": "إجاباتك على الاستبيان",
+    "pt": "Suas respostas ao questionário",
+    "ru": "Ваши ответы на анкету",
+    "de": "Deine Antworten im Fragebogen",
+    "ja": "あなたのアンケート回答"
+  },
+  "Your questionnaire was resumed automatically where you left off.": {
+    "es": "Tu cuestionario se reanudó automáticamente donde lo dejaste.",
+    "zh": "问卷已自动从你上次离开的地方继续。",
+    "hi": "आपकी प्रश्नावली वहीं से अपने आप फिर शुरू हुई जहाँ आपने छोड़ा था।",
+    "ar": "تم استئناف الاستبيان تلقائيًا من حيث توقفت.",
+    "pt": "Seu questionário foi retomado automaticamente de onde você parou.",
+    "ru": "Ваш опрос автоматически продолжен с того места, где вы остановились.",
+    "de": "Dein Fragebogen wurde automatisch dort fortgesetzt, wo du aufgehört hast.",
+    "ja": "アンケートは前回中断したところから自動的に再開されました。"
+  },
+  "Your recommended path": {
+    "es": "Tu recorrido recomendado",
+    "zh": "为你推荐的路径",
+    "hi": "आपके लिए सुझाया गया पथ",
+    "ar": "المسار المقترح لك",
+    "pt": "Seu percurso recomendado",
+    "ru": "Ваш рекомендуемый путь",
+    "de": "Dein empfohlener Weg",
+    "ja": "あなたへのおすすめ進路"
+  },
+  "Your stack is answering with an outdated dev API placeholder. Stop **all** Node processes on port **8787**, pull the latest code, run `npm run check:llm`, then `npm run dev` from the tempo repo.": {
+    "es": "Tu stack está respondiendo con un marcador de dev API desactualizado. Detén **todos** los procesos de Node en el puerto **8787**, descarga el código más reciente, ejecuta `npm run check:llm` y luego `npm run dev` desde el repositorio tempo.",
+    "zh": "你的技术栈当前返回的是过时的 dev API 占位响应。请停止端口 **8787** 上的**所有** Node 进程，拉取最新代码，在 tempo 仓库中运行 `npm run check:llm`，然后运行 `npm run dev`。",
+    "hi": "आपका स्टैक पुराने dev API placeholder से जवाब दे रहा है। पोर्ट **8787** पर चल रही **सभी** Node प्रक्रियाएँ रोकें, नवीनतम कोड पुल करें, tempo repo से `npm run check:llm` चलाएँ, फिर `npm run dev` चलाएँ।",
+    "ar": "حزمتك البرمجية تردّ بعنصر نائب قديم لـ dev API. أوقف **كل** عمليات Node على المنفذ **8787**، واسحب أحدث كود، ثم شغّل `npm run check:llm` وبعدها `npm run dev` من مستودع tempo.",
+    "pt": "Sua stack está respondendo com um placeholder antigo da dev API. Pare **todos** os processos Node na porta **8787**, puxe o código mais recente, execute `npm run check:llm` e depois `npm run dev` a partir do repositório tempo.",
+    "ru": "Ваш стек отвечает устаревшей заглушкой dev API. Остановите **все** процессы Node на порту **8787**, подтяните последний код, запустите `npm run check:llm`, затем `npm run dev` из репозитория tempo.",
+    "de": "Dein Stack antwortet mit einem veralteten dev-API-Platzhalter. Stoppe **alle** Node-Prozesse auf Port **8787**, hole den neuesten Code, führe im `tempo`-Repo `npm run check:llm` und danach `npm run dev` aus.",
+    "ja": "現在のスタックは古い dev API プレースホルダーで応答しています。ポート **8787** 上の Node プロセスを**すべて**停止し、最新コードを取得して、`tempo` リポジトリで `npm run check:llm` を実行し、その後 `npm run dev` を実行してください。"
+  },
+  "You’re on **Premium B2C**: unlimited Moov’Coach messages (in this demo).": {
+    "es": "Estás en **Premium B2C**: mensajes ilimitados de Moov’Coach (en esta demo).",
+    "zh": "你当前使用的是 **Premium B2C**：Moov’Coach 消息不限量（在此演示中）。",
+    "hi": "आप **Premium B2C** पर हैं: Moov’Coach संदेश असीमित हैं (इस डेमो में)।",
+    "ar": "أنت على **Premium B2C**: رسائل Moov’Coach غير محدودة (في هذه النسخة التجريبية).",
+    "pt": "Você está no **Premium B2C**: mensagens ilimitadas do Moov’Coach (nesta demo).",
+    "ru": "У вас **Premium B2C**: неограниченные сообщения Moov’Coach (в этом демо).",
+    "de": "Du nutzt **Premium B2C**: unbegrenzte Moov’Coach-Nachrichten (in dieser Demo).",
+    "ja": "現在 **Premium B2C** を利用中です: Moov’Coach メッセージは無制限です（このデモ内）。"
+  },
+  "You’ve used all free Moov’Coach messages. Upgrade to **Premium** to keep chatting, or pick another plan.": {
+    "es": "Has usado todos los mensajes gratuitos de Moov’Coach. Pásate a **Premium** para seguir chateando o elige otro plan.",
+    "zh": "你的免费 Moov’Coach 消息已全部用完。升级到 **Premium** 以继续聊天，或选择其他方案。",
+    "hi": "आपने Moov’Coach के सभी मुफ़्त संदेश इस्तेमाल कर लिए हैं। बातचीत जारी रखने के लिए **Premium** में अपग्रेड करें या कोई दूसरी योजना चुनें।",
+    "ar": "لقد استخدمت كل رسائل Moov’Coach المجانية. قم بالترقية إلى **Premium** لمواصلة الدردشة، أو اختر خطة أخرى.",
+    "pt": "Você usou todas as mensagens gratuitas do Moov’Coach. Faça upgrade para **Premium** para continuar conversando ou escolha outro plano.",
+    "ru": "Вы использовали все бесплатные сообщения Moov’Coach. Перейдите на **Premium**, чтобы продолжить чат, или выберите другой план.",
+    "de": "Du hast alle kostenlosen Moov’Coach-Nachrichten verbraucht. Wechsle zu **Premium**, um weiterzuchatten, oder wähle einen anderen Tarif.",
+    "ja": "無料の Moov’Coach メッセージをすべて使い切りました。チャットを続けるには **Premium** にアップグレードするか、別のプランを選んでください。"
+  },
+  "cover letter": {
+    "es": "carta de presentación",
+    "zh": "求职信",
+    "hi": "कवर लेटर",
+    "ar": "رسالة تغطية",
+    "pt": "carta de apresentação",
+    "ru": "сопроводительное письмо",
+    "de": "Anschreiben",
+    "ja": "志望動機書"
+  },
+  "{answered}/{total} completed": {
+    "es": "{answered}/{total} completado",
+    "zh": "已完成 {answered}/{total}",
+    "hi": "{answered}/{total} पूरे",
+    "ar": "اكتمل {answered}/{total}",
+    "pt": "{answered}/{total} concluído",
+    "ru": "{answered}/{total} завершено",
+    "de": "{answered}/{total} abgeschlossen",
+    "ja": "{answered}/{total} 完了"
+  },
+  "{count} training options": {
+    "es": "{count} opciones de formación",
+    "zh": "{count} 个培训选项",
+    "hi": "{count} प्रशिक्षण विकल्प",
+    "ar": "{count} خيارات تكوين",
+    "pt": "{count} opções de formação",
+    "ru": "{count} вариантов обучения",
+    "de": "{count} Ausbildungsoptionen",
+    "ja": "{count} 件の進学オプション"
+  },
+  "🚀 Beta phase": {
+    "es": "🚀 Fase beta",
+    "zh": "🚀 Beta 阶段",
+    "hi": "🚀 बीटा चरण",
+    "ar": "🚀 المرحلة التجريبية",
+    "pt": "🚀 Fase beta",
+    "ru": "🚀 Бета-фаза",
+    "de": "🚀 Beta-Phase",
+    "ja": "🚀 ベータ段階"
+  }
+}
