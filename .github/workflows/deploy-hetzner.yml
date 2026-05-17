@@ -213,7 +213,12 @@ jobs:
             echo 'Ni docker compose ni docker-compose sur le VPS' >&2
             exit 1
           fi
-          eval \"\${DC} \${COMPOSE_FILES} up -d --force-recreate --build\"
+          eval \"\${DC} \${COMPOSE_FILES} build backend\"
+          if [ ! -f backend/data/metiers.faiss ]; then
+            echo 'Index FAISS absent — génération (scripts/build_index.py, ~5-10 min)…'
+            eval \"\${DC} \${COMPOSE_FILES} run --rm backend python scripts/build_index.py\"
+          fi
+          eval \"\${DC} \${COMPOSE_FILES} up -d --force-recreate\"
           eval \"\${DC} \${COMPOSE_FILES} ps\"
           ok=0
           for i in \$(seq 1 30); do
