@@ -39,7 +39,7 @@ export default function PartenairesAuthPage() {
       lead: t(
         "partenaires",
         "authLead",
-        "Utilise le compte de ta mission locale, ton lycée ou ton réseau. Après connexion, tu choisis l’offre adaptée (Freemium, Premium ou Licences B2B)."
+        "Utilise le compte de ta mission locale, ton lycée ou ton réseau. Après connexion, tu choisis l’offre adaptée (Freemium, Premium ou Licences B2B/B2G)."
       ),
       email: t("auth", "email", "Adresse email"),
       password: t("auth", "password", "Mot de passe"),

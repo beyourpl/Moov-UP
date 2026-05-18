@@ -135,7 +135,7 @@ export default function PartenairesOfferSubscribePage() {
     if (mode === "b2b") {
       return {
         kind: "b2b",
-        title: t("partenaires", "subscribeB2bTitle", "Licences B2B — comment ça se passe ?"),
+        title: t("partenaires", "subscribeB2bTitle", "Licences B2B/B2G — comment ça se passe ?"),
         lead: t(
           "partenaires",
           "subscribeB2bLead",
@@ -155,12 +155,12 @@ export default function PartenairesOfferSubscribePage() {
         p2: t(
           "partenaires",
           "subscribeB2bP2",
-          "Le **tableau de bord collectif** et les exports avancés sont inclus dans la licence ; l’accompagnement dédié est planifié avec ton interlocuteur Moov’Up."
+          "Le **tableau de bord collectif** et les exports avancés sont inclus dans les licences ; l’accompagnement dédié est planifié avec ton interlocuteur Moov’Up."
         ),
         p3: t(
           "partenaires",
           "subscribeB2bP3",
-          "Ici tu actives la licence en **mode démonstration** pour parcourir l’interface sans contrat réel."
+          "Ici tu actives les licences en **mode démonstration** pour parcourir l’interface sans contrat réel."
         ),
         p4: "",
         legal: t(
@@ -168,11 +168,11 @@ export default function PartenairesOfferSubscribePage() {
           "subscribeB2bLegal",
           "Pour un devis réel : contacte l’équipe licences depuis le tableau de bord (lien support)."
         ),
-        activate: t("partenaires", "subscribeB2bActivate", "Activer la licence B2B (démo)"),
+        activate: t("partenaires", "subscribeB2bActivate", "Activer les licences B2B/B2G (démo)"),
         already: t(
           "partenaires",
           "subscribeAlreadyB2b",
-          "Tu es déjà sur l’offre Licences B2B. Tu peux ouvrir le tableau de bord ou revenir aux offres."
+          "Tu es déjà sur l’offre Licences B2B/B2G. Tu peux ouvrir le tableau de bord ou revenir aux offres."
         ),
         goHub: t("partenaires", "subscribeGoB2bDashboard", "Ouvrir le tableau de bord"),
       };

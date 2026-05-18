@@ -67,7 +67,7 @@ export default function PartenairesIntroPage() {
               ✨
             </span>
             <p className="partenaires-step-text">
-              {t("partenaires", "bullet2", "Après connexion : choix de l’offre Freemium, Premium ou Licences B2B")}
+              {t("partenaires", "bullet2", "Après connexion : choix de l’offre Freemium, Premium ou Licences B2B/B2G")}
             </p>
           </article>
           <article className="partenaires-step-card" role="listitem">

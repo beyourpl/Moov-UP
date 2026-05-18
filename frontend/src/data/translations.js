@@ -882,20 +882,20 @@ export const TEXTS = {
       lead:
         "Tableau de bord collectif pour suivre les jeunes qui ont accepté de partager des indicateurs d’orientation : volume, répartition et tendances — sans exposer les données personnelles hors du cadre prévu.",
       bullet1: "Connexion réservée aux comptes de votre structure",
-      bullet2: "Après connexion : choix de l’offre Freemium, Premium ou Licences B2B",
+      bullet2: "Après connexion : choix de l’offre Freemium, Premium ou Licences B2B/B2G",
       bullet3: "Accès au tableau de bord avec les agrégats consentis",
       ctaOffers: "Voir les offres",
       authEyebrow: "Connexion structure",
       authTitle: "Accès partenaires",
       authLead:
-        "Utilise le compte de ta mission locale, ton lycée ou ton réseau. Après connexion, tu choisis l’offre adaptée (Freemium, Premium ou Licences B2B).",
+        "Utilise le compte de ta mission locale, ton lycée ou ton réseau. Après connexion, tu choisis l’offre adaptée (Freemium, Premium ou Licences B2B/B2G).",
       authSubmit: "Se connecter",
       authJeunesLink: "Compte jeune ? Connexion classique",
       backStructures: "Espace structures",
       offersEyebrow: "Choix d’offre",
       offersTitle: "Quelle formule pour votre structure ?",
       offersSubtitle:
-        "Les jeunes peuvent utiliser Freemium ou Premium B2C ; votre structure active les Licences B2B pour le tableau de bord collectif (missions locales, lycées, réseaux).",
+        "Les jeunes peuvent utiliser Freemium ou Premium B2C ; votre structure active les Licences B2B/B2G pour le tableau de bord collectif (missions locales, lycées, réseaux).",
       authConnectedLead:
         "Vous êtes connecté·e. Accédez à l’espace Moov’Up partenaires ou ouvrez directement votre tableau de bord.",
       authConnectedIntro: "Espace missions locales & partenaires",
@@ -961,7 +961,7 @@ export const TEXTS = {
       subscribeAlreadyPremium:
         "Tu es déjà sur l’offre Premium B2C. Tu peux ouvrir ton espace ou revenir aux offres.",
       subscribeGoPremiumHub: "Ouvrir l’espace Premium",
-      subscribeB2bTitle: "Licences B2B — comment ça se passe ?",
+      subscribeB2bTitle: "Licences B2B/B2G — comment ça se passe ?",
       subscribeB2bLead:
         "Les **licences annuelles** se négocient avec l’équipe commerciale : devis, bon de commande ou contrat-cadre, puis facturation.",
       subscribeB2bPriceLine:
@@ -970,14 +970,14 @@ export const TEXTS = {
       subscribeB2bP1:
         "Après signature, tu reçois une **facture** et l’activation des comptes structures (référents, SSO ou listes d’emails selon le setup).",
       subscribeB2bP2:
-        "Le **tableau de bord collectif** et les exports avancés sont inclus dans la licence ; l’accompagnement dédié est planifié avec ton interlocuteur Moov’Up.",
+        "Le **tableau de bord collectif** et les exports avancés sont inclus dans les licences ; l’accompagnement dédié est planifié avec ton interlocuteur Moov’Up.",
       subscribeB2bP3:
-        "Ici tu actives la licence en **mode démonstration** pour parcourir l’interface sans contrat réel.",
+        "Ici tu actives les licences en **mode démonstration** pour parcourir l’interface sans contrat réel.",
       subscribeB2bLegal:
         "Pour un devis réel : contacte l’équipe licences depuis le tableau de bord (lien support).",
-      subscribeB2bActivate: "Activer la licence B2B (démo)",
+      subscribeB2bActivate: "Activer les licences B2B/B2G (démo)",
       subscribeAlreadyB2b:
-        "Tu es déjà sur l’offre Licences B2B. Tu peux ouvrir le tableau de bord ou revenir aux offres.",
+        "Tu es déjà sur l’offre Licences B2B/B2G. Tu peux ouvrir le tableau de bord ou revenir aux offres.",
       subscribeGoB2bDashboard: "Ouvrir le tableau de bord",
       currentOfferPremiumBanner:
         "Offre active : Premium B2C — 0,99 € TTC / mois ou 9,99 € TTC / an. Aucun prélèvement réel en mode démonstration ; le paiement en ligne sera branché ensuite.",
@@ -1008,13 +1008,13 @@ export const TEXTS = {
       cohortDemo2Period: "oct.–déc. 2025",
       cohortDemo3Period: "juil.–sept. 2025",
       wrongOffer:
-        "Le tableau de bord collectif est inclus dans l’offre Licences B2B. Choisis cette offre pour y accéder.",
+        "Le tableau de bord collectif est inclus dans l’offre Licences B2B/B2G. Choisis cette offre pour y accéder.",
       goOffers: "Retour aux offres",
       connectedAs: "Connecté :",
       cohortPeriod: "Période",
       cohortSize: "Effectif",
       cohortActive: "Actifs 30 j.",
-      dashIncludedTitle: "Inclus dans les Licences B2B",
+      dashIncludedTitle: "Inclus dans les Licences B2B/B2G",
       pillarCollectiveBody:
         "Indicateurs agrégés sur les jeunes qui ont consenti au partage dans ton périmètre : volumes, répartition, tendances — sans exposer les dossiers nominatifs.",
       pillarCohortsBody:
@@ -1044,7 +1044,7 @@ export const TEXTS = {
       supportLead:
         "Équipe licences : onboarding de la structure, médiation et montée en compétence des référents orientation.",
       supportCta: "Écrire à l’équipe licences",
-      supportEmailSubject: "Demande Licences B2B — Moov’Up",
+      supportEmailSubject: "Demande Licences B2B/B2G — Moov’Up",
       pillarCtaOverview: "Ouvrir la vue d’ensemble",
       pillarCtaCohorts: "Ouvrir le suivi des cohortes",
       pillarCtaReports: "Ouvrir les rapports",
@@ -1784,20 +1784,20 @@ export const TEXTS = {
       lead:
         "Collective dashboard for young people who opted in to share orientation indicators: volume, breakdown, and trends—no personal data exposed beyond agreed scope.",
       bullet1: "Sign-in for your organisation’s accounts",
-      bullet2: "After sign-in: pick Freemium, Premium, or B2B licences",
+      bullet2: "After sign-in: pick Freemium, Premium, or B2B/B2G licences",
       bullet3: "Dashboard access with consented aggregates",
       ctaOffers: "View plans",
       authEyebrow: "Organisation sign-in",
       authTitle: "Partner access",
       authLead:
-        "Use your local mission, school, or network account. After sign-in you choose the right plan (Freemium, Premium, or B2B licences).",
+        "Use your local mission, school, or network account. After sign-in you choose the right plan (Freemium, Premium, or B2B/B2G licences).",
       authSubmit: "Sign in",
       authJeunesLink: "Young user? Standard sign-in",
       backStructures: "Partner home",
       offersEyebrow: "Choose a plan",
       offersTitle: "Choose the plan that fits you",
       offersSubtitle:
-        "Start on Freemium, upgrade to Premium B2C for full access (coach, CV tools…), or pick B2B licences for schools, local missions, and large organisations.",
+        "Start on Freemium, upgrade to Premium B2C for full access (coach, CV tools…), or pick B2B/B2G licences for schools, local missions, and large organisations.",
       offerFreemiumTitle: "FREEMIUM",
       offerFreemiumPrice: "Free",
       offerFreemiumDesc: "Basic diagnosis with limited Moov’Coach exchanges.",
@@ -1859,7 +1859,7 @@ export const TEXTS = {
       subscribeAlreadyPremium:
         "You’re already on Premium B2C. Open your space or return to plans.",
       subscribeGoPremiumHub: "Open Premium space",
-      subscribeB2bTitle: "B2B licences — how does it work?",
+      subscribeB2bTitle: "B2B/B2G licences — how does it work?",
       subscribeB2bLead:
         "**Annual licences** are agreed with sales: quote, purchase order or framework agreement, then invoicing.",
       subscribeB2bPriceLine:
@@ -1868,14 +1868,14 @@ export const TEXTS = {
       subscribeB2bP1:
         "After signature you receive an **invoice** and organisation accounts are activated (referrers, SSO or email lists depending on setup).",
       subscribeB2bP2:
-        "The **collective dashboard** and advanced exports are included in the licence; dedicated onboarding is scheduled with your Moov’Up contact.",
+        "The **collective dashboard** and advanced exports are included in the licences; dedicated onboarding is scheduled with your Moov’Up contact.",
       subscribeB2bP3:
-        "Here you activate the licence in **demo mode** to explore the product without a real contract.",
+        "Here you activate the licences in **demo mode** to explore the product without a real contract.",
       subscribeB2bLegal:
         "For a real quote: email the licence team from the dashboard (support link).",
-      subscribeB2bActivate: "Enable B2B licence (demo)",
+      subscribeB2bActivate: "Enable B2B/B2G licences (demo)",
       subscribeAlreadyB2b:
-        "You’re already on B2B licences. Open the dashboard or return to plans.",
+        "You’re already on B2B/B2G licences. Open the dashboard or return to plans.",
       subscribeGoB2bDashboard: "Open dashboard",
       currentOfferPremiumBanner:
         "Active plan: Premium B2C — €0.99 incl. VAT / month or €9.99 incl. VAT / year. No real charge in demo mode; card payments will be connected later.",
@@ -1906,13 +1906,13 @@ export const TEXTS = {
       cohortDemo2Period: "Oct–Dec 2025",
       cohortDemo3Period: "Jul–Sep 2025",
       wrongOffer:
-        "The collective dashboard is included in the B2B licences plan. Pick that plan to access it.",
+        "The collective dashboard is included in the B2B/B2G licences plan. Pick that plan to access it.",
       goOffers: "Back to plans",
       connectedAs: "Signed in as:",
       cohortPeriod: "Period",
       cohortSize: "Headcount",
       cohortActive: "Active (30d)",
-      dashIncludedTitle: "Included in B2B licences",
+      dashIncludedTitle: "Included in B2B/B2G licences",
       pillarCollectiveBody:
         "Aggregated indicators for young people who opted in within your scope: volumes, breakdown, trends—no named individual records.",
       pillarCohortsBody:
@@ -1942,7 +1942,7 @@ export const TEXTS = {
       supportLead:
         "Licence team: organisation onboarding, mediation, and skills uplift for guidance staff.",
       supportCta: "Email the licence team",
-      supportEmailSubject: "B2B licence request — Moov’Up",
+      supportEmailSubject: "B2B/B2G licence request — Moov’Up",
       pillarCtaOverview: "Open overview",
       pillarCtaCohorts: "Open cohort tracking",
       pillarCtaReports: "Open reports",
@@ -2267,7 +2267,7 @@ export const TEXTS = {
       offerPremiumF2: "إنشاء السيرة الذاتية وخطاب التقديم",
       offerPremiumF3: "التحضير للمقابلات",
       offerPremiumF4: "MoovCoach غير محدود",
-      offerB2bTitle: "تراخيص B2B",
+      offerB2bTitle: "تراخيص B2B/B2G",
       offerB2bPrice: "ابتداءً من 2 000 € / سنة",
       offerB2bDesc:
         "للمدارس الثانوية ومهام التوجيه المحلية ومنشآت الإدماج والمؤسسات الكبرى.",
@@ -3213,7 +3213,7 @@ export const TEXTS = {
       offerPremiumF2: "Generación de CV y carta",
       offerPremiumF3: "Preparación de entrevistas",
       offerPremiumF4: "MoovCoach ilimitado",
-      offerB2bTitle: "LICENCIAS B2B",
+      offerB2bTitle: "LICENCIAS B2B/B2G",
       offerB2bPrice: "Desde 2.000 € / año",
       offerB2bDesc:
         "Para institutos, orientación local, estructuras de inserción y grandes organizaciones.",

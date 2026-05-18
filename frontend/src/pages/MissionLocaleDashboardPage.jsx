@@ -100,7 +100,7 @@ export default function MissionLocaleDashboardPage() {
       wrongOffer: t(
         "partenaires",
         "wrongOffer",
-        "Le tableau de bord collectif est inclus dans l’offre Licences B2B. Choisis cette offre pour y accéder."
+        "Le tableau de bord collectif est inclus dans l’offre Licences B2B/B2G. Choisis cette offre pour y accéder."
       ),
       goOffers: t("partenaires", "goOffers", "Retour aux offres"),
       home: t("common", "home", "Accueil"),
@@ -111,7 +111,7 @@ export default function MissionLocaleDashboardPage() {
         "offerB2bDesc",
         "Réservé aux lycées, missions locales, structures d’insertion, grandes structures."
       ),
-      dashIncludedTitle: t("partenaires", "dashIncludedTitle", "Inclus dans les Licences B2B"),
+      dashIncludedTitle: t("partenaires", "dashIncludedTitle", "Inclus dans les Licences B2B/B2G"),
       pillarCollectiveTitle: t("partenaires", "offerB2bF1", "Tableau de bord collectif"),
       pillarCollectiveBody: t(
         "partenaires",
@@ -150,7 +150,7 @@ export default function MissionLocaleDashboardPage() {
         "Équipe licences : onboarding de la structure, médiation et montée en compétence des référents orientation."
       ),
       supportCta: t("partenaires", "supportCta", "Écrire à l’équipe licences"),
-      supportEmailSubject: t("partenaires", "supportEmailSubject", "Demande Licences B2B — Moov’Up"),
+      supportEmailSubject: t("partenaires", "supportEmailSubject", "Demande Licences B2B/B2G — Moov’Up"),
       pillarCtaOverview: t("partenaires", "pillarCtaOverview", "Ouvrir la vue d’ensemble"),
       pillarCtaCohorts: t("partenaires", "pillarCtaCohorts", "Ouvrir le suivi des cohortes"),
       pillarCtaReports: t("partenaires", "pillarCtaReports", "Ouvrir les rapports"),
