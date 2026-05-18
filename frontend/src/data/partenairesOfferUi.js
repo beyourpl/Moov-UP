@@ -40,9 +40,6 @@ export function buildPartenairesOfferUi(t) {
     b2bF4: t("partenaires", "offerB2bF4", "Accompagnement dédié"),
     choose: t("partenaires", "offerChoose", "Choisir"),
     dashboard: t("partenaires", "goDashboard", "Ouvrir le tableau de bord"),
-    freemiumTagline: t("partenaires", "offerFreemiumTagline", "MOTEUR D'ACQUISITION"),
-    premiumTagline: t("partenaires", "offerPremiumTagline", "MOTEUR DE MONÉTISATION"),
-    b2bTagline: t("partenaires", "offerB2bTagline", "MOTEUR DE STABILISATION"),
   };
 }
 

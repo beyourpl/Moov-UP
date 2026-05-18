@@ -72,7 +72,6 @@ export default function PartenairesPricingCards({ ui, variant, onFreemium, onPre
             {ui.choose}
           </button>
         ) : null}
-        <p className="pricing-card-tagline pricing-card-tagline--freemium">{ui.freemiumTagline}</p>
       </article>
 
       <article className={`${deckCls} pricing-card--premium pricing-card--featured`}>
@@ -99,7 +98,6 @@ export default function PartenairesPricingCards({ ui, variant, onFreemium, onPre
             {ui.choose}
           </button>
         ) : null}
-        <p className="pricing-card-tagline pricing-card-tagline--premium">{ui.premiumTagline}</p>
       </article>
 
       <article className={`${deckCls} pricing-card--b2b`}>
@@ -120,7 +118,6 @@ export default function PartenairesPricingCards({ ui, variant, onFreemium, onPre
             {ui.dashboard}
           </button>
         ) : null}
-        <p className="pricing-card-tagline pricing-card-tagline--b2b">{ui.b2bTagline}</p>
       </article>
     </>
   );
