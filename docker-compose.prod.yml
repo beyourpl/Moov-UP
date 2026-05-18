@@ -1,0 +1,9 @@
+# Production VPS : redémarrage auto, rate limit désactivé (stabilité derrière Caddy).
+services:
+  backend:
+    environment:
+      RATE_LIMIT_ENABLED: "false"
+    restart: unless-stopped
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000
+  frontend:
+    restart: unless-stopped

@@ -10,13 +10,17 @@ if docker compose version >/dev/null 2>&1; then
 else
   DC="docker-compose"
 fi
-eval "${DC} -f docker-compose.yml build backend"
+COMPOSE_FILES="-f docker-compose.yml"
+if [ -f docker-compose.prod.yml ]; then
+  COMPOSE_FILES="${COMPOSE_FILES} -f docker-compose.prod.yml"
+fi
+eval "${DC} ${COMPOSE_FILES} build backend"
 if [ ! -f backend/data/metiers.faiss ]; then
   echo "Building FAISS index..."
-  eval "${DC} -f docker-compose.yml run --rm backend python scripts/build_index.py"
+  eval "${DC} ${COMPOSE_FILES} run --rm backend python scripts/build_index.py"
 fi
-eval "${DC} -f docker-compose.yml up -d --force-recreate"
-eval "${DC} -f docker-compose.yml ps"
+eval "${DC} ${COMPOSE_FILES} up -d --force-recreate"
+eval "${DC} ${COMPOSE_FILES} ps"
 ok=0
 for i in $(seq 1 30); do
   if curl -sf http://127.0.0.1:8000/api/health >/tmp/moovup-health.json; then
@@ -29,6 +33,6 @@ for i in $(seq 1 30); do
   sleep 10
 done
 if [ "${ok}" != 1 ]; then
-  eval "${DC} -f docker-compose.yml logs backend --tail 120" || true
+  eval "${DC} ${COMPOSE_FILES} logs backend --tail 120" || true
   exit 1
 fi
