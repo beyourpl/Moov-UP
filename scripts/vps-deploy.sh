@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-set -exuo pipefailcd /root/tempo
+set -exuo pipefail
+cd /root/tempo
 git pull --ff-only
 if [ ! -f backend/.env ]; then
   cp backend/.env.example backend/.env
