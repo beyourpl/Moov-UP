@@ -41,7 +41,7 @@ async def chat(
 ):
     conv = db.get(Conversation, body.conversation_id)
     if conv is None or conv.user_id != current.id:
-        raise HTTPException(status_code=404, detail="Conversation not found")
+        raise HTTPException(status_code=404, detail="Conversation introuvable")
 
     rag = get_rag(request)
     if rag is None:

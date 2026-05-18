@@ -2,8 +2,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getLastConversationId } from "../data/conversationStorage.js";
 import ReactMarkdown from "react-markdown";
-import { apiGet, apiPost } from "../data/apiClient.js";
+import {
+  apiGet,
+  apiPost,
+  humanizeApiErrorMessage,
+  isConversationNotFoundMessage,
+} from "../data/apiClient.js";
 import { getSession, logoutUser } from "../data/authStorage.js";
+import { clearLastConversationId } from "../data/conversationStorage.js";
 import { getPartenairesOffer } from "../data/partenairesSession.js";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import PathwaySummaryModal from "../components/PathwaySummaryModal.jsx";
@@ -12,6 +18,7 @@ import { useTranslation } from "../hooks/useTranslation.js";
 import { useNavigateBack } from "../hooks/useNavigateBack.js";
 import { stripTrailingOnisepFromAssistantText } from "../data/chatMessageCleanup.js";
 import { detectLegacyCoachStubReply } from "../data/chatLegacyStub.js";
+import { localizeRecommendations } from "../data/localizeRecommendations.js";
 import { getCoachQuotaState, reconcileCoachUsageAfterSend, syncCoachUsageFromHistory } from "../data/usageQuota.js";
 
 function useQueryParam(key) {
@@ -98,10 +105,13 @@ export default function ChatbotPage() {
   const userInitial = session?.email?.trim()?.[0] ?? "?";
   const [conv, setConv] = useState(null);
   const [history, setHistory] = useState([]);
+  const [rawRecs, setRawRecs] = useState([]);
   const [recs, setRecs] = useState([]);
+  const [localizingRecs, setLocalizingRecs] = useState(false);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
+  const [convLoadState, setConvLoadState] = useState("loading");
   const [pathwayOpen, setPathwayOpen] = useState(false);
   const [shareCopied, setShareCopied] = useState(false);
   const [apiHealth, setApiHealth] = useState(null);
@@ -144,18 +154,62 @@ export default function ChatbotPage() {
       .catch(() => setApiHealth(null));
   }, [cid]);
 
+  const convNotFoundFallback = tc("convNotFound", "Conversation introuvable");
+
+  const handleConversationMissing = () => {
+    clearLastConversationId();
+    setConv(null);
+    setHistory([]);
+    setRawRecs([]);
+    setRecs([]);
+    setConvLoadState("not_found");
+    setError(convNotFoundFallback);
+  };
+
   useEffect(() => {
     if (!cid) return;
+    setConvLoadState("loading");
+    setError("");
     apiGet(`/api/conversations/${cid}`)
       .then((c) => {
         setConv(c);
         const msgs = c.messages || [];
         syncCoachUsageFromHistory(msgs);
         setHistory(msgs);
-        setRecs(c.initial_recommendations || []);
+        setRawRecs(c.initial_recommendations || []);
+        setConvLoadState("ready");
       })
-      .catch((e) => setError(e.message || tc("convNotFound", "Conversation introuvable")));
+      .catch((e) => {
+        if (isConversationNotFoundMessage(e.message)) {
+          handleConversationMissing();
+          return;
+        }
+        setConvLoadState("error");
+        setError(
+          humanizeApiErrorMessage(e.message, convNotFoundFallback)
+        );
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- rechargement lié au cid uniquement
   }, [cid]);
+
+  useEffect(() => {
+    if (!rawRecs.length) {
+      setRecs([]);
+      return undefined;
+    }
+    let cancelled = false;
+    setLocalizingRecs(true);
+    localizeRecommendations(rawRecs, language)
+      .then((localized) => {
+        if (!cancelled) setRecs(localized);
+      })
+      .finally(() => {
+        if (!cancelled) setLocalizingRecs(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [rawRecs, language]);
 
   useEffect(() => {
     if (!scrollRef.current) return;
@@ -195,7 +249,7 @@ export default function ChatbotPage() {
       });
       reconcileCoachUsageAfterSend(res.updated_history || []);
       setHistory(res.updated_history);
-      setRecs(res.recommended_metiers);
+      setRawRecs(res.recommended_metiers || []);
     } catch (err) {
       setError(err.message);
       setHistory((h) => h.filter((m, i) => !(i === h.length - 1 && m.role === "user" && m.content === trimmed)));
@@ -279,9 +333,9 @@ export default function ChatbotPage() {
     await copyConversationLink();
   };
 
-  if (!conv && !error) {
+  if (convLoadState === "loading") {
     return (
-      <div className="app">
+      <div className="app chatbot-app">
         <p style={{ padding: 40 }}>{tc("loading", "Chargement…")}</p>
       </div>
     );
@@ -302,7 +356,7 @@ export default function ChatbotPage() {
               onClick={goBackPage}
               aria-label={t("common", "navBackAria", "Revenir à la page précédente")}
             >
-              ← {t("common", "back", "Retour")}
+              {t("common", "backNav", "← — Retour")}
             </button>
             <Link to="/" className="chatbot-nav-brand" aria-label={tc("brandHomeAria", "Moov'Up — accueil")}>
               <BrandMark />
@@ -320,6 +374,68 @@ export default function ChatbotPage() {
         </div>
       </header>
 
+      {convLoadState === "not_found" ? (
+        <section className="panel chatbot-recovery" role="alert">
+          <h2 className="chatbot-recovery-title">
+            {tc("convNotFoundTitle", "Parcours introuvable")}
+          </h2>
+          <p className="chatbot-recovery-lead">
+            {tc(
+              "convNotFoundLead",
+              "Ce parcours n’existe plus ou n’est plus lié à ton compte. Refais le questionnaire pour générer un nouveau parcours."
+            )}
+          </p>
+          <div className="chatbot-recovery-actions">
+            <Link to="/demo" className="lp-btn lp-btn-primary">
+              {tc("convNotFoundCtaQuiz", "Refaire le questionnaire")}
+            </Link>
+            <Link to="/choice" className="nav-btn secondary">
+              {tc("convNotFoundCtaChoice", "Retour au menu")}
+            </Link>
+          </div>
+        </section>
+      ) : null}
+
+      {convLoadState === "error" ? (
+        <section className="panel chatbot-recovery" role="alert">
+          <h2 className="chatbot-recovery-title">{tc("loadErrorTitle", "Impossible de charger le parcours")}</h2>
+          <p className="chatbot-recovery-lead">{error}</p>
+          <div className="chatbot-recovery-actions">
+            <button
+              type="button"
+              className="lp-btn lp-btn-primary"
+              onClick={() => {
+                setConvLoadState("loading");
+                setError("");
+                apiGet(`/api/conversations/${cid}`)
+                  .then((c) => {
+                    setConv(c);
+                    const msgs = c.messages || [];
+                    syncCoachUsageFromHistory(msgs);
+                    setHistory(msgs);
+                    setRawRecs(c.initial_recommendations || []);
+                    setConvLoadState("ready");
+                  })
+                  .catch((e) => {
+                    if (isConversationNotFoundMessage(e.message)) handleConversationMissing();
+                    else {
+                      setConvLoadState("error");
+                      setError(humanizeApiErrorMessage(e.message, convNotFoundFallback));
+                    }
+                  });
+              }}
+            >
+              {tc("loadErrorRetry", "Réessayer")}
+            </button>
+            <Link to="/demo" className="nav-btn secondary">
+              {tc("convNotFoundCtaQuiz", "Refaire le questionnaire")}
+            </Link>
+          </div>
+        </section>
+      ) : null}
+
+      {convLoadState === "ready" ? (
+      <>
       <section className="hero" style={{ paddingBottom: 12 }}>
         <span className="eyebrow">{tc("eyebrow", "Assistant orientation")}</span>
         <h1>{tc("title", "Moov'Coach")}</h1>
@@ -377,6 +493,9 @@ export default function ChatbotPage() {
           <div className="chatbot-aside-head">
             <h3>{tc("asideJobsTitle", "Métiers recommandés")}</h3>
             <span className="chatbot-aside-count">{recs.length}</span>
+            {localizingRecs ? (
+              <span className="chatbot-aside-localizing">{tc("localizingJobs", "Translating…")}</span>
+            ) : null}
           </div>
           <div className="chatbot-aside-list">
             {recs.map((hit, i) => (
@@ -476,6 +595,8 @@ export default function ChatbotPage() {
         quizAnswers={conv?.quiz_answers}
         niveauMax={typeof conv?.niveau_max === "number" ? conv.niveau_max : undefined}
       />
+      </>
+      ) : null}
     </div>
   );
 }

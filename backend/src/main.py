@@ -76,8 +76,14 @@ def health(request: Request):
 from src.infrastructure.api.routes import auth as auth_routes
 
 app.include_router(auth_routes.router)
-from src.infrastructure.api.routes import conversations as conv_routes, chat as chat_routes, rag as rag_routes
+from src.infrastructure.api.routes import (
+    conversations as conv_routes,
+    chat as chat_routes,
+    rag as rag_routes,
+    recommendations as rec_routes,
+)
 
 app.include_router(conv_routes.router)
 app.include_router(chat_routes.router)
 app.include_router(rag_routes.router)
+app.include_router(rec_routes.router)

@@ -28,7 +28,7 @@ export default function PartenairesAudienceSwitch({ active = "structures" }) {
         <span className="partenaires-audience-switch-label">{structs}</span>
       </Link>
       <Link
-        to="/auth"
+        to="/jeunes"
         className={active === "jeunes" ? "is-active" : undefined}
         aria-current={active === "jeunes" ? "page" : undefined}
       >

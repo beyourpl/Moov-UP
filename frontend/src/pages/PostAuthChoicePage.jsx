@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import PartenairesAudienceSwitch from "../components/PartenairesAudienceSwitch.jsx";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import { getLastConversationId } from "../data/conversationStorage.js";
 import { logoutUser } from "../data/authStorage.js";
@@ -97,15 +98,18 @@ export default function PostAuthChoicePage() {
 
   return (
     <div className={`app quiz-app ${theme} post-auth-choice`}>
-      <div className="top-actions quiz-top">
-        <button
-          type="button"
-          className="quiz-site-link"
-          onClick={goBackPage}
-          aria-label={t("common", "navBackAria", "Revenir à la page précédente")}
-        >
-          ← {t("common", "back", "Retour")}
-        </button>
+      <div className="top-actions quiz-top post-auth-choice-top">
+        <div className="quiz-top-left">
+          <button
+            type="button"
+            className="lp-nav-back post-auth-choice-back"
+            onClick={goBackPage}
+            aria-label={t("common", "navBackAria", "Revenir à la page précédente")}
+          >
+            {t("common", "backNav", "← — Retour")}
+          </button>
+          <PartenairesAudienceSwitch active="jeunes" />
+        </div>
 
         <div className="quiz-top-btns">
           <TopBarAccountTools className="quiz-top-tools" />

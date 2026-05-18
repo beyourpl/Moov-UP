@@ -57,6 +57,23 @@ export function formatApiErrorDetail(detail, fallback = "") {
   return String(detail) || fallback;
 }
 
+/** Messages API génériques (404) à remplacer par un libellé UI localisé. */
+export function isConversationNotFoundMessage(message) {
+  const m = String(message || "").trim().toLowerCase();
+  return (
+    m === "not found" ||
+    m === "conversation not found" ||
+    m.includes("conversation introuvable") ||
+    m.includes("conversation not found")
+  );
+}
+
+export function humanizeApiErrorMessage(message, fallback) {
+  if (isConversationNotFoundMessage(message)) return fallback;
+  const m = String(message || "").trim();
+  return m || fallback;
+}
+
 async function request(method, path, body) {
   const API_URL = resolveApiBase();
   const headers = { "Content-Type": "application/json" };

@@ -7,6 +7,7 @@ import AuthPage from "./pages/AuthPage.jsx";
 import PostAuthChoicePage from "./pages/PostAuthChoicePage.jsx";
 import CvLmUploader from "./components/CvLmUploader.jsx";
 import PartenairesIntroPage from "./pages/PartenairesIntroPage.jsx";
+import JeunesIntroPage from "./pages/JeunesIntroPage.jsx";
 import PartenairesAuthPage from "./pages/PartenairesAuthPage.jsx";
 import PartenairesOfferChoicePage from "./pages/PartenairesOfferChoicePage.jsx";
 import PartenairesOfferSubscribePage from "./pages/PartenairesOfferSubscribePage.jsx";
@@ -44,6 +45,7 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/jeunes" element={<JeunesIntroPage />} />
       <Route path="/partenaires" element={<PartenairesIntroPage />} />
       <Route path="/partenaires/connexion" element={<PartenairesAuthPage />} />
       <Route path="/partenaires/offres" element={<PartenairesOfferChoicePage />} />

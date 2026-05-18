@@ -544,6 +544,103 @@ async function chatWithOpenRouter(orchMessages) {
   return reply;
 }
 
+function normalizeUiLang(language) {
+  const raw = String(language || "fr").trim().toLowerCase().split("-")[0];
+  return raw || "fr";
+}
+
+function ruleLocalizeFormationDev(f, lang) {
+  if (lang === "fr" || !f) return f;
+  const out = { ...f };
+  const typeMap = {
+    "formation d'école spécialisée": "Specialized school program",
+    "diplôme d'institut d'études politiques": "Political studies institute degree",
+  };
+  for (const key of ["type_formation", "niveau_sortie", "niveau_label", "resume", "duree"]) {
+    if (typeof out[key] !== "string") continue;
+    const low = out[key].trim().toLowerCase();
+    out[key] =
+      typeMap[low] ||
+      out[key]
+        .replace(/\bbac\s*\+\s*(\d+)\b/gi, "Level Bac+$1")
+        .replace(/(\d+)\s*ans?\b/gi, "$1 years")
+        .replace(/durée\s*:\s*/gi, "Duration: ");
+  }
+  return out;
+}
+
+function ruleLocalizeRecsDev(recs, lang) {
+  if (lang === "fr" || !Array.isArray(recs)) return recs;
+  return recs.map((hit) => ({
+    ...hit,
+    formations: (hit.formations || []).map((f) => ruleLocalizeFormationDev(f, lang)),
+  }));
+}
+
+function extractJsonArray(text) {
+  let raw = String(text || "").trim();
+  if (raw.startsWith("```")) {
+    raw = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+  }
+  const m = raw.match(/\[[\s\S]*\]/);
+  return JSON.parse(m ? m[0] : raw);
+}
+
+async function localizeRecommendationsDev(recs, language) {
+  const lang = normalizeUiLang(language);
+  const ruled = ruleLocalizeRecsDev(recs, lang);
+  if (lang === "fr" || !Array.isArray(recs) || !recs.length) return ruled;
+  if (!HAS_LLM_KEY) return ruled;
+
+  const label = _COACH_LANG_LABEL[lang] || "English";
+  const payload = recs.slice(0, 5).map((hit, i) => ({
+    i,
+    metier_libelle: String(hit?.metier?.libelle || "").slice(0, 160),
+    metier_description: String(hit?.metier?.description || "").slice(0, 320),
+    formations: (hit?.formations || []).slice(0, 6).map((f, j) => ({
+      j,
+      libelle: String(f?.libelle || "").slice(0, 140),
+      resume: String(f?.resume || "").slice(0, 160),
+    })),
+  }));
+
+  const raw = await chatWithOpenRouter([
+    {
+      role: "system",
+      content:
+        `Translate French ONISEP data to ${label}. Return ONLY a JSON array with fields i, metier_libelle, metier_description, formations (j, libelle, resume).`,
+    },
+    { role: "user", content: JSON.stringify(payload) },
+  ]);
+
+  let translated;
+  try {
+    translated = extractJsonArray(raw);
+  } catch {
+    return ruled;
+  }
+
+  const byI = new Map(translated.map((x) => [Number(x.i), x]));
+  return recs.map((hit, i) => {
+    const base = { ...hit, formations: (hit.formations || []).map((f) => ruleLocalizeFormationDev(f, lang)) };
+    const patch = byI.get(i);
+    if (!patch) return base;
+    const metier = { ...(base.metier || {}) };
+    if (patch.metier_libelle) metier.libelle = patch.metier_libelle;
+    if (patch.metier_description) metier.description = patch.metier_description;
+    const forms = (base.formations || []).map((f, j) => {
+      const p = (patch.formations || []).find((x) => Number(x.j) === j);
+      if (!p) return f;
+      return {
+        ...f,
+        libelle: p.libelle || f.libelle,
+        resume: p.resume || f.resume,
+      };
+    });
+    return { ...base, metier, formations: forms };
+  });
+}
+
 /** @type {Map<string, { id: number, email: string, password: string, totp_secret: string | null, totp_enabled: boolean }>} */
 const usersByEmail = new Map();
 /** @type {Map<number, { id: number, email: string, password: string, totp_secret: string | null, totp_enabled: boolean }>} */
@@ -884,7 +981,7 @@ const server = http.createServer(async (req, res) => {
       const cid = Number(convGet[1]);
       const c = conversations.get(cid);
       if (!c || c.userId !== r.user.id) {
-        sendJson(res, 404, { detail: "Not found" });
+        sendJson(res, 404, { detail: "Conversation introuvable" });
         return;
       }
       sendJson(res, 200, {
@@ -910,7 +1007,7 @@ const server = http.createServer(async (req, res) => {
       const uiLang = normalizeCoachUiLang(body.language);
       const c = conversations.get(conversation_id);
       if (!c || c.userId !== r.user.id) {
-        sendJson(res, 404, { detail: "Conversation not found" });
+        sendJson(res, 404, { detail: "Conversation introuvable" });
         return;
       }
       const historyForPrompt = c.messages.slice(-10);
@@ -954,6 +1051,19 @@ const server = http.createServer(async (req, res) => {
         recommended_metiers: c.initial_recommendations,
         updated_history: tail,
       });
+      return;
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/recommendations/localize") {
+      const r = getUser(req);
+      if (r.err) {
+        sendJson(res, r.err, { detail: r.detail });
+        return;
+      }
+      const body = await readBody(req);
+      const recommendations = Array.isArray(body.recommendations) ? body.recommendations : [];
+      const localized = await localizeRecommendationsDev(recommendations, body.language);
+      sendJson(res, 200, { recommendations: localized });
       return;
     }
 

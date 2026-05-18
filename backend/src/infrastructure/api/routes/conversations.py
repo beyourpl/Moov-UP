@@ -127,7 +127,7 @@ def get_conversation(
 ):
     conv = db.get(Conversation, cid)
     if conv is None or conv.user_id != current.id:
-        raise HTTPException(status_code=404, detail="Not found")
+        raise HTTPException(status_code=404, detail="Conversation introuvable")
     msgs = (db.query(Message)
               .filter(Message.conversation_id == cid)
               .order_by(Message.created_at)

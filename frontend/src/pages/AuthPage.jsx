@@ -189,7 +189,7 @@ export default function AuthPage() {
   const emailError = submitted && !emailValid ? ui.emailInvalid : "";
 
   return (
-    <div className="lp fade-in">
+    <div className="lp fade-in jeunes-page">
       <header className="lp-header">
         <div className="lp-header-inner">
           <Link to="/" className="lp-logo">Moov&apos;Up</Link>

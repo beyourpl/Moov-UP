@@ -1,4 +1,5 @@
 ﻿import { Link, useNavigate } from "react-router-dom";
+import PartenairesAudienceSwitch from "../components/PartenairesAudienceSwitch.jsx";
 import { TopBarAccountTools } from "../components/TopBarAccountTools.jsx";
 import { getLastConversationId } from "../data/conversationStorage.js";
 import { getSession, logoutUser } from "../data/authStorage.js";
@@ -36,7 +37,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="lp fade-in lp-landing">
+    <div className="lp fade-in lp-landing jeunes-page">
       {/* ─── HEADER ─── */}
       <header className="lp-header">
         <div className="lp-header-inner">
@@ -55,8 +56,8 @@ export default function LandingPage() {
             />
           </Link>
           <nav className="lp-nav" aria-label={t("a11y", "mainNav", "Navigation principale")}>
+            <PartenairesAudienceSwitch active="jeunes" />
             <a href="#fondateurs">{t("landing", "navCoFounders", "Cofondateurs")}</a>
-            <Link to="/partenaires">{t("landing", "navPartenaires", "Missions locales")}</Link>
             <a href="#produit">{t("landing", "navProduct", "Produit")}</a>
             <a href="#parcours">{t("landing", "navSteps", "Comment ça marche")}</a>
             <a href="#faq">{t("landing", "navFaq", "FAQ")}</a>
