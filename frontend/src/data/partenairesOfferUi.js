@@ -15,7 +15,9 @@ export function buildPartenairesOfferUi(t) {
     freemiumF3: t("partenaires", "offerFreemiumF3", "Moov’Coach limité"),
     premiumTitle: t("partenaires", "offerPremiumTitle", "PREMIUM B2C"),
     premiumBadge: t("partenaires", "offerPremiumBadge", "★ Le plus populaire"),
-    premiumPrice: t("partenaires", "offerPremiumPrice", "1,99€ / mois"),
+    premiumPriceMonthly: t("partenaires", "offerPremiumPriceMonthly", "0,99 € / mois"),
+    premiumPriceAnnual: t("partenaires", "offerPremiumPriceAnnual", "9,99 € / an"),
+    premiumPrice: t("partenaires", "offerPremiumPrice", "0,99 € / mois"),
     premiumDesc: t(
       "partenaires",
       "offerPremiumDesc",
@@ -25,8 +27,8 @@ export function buildPartenairesOfferUi(t) {
     premiumF2: t("partenaires", "offerPremiumF2", "Génération CV & lettre"),
     premiumF3: t("partenaires", "offerPremiumF3", "Préparation entretiens"),
     premiumF4: t("partenaires", "offerPremiumF4", "Moov’Coach illimité"),
-    b2bTitle: t("partenaires", "offerB2bTitle", "LICENCES B2B"),
-    b2bPrice: t("partenaires", "offerB2bPrice", "À partir de 2 000€ / an"),
+    b2bTitle: t("partenaires", "offerB2bTitle", "LICENCES B2B/B2G"),
+    b2bPrice: t("partenaires", "offerB2bPrice", "À partir de 8 € / jeune / an"),
     b2bDesc: t(
       "partenaires",
       "offerB2bDesc",

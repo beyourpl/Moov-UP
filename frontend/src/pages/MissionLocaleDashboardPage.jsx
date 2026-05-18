@@ -104,8 +104,8 @@ export default function MissionLocaleDashboardPage() {
       ),
       goOffers: t("partenaires", "goOffers", "Retour aux offres"),
       home: t("common", "home", "Accueil"),
-      offerB2bTitle: t("partenaires", "offerB2bTitle", "LICENCES B2B"),
-      offerB2bPrice: t("partenaires", "offerB2bPrice", "À partir de 2 000€ / an"),
+      offerB2bTitle: t("partenaires", "offerB2bTitle", "LICENCES B2B/B2G"),
+      offerB2bPrice: t("partenaires", "offerB2bPrice", "À partir de 8 € / jeune / an"),
       offerB2bDesc: t(
         "partenaires",
         "offerB2bDesc",
@@ -158,7 +158,7 @@ export default function MissionLocaleDashboardPage() {
       currentOfferB2bBanner: t(
         "partenaires",
         "currentOfferB2bBanner",
-        "Offre active : Licences B2B — à partir de 2 000 € HT / an. Activation démo : pas de contrat ni facturation réelle tant que l’équipe commerciale n’a pas finalisé ton dossier."
+        "Offre active : Licences B2B/B2G — à partir de 8 € HT / jeune / an. Activation démo : pas de contrat ni facturation réelle tant que l’équipe commerciale n’a pas finalisé ton dossier."
       ),
     }),
     [t]

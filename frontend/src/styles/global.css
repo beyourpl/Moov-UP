@@ -10222,7 +10222,26 @@ body {
   letter-spacing: -0.02em;
 }
 
+.pricing-price-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+}
+
+.pricing-price-secondary {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.8vw, 1.08rem);
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+}
+
 .partenaires-page .pricing-card .pricing-price {
+  margin-top: 2px;
+}
+
+.partenaires-page .pricing-card .pricing-price-stack {
   margin-top: 2px;
 }
 
@@ -11088,6 +11107,17 @@ a.b2b-pillar-link--external {
   margin: 0 0 0.5rem;
   font-size: 1.35rem;
   font-weight: 800;
+}
+
+.premium-contract-price-secondary {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.premium-contract-prices .premium-contract-price {
+  margin-bottom: 0.15rem;
 }
 
 .premium-contract-audience {

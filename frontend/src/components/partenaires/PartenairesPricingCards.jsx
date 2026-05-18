@@ -81,7 +81,12 @@ export default function PartenairesPricingCards({ ui, variant, onFreemium, onPre
           💎
         </div>
         <h3 className="pricing-card-heading">{ui.premiumTitle}</h3>
-        <p className="pricing-price">{ui.premiumPrice}</p>
+        <div className="pricing-price-stack">
+          <p className="pricing-price">{ui.premiumPriceMonthly || ui.premiumPrice}</p>
+          {ui.premiumPriceAnnual ? (
+            <p className="pricing-price-secondary">{ui.premiumPriceAnnual}</p>
+          ) : null}
+        </div>
         <PremiumDesc />
         <ul className="pricing-features">
           <li>{ui.premiumF1}</li>

@@ -95,7 +95,7 @@ export default function PartenairesOfferSubscribePage() {
         priceLine: t(
           "partenaires",
           "subscribePremiumPriceLine",
-          "Tarif affiché : **1,99 € TTC / mois** — abonnement avec renouvellement automatique, résiliable."
+          "Tarifs affichés : **0,99 € TTC / mois** ou **9,99 € TTC / an** — abonnement avec renouvellement automatique, résiliable."
         ),
         h1: t("partenaires", "subscribePremiumH1", "Modalités de paiement"),
         p1: t(
@@ -144,7 +144,7 @@ export default function PartenairesOfferSubscribePage() {
         priceLine: t(
           "partenaires",
           "subscribeB2bPriceLine",
-          "À partir de **2 000 € HT / an** selon périmètre (nombre de sites, volume d’utilisateurs, options)."
+          "À partir de **8 € HT / jeune / an** selon périmètre (volume de jeunes, sites, options)."
         ),
         h1: t("partenaires", "subscribeB2bH1", "Modalités de facturation"),
         p1: t(

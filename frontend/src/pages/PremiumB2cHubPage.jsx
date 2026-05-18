@@ -37,7 +37,8 @@ export default function PremiumB2cHubPage() {
       ),
       badge: t("partenaires", "offerPremiumBadge", "★ Le plus populaire"),
       offerTitle: t("partenaires", "offerPremiumTitle", "PREMIUM B2C"),
-      offerPrice: t("partenaires", "offerPremiumPrice", "1,99€ / mois"),
+      offerPriceMonthly: t("partenaires", "offerPremiumPriceMonthly", "0,99 € / mois"),
+      offerPriceAnnual: t("partenaires", "offerPremiumPriceAnnual", "9,99 € / an"),
       offerDesc: t(
         "partenaires",
         "offerPremiumDesc",
@@ -80,7 +81,7 @@ export default function PremiumB2cHubPage() {
       currentOfferBanner: t(
         "partenaires",
         "currentOfferPremiumBanner",
-        "Offre active : Premium B2C — 1,99 € TTC / mois. Aucun prélèvement réel en mode démonstration ; le paiement en ligne sera branché ensuite."
+        "Offre active : Premium B2C — 0,99 € TTC / mois ou 9,99 € TTC / an. Aucun prélèvement réel en mode démonstration ; le paiement en ligne sera branché ensuite."
       ),
     }),
     [t]
@@ -163,7 +164,10 @@ export default function PremiumB2cHubPage() {
           <p id="premium-contract-heading" className="premium-contract-badge">
             {ui.offerTitle}
           </p>
-          <p className="premium-contract-price">{ui.offerPrice}</p>
+          <div className="pricing-price-stack premium-contract-prices">
+            <p className="premium-contract-price">{ui.offerPriceMonthly}</p>
+            <p className="premium-contract-price-secondary">{ui.offerPriceAnnual}</p>
+          </div>
           <p className="premium-contract-audience">{ui.offerDesc}</p>
         </section>
 

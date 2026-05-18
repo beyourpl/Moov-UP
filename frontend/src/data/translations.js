@@ -908,14 +908,16 @@ export const TEXTS = {
       offerFreemiumF3: "MoovCoach limité",
       offerPremiumTitle: "PREMIUM B2C",
       offerPremiumBadge: "★ LE PLUS POPULAIRE",
-      offerPremiumPrice: "1,99€ / mois",
+      offerPremiumPriceMonthly: "0,99 € / mois",
+      offerPremiumPriceAnnual: "9,99 € / an",
+      offerPremiumPrice: "0,99 € / mois",
       offerPremiumDesc: "Accès illimité, génération CV, outils avancés.",
       offerPremiumF1: "Accès illimité",
       offerPremiumF2: "Génération CV & lettre",
       offerPremiumF3: "Préparation entretiens",
       offerPremiumF4: "MoovCoach illimité",
-      offerB2bTitle: "LICENCES B2B",
-      offerB2bPrice: "À partir de 2 000€ / an",
+      offerB2bTitle: "LICENCES B2B/B2G",
+      offerB2bPrice: "À partir de 8 € / jeune / an",
       offerB2bDesc:
         "Réservé aux lycées, missions locales, structures d’insertion, grandes structures.",
       offerB2bF1: "Tableau de bord collectif",
@@ -943,7 +945,7 @@ export const TEXTS = {
       subscribePremiumLead:
         "Voici le fonctionnement prévu une fois le paiement en ligne branché. Aujourd’hui tu actives l’offre en **mode démonstration** (sans prélèvement).",
       subscribePremiumPriceLine:
-        "Tarif affiché : **1,99 € TTC / mois** — abonnement avec renouvellement automatique, résiliable.",
+        "Tarifs affichés : **0,99 € TTC / mois** ou **9,99 € TTC / an** — abonnement avec renouvellement automatique, résiliable.",
       subscribePremiumH1: "Modalités de paiement",
       subscribePremiumP1:
         "Tu règles par **carte bancaire** (prestataire de paiement sécurisé type Stripe) : première validation, puis prélèvement mensuel le même jour chaque mois.",
@@ -963,7 +965,7 @@ export const TEXTS = {
       subscribeB2bLead:
         "Les **licences annuelles** se négocient avec l’équipe commerciale : devis, bon de commande ou contrat-cadre, puis facturation.",
       subscribeB2bPriceLine:
-        "À partir de **2 000 € HT / an** selon périmètre (nombre de sites, volume d’utilisateurs, options).",
+        "À partir de **8 € HT / jeune / an** selon périmètre (volume de jeunes, sites, options).",
       subscribeB2bH1: "Modalités de facturation",
       subscribeB2bP1:
         "Après signature, tu reçois une **facture** et l’activation des comptes structures (référents, SSO ou listes d’emails selon le setup).",
@@ -978,9 +980,9 @@ export const TEXTS = {
         "Tu es déjà sur l’offre Licences B2B. Tu peux ouvrir le tableau de bord ou revenir aux offres.",
       subscribeGoB2bDashboard: "Ouvrir le tableau de bord",
       currentOfferPremiumBanner:
-        "Offre active : Premium B2C — 1,99 € TTC / mois. Aucun prélèvement réel en mode démonstration ; le paiement en ligne sera branché ensuite.",
+        "Offre active : Premium B2C — 0,99 € TTC / mois ou 9,99 € TTC / an. Aucun prélèvement réel en mode démonstration ; le paiement en ligne sera branché ensuite.",
       currentOfferB2bBanner:
-        "Offre active : Licences B2B — à partir de 2 000 € HT / an. Activation démo : pas de contrat ni facturation réelle tant que l’équipe commerciale n’a pas finalisé ton dossier.",
+        "Offre active : Licences B2B/B2G — à partir de 8 € HT / jeune / an. Activation démo : pas de contrat ni facturation réelle tant que l’équipe commerciale n’a pas finalisé ton dossier.",
       offerChoose: "Choisir",
       goDashboard: "Ouvrir le tableau de bord",
       needLogin: "Connexion requise.",
@@ -1804,14 +1806,16 @@ export const TEXTS = {
       offerFreemiumF3: "Limited MoovCoach",
       offerPremiumTitle: "PREMIUM B2C",
       offerPremiumBadge: "★ MOST POPULAR",
-      offerPremiumPrice: "€1.99 / month",
+      offerPremiumPriceMonthly: "€0.99 / month",
+      offerPremiumPriceAnnual: "€9.99 / year",
+      offerPremiumPrice: "€0.99 / month",
       offerPremiumDesc: "Unlimited access, CV generation, advanced tools.",
       offerPremiumF1: "Unlimited access",
       offerPremiumF2: "CV & cover letter generation",
       offerPremiumF3: "Interview prep",
       offerPremiumF4: "Unlimited MoovCoach",
-      offerB2bTitle: "B2B LICENCES",
-      offerB2bPrice: "From €2,000 / year",
+      offerB2bTitle: "B2B/B2G LICENCES",
+      offerB2bPrice: "From €8 / young person / year",
       offerB2bDesc:
         "For high schools, local missions, integration schemes, large organisations.",
       offerB2bF1: "Collective dashboard",
@@ -1839,7 +1843,7 @@ export const TEXTS = {
       subscribePremiumLead:
         "Here’s the intended flow once online payments are connected. For now you enable the plan in **demo mode** (no charge).",
       subscribePremiumPriceLine:
-        "Displayed price: **€1.99 incl. VAT / month** — subscription renews monthly and can be cancelled.",
+        "Displayed prices: **€0.99 incl. VAT / month** or **€9.99 incl. VAT / year** — subscription renews automatically and can be cancelled.",
       subscribePremiumH1: "Payment model",
       subscribePremiumP1:
         "You pay by **card** (secure provider such as Stripe): first authorisation, then monthly billing on the same calendar day.",
@@ -1859,7 +1863,7 @@ export const TEXTS = {
       subscribeB2bLead:
         "**Annual licences** are agreed with sales: quote, purchase order or framework agreement, then invoicing.",
       subscribeB2bPriceLine:
-        "From **€2,000 ex VAT / year** depending on scope (sites, user volume, options).",
+        "From **€8 ex VAT / young person / year** depending on scope (number of young people, sites, options).",
       subscribeB2bH1: "Billing model",
       subscribeB2bP1:
         "After signature you receive an **invoice** and organisation accounts are activated (referrers, SSO or email lists depending on setup).",
@@ -1874,9 +1878,9 @@ export const TEXTS = {
         "You’re already on B2B licences. Open the dashboard or return to plans.",
       subscribeGoB2bDashboard: "Open dashboard",
       currentOfferPremiumBanner:
-        "Active plan: Premium B2C — €1.99 incl. VAT / month. No real charge in demo mode; card payments will be connected later.",
+        "Active plan: Premium B2C — €0.99 incl. VAT / month or €9.99 incl. VAT / year. No real charge in demo mode; card payments will be connected later.",
       currentOfferB2bBanner:
-        "Active plan: B2B licences — from €2,000 ex VAT / year. Demo activation: no contract or real billing until sales finalises your file.",
+        "Active plan: B2B/B2G licences — from €8 ex VAT / young person / year. Demo activation: no contract or real billing until sales finalises your file.",
       offerChoose: "Choose",
       goDashboard: "Open dashboard",
       needLogin: "Sign-in required.",
